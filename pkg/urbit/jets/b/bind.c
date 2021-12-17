@@ -13,7 +13,7 @@
     if ( 0 == a ) {
       return 0;
     } else {
-      return u3nc(0, u3n_slam_on(u3k(b), u3k(u3t(a))));
+      return u3i_cell(0, u3n_slam_on(u3a_gain(b), u3a_gain(u3x_t(a))));
     }
   }
   u3_noun

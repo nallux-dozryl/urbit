@@ -32,7 +32,7 @@ _n_hint(u3_noun zep,
     case c3__lose:
     case c3__mean:
     case c3__spot: {
-      u3_noun tac = u3nc(zep, hod);
+      u3_noun tac = u3i_cell(zep, hod);
       u3_noun pro;
 
       u3t_push(tac);
@@ -45,10 +45,10 @@ _n_hint(u3_noun zep,
           if ( 0 == (u3R->pro.nox_d % 65536ULL) ) {
             if ( c3__spot == zep ) {
               u3l_log("spot %d/%d : %d/%d\r\n",
-                      u3h(u3h(u3t(hod))),
-                      u3t(u3h(u3t(hod))),
-                      u3h(u3t(u3t(hod))),
-                      u3t(u3t(u3t(hod))));
+                      u3x_h(u3x_h(u3x_t(hod))),
+                      u3x_t(u3x_h(u3x_t(hod))),
+                      u3x_h(u3x_t(u3x_t(hod))),
+                      u3x_t(u3x_t(u3x_t(hod))));
             }
           }
           low_i = 0;
@@ -62,12 +62,12 @@ _n_hint(u3_noun zep,
     }
 
     case c3__live: {
-      if ( c3y == u3ud(hod) ) {
+      if ( c3y == u3a_is_atom(hod) ) {
         u3t_off(noc_o);
         u3t_heck(hod);
         u3t_on(noc_o);
       } else {
-        u3z(hod);
+        u3a_lose(hod);
       }
       return _n_nock_on(bus, nex);
     }
@@ -85,9 +85,9 @@ _n_hint(u3_noun zep,
       u3_noun pro = _n_nock_on(bus, nex);
 
       if ( c3y == u3r_sing(pro, hod) ) {
-        u3z(pro); return hod;
+        u3a_lose(pro); return hod;
       } else {
-        u3z(hod); return pro;
+        u3a_lose(hod); return pro;
       }
     }
 
@@ -95,14 +95,14 @@ _n_hint(u3_noun zep,
       u3_noun pro = _n_nock_on(bus, nex);
 
       u3t_off(noc_o);
-      u3j_mine(hod, u3k(pro));
+      u3j_mine(hod, u3a_gain(pro));
       u3t_on(noc_o);
 
       return pro;
     }
 
     case c3__memo: {
-      u3z(hod);
+      u3a_lose(hod);
 #if 0
       return _n_nock_on(bus, nex);
 #else
@@ -110,16 +110,16 @@ _n_hint(u3_noun zep,
         u3_noun pro = u3z_find_2(144 + c3__nock, bus, nex);
 
         if ( pro != u3_none ) {
-          u3z(bus); u3z(nex);
+          u3a_lose(bus); u3a_lose(nex);
           return pro;
         }
-        pro = _n_nock_on(u3k(bus), u3k(nex));
+        pro = _n_nock_on(u3a_gain(bus), u3a_gain(nex));
 
         if ( &(u3H->rod_u) != u3R ) {
           u3z_save_2(144 + c3__nock, bus, nex, pro);
         }
 
-        u3z(bus); u3z(nex);
+        u3a_lose(bus); u3a_lose(nex);
 
         return pro;
       }
@@ -127,7 +127,7 @@ _n_hint(u3_noun zep,
     }
 
     case c3__sole: {
-      u3z(hod);
+      u3a_lose(hod);
       {
         u3_noun pro = _n_nock_on(bus, nex);
 
@@ -146,18 +146,18 @@ _n_nock_on(u3_noun bus, u3_noun fol)
   u3_noun hib, gal;
 
   while ( 1 ) {
-    hib = u3h(fol);
-    gal = u3t(fol);
+    hib = u3x_h(fol);
+    gal = u3x_t(fol);
 
 #ifdef U3_CPU_DEBUG
     u3R->pro.nox_d += 1;
 #endif
 
-    if ( c3y == u3r_du(hib) ) {
+    if ( c3y == u3a_is_cell(hib) ) {
       u3_noun poz, riv;
 
-      poz = _n_nock_on(u3k(bus), u3k(hib));
-      riv = _n_nock_on(bus, u3k(gal));
+      poz = _n_nock_on(u3a_gain(bus), u3a_gain(hib));
+      riv = _n_nock_on(bus, u3a_gain(gal));
 
       u3a_lose(fol);
       return u3i_cell(poz, riv);
@@ -166,11 +166,11 @@ _n_nock_on(u3_noun bus, u3_noun fol)
       default: return u3m_bail(c3__exit);
 
       case 0: {
-        if ( c3n == u3r_ud(gal) ) {
+        if ( c3n == u3a_is_atom(gal) ) {
           return u3m_bail(c3__exit);
         }
         else {
-          u3_noun pro = u3k(u3at(gal, bus));
+          u3_noun pro = u3a_gain(u3x_at(gal, bus));
 
           u3a_lose(bus); u3a_lose(fol);
           return pro;
@@ -179,7 +179,7 @@ _n_nock_on(u3_noun bus, u3_noun fol)
       c3_assert(!"not reached");
 
       case 1: {
-        u3_noun pro = u3k(gal);
+        u3_noun pro = u3a_gain(gal);
 
         u3a_lose(bus); u3a_lose(fol);
         return pro;
@@ -187,8 +187,8 @@ _n_nock_on(u3_noun bus, u3_noun fol)
       c3_assert(!"not reached");
 
       case 2: {
-        u3_noun nex = _n_nock_on(u3k(bus), u3k(u3t(gal)));
-        u3_noun seb = _n_nock_on(bus, u3k(u3h(gal)));
+        u3_noun nex = _n_nock_on(u3a_gain(bus), u3a_gain(u3x_t(gal)));
+        u3_noun seb = _n_nock_on(bus, u3a_gain(u3x_h(gal)));
 
         u3a_lose(fol);
         bus = seb;
@@ -200,8 +200,8 @@ _n_nock_on(u3_noun bus, u3_noun fol)
       case 3: {
         u3_noun gof, pro;
 
-        gof = _n_nock_on(bus, u3k(gal));
-        pro = u3r_du(gof);
+        gof = _n_nock_on(bus, u3a_gain(gal));
+        pro = u3a_is_cell(gof);
 
         u3a_lose(gof); u3a_lose(fol);
         return pro;
@@ -211,7 +211,7 @@ _n_nock_on(u3_noun bus, u3_noun fol)
       case 4: {
         u3_noun gof, pro;
 
-        gof = _n_nock_on(bus, u3k(gal));
+        gof = _n_nock_on(bus, u3a_gain(gal));
         pro = u3i_vint(gof);
 
         u3a_lose(fol);
@@ -220,8 +220,8 @@ _n_nock_on(u3_noun bus, u3_noun fol)
       c3_assert(!"not reached");
 
       case 5: {
-        u3_noun wim = _n_nock_on(bus, u3k(gal));
-        u3_noun pro = u3r_sing(u3h(wim), u3t(wim));
+        u3_noun wim = _n_nock_on(bus, u3a_gain(gal));
+        u3_noun pro = u3r_sing(u3x_h(wim), u3x_t(wim));
 
         u3a_lose(wim); u3a_lose(fol);
         return pro;
@@ -233,13 +233,13 @@ _n_nock_on(u3_noun bus, u3_noun fol)
 
         u3x_trel(gal, &b_gal, &c_gal, &d_gal);
         {
-          u3_noun tys = _n_nock_on(u3k(bus), u3k(b_gal));
+          u3_noun tys = _n_nock_on(u3a_gain(bus), u3a_gain(b_gal));
           u3_noun nex;
 
           if ( 0 == tys ) {
-            nex = u3k(c_gal);
+            nex = u3a_gain(c_gal);
           } else if ( 1 == tys ) {
-            nex = u3k(d_gal);
+            nex = u3a_gain(d_gal);
           } else return u3m_bail(c3__exit);
 
           u3a_lose(fol);
@@ -254,8 +254,8 @@ _n_nock_on(u3_noun bus, u3_noun fol)
 
         u3x_cell(gal, &b_gal, &c_gal);
         {
-          u3_noun bod = _n_nock_on(bus, u3k(b_gal));
-          u3_noun nex = u3k(c_gal);
+          u3_noun bod = _n_nock_on(bus, u3a_gain(b_gal));
+          u3_noun nex = u3a_gain(c_gal);
 
           u3a_lose(fol);
           bus = bod;
@@ -270,9 +270,9 @@ _n_nock_on(u3_noun bus, u3_noun fol)
 
         u3x_cell(gal, &b_gal, &c_gal);
         {
-          u3_noun heb = _n_nock_on(u3k(bus), u3k(b_gal));
-          u3_noun bod = u3nc(heb, bus);
-          u3_noun nex = u3k(c_gal);
+          u3_noun heb = _n_nock_on(u3a_gain(bus), u3a_gain(b_gal));
+          u3_noun bod = u3i_cell(heb, bus);
+          u3_noun nex = u3a_gain(c_gal);
 
           u3a_lose(fol);
           bus = bod;
@@ -287,7 +287,7 @@ _n_nock_on(u3_noun bus, u3_noun fol)
 
         u3x_cell(gal, &b_gal, &c_gal);
         {
-          u3_noun seb = _n_nock_on(bus, u3k(c_gal));
+          u3_noun seb = _n_nock_on(bus, u3a_gain(c_gal));
           u3_noun pro;
 
           u3t_off(noc_o);
@@ -299,11 +299,11 @@ _n_nock_on(u3_noun bus, u3_noun fol)
             return pro;
           }
           else {
-            if ( c3n == u3r_ud(b_gal) ) {
+            if ( c3n == u3a_is_atom(b_gal) ) {
               return u3m_bail(c3__exit);
             }
             else {
-              u3_noun nex = u3k(u3at(b_gal, seb));
+              u3_noun nex = u3a_gain(u3x_at(b_gal, seb));
 
               u3a_lose(fol);
               bus = seb;
@@ -322,22 +322,22 @@ _n_nock_on(u3_noun bus, u3_noun fol)
         {
           u3_noun zep, hod, nex;
 
-          if ( c3y == u3r_du(p_gal) ) {
-            u3_noun b_gal = u3h(p_gal);
-            u3_noun c_gal = u3t(p_gal);
+          if ( c3y == u3a_is_cell(p_gal) ) {
+            u3_noun b_gal = u3x_h(p_gal);
+            u3_noun c_gal = u3x_t(p_gal);
             u3_noun d_gal = q_gal;
 
-            zep = u3k(b_gal);
-            hod = _n_nock_on(u3k(bus), u3k(c_gal));
-            nex = u3k(d_gal);
+            zep = u3a_gain(b_gal);
+            hod = _n_nock_on(u3a_gain(bus), u3a_gain(c_gal));
+            nex = u3a_gain(d_gal);
           }
           else {
             u3_noun b_gal = p_gal;
             u3_noun c_gal = q_gal;
 
-            zep = u3k(b_gal);
+            zep = u3a_gain(b_gal);
             hod = u3_nul;
-            nex = u3k(c_gal);
+            nex = u3a_gain(c_gal);
           }
 
           u3a_lose(fol);
@@ -346,32 +346,32 @@ _n_nock_on(u3_noun bus, u3_noun fol)
       }
 
       case 11: {
-        u3_noun ref = _n_nock_on(u3k(bus), u3k(u3h(gal)));
-        u3_noun gof = _n_nock_on(bus, u3k(u3t(gal)));
+        u3_noun ref = _n_nock_on(u3a_gain(bus), u3a_gain(u3x_h(gal)));
+        u3_noun gof = _n_nock_on(bus, u3a_gain(u3x_t(gal)));
         u3_noun val;
 
         u3t_off(noc_o);
-        val = u3m_soft_esc(u3k(ref), u3k(gof));
+        val = u3m_soft_esc(u3a_gain(ref), u3a_gain(gof));
         u3t_on(noc_o);
 
-        if ( !_(u3du(val)) ) {
-          u3m_bail(u3nt(1, gof, 0));
+        if ( !_(u3a_is_cell(val)) ) {
+          u3m_bail(u3i_trel(1, gof, 0));
         }
-        if ( !_(u3du(u3t(val))) ) {
+        if ( !_(u3a_is_cell(u3x_t(val))) ) {
           //
           //  replace with proper error stack push
           //
-          u3t_push(u3nt(c3__hunk, ref, gof));
+          u3t_push(u3i_trel(c3__hunk, ref, gof));
           return u3m_bail(c3__exit);
         }
         else {
           u3_noun pro;
 
-          u3z(ref);
-          u3z(gof);
-          u3z(fol);
-          pro = u3k(u3t(u3t(val)));
-          u3z(val);
+          u3a_lose(ref);
+          u3a_lose(gof);
+          u3a_lose(fol);
+          pro = u3a_gain(u3x_t(u3x_t(val)));
+          u3a_lose(val);
 
           return pro;
         }
@@ -547,8 +547,8 @@ _n_melt(u3_noun ops, c3_w* byc_w, c3_w* cal_w,
   u3_noun op, sip = u3_nul;
 
   while ( u3_nul != ops ) {
-    op  = u3h(ops);
-    if ( c3n == u3du(op) ) {
+    op  = u3x_h(ops);
+    if ( c3n == u3a_is_cell(op) ) {
       switch ( op ) {
         default:
           siz_y[i_w] = 1;
@@ -570,7 +570,7 @@ _n_melt(u3_noun ops, c3_w* byc_w, c3_w* cal_w,
       }
     }
     else {
-      cod_y = u3h(op);
+      cod_y = u3x_h(op);
 
       switch ( cod_y ) {
         default:
@@ -579,24 +579,24 @@ _n_melt(u3_noun ops, c3_w* byc_w, c3_w* cal_w,
 
         case SBIP: case SBIN: {
           c3_l tot_l = 0,
-               sip_l = u3t(op);
+               sip_l = u3x_t(op);
           c3_w j_w, k_w = i_w;
           for ( j_w = 0; j_w < sip_l; ++j_w ) {
             tot_l += siz_y[++k_w];
           }
-          sip = u3nc(tot_l, sip);
+          sip = u3i_cell(tot_l, sip);
           siz_y[i_w] = tot_l <= 0xFF ? 2 : tot_l <= 0xFFFF ? 3 : 5;
           break;
         }
 
         case SKIB: case SLIB: {
           c3_l tot_l = 0,
-               sip_l = u3h(u3t(op));
+               sip_l = u3x_h(u3x_t(op));
           c3_w j_w, k_w = i_w;
           for ( j_w = 0; j_w < sip_l; ++j_w ) {
             tot_l += siz_y[++k_w];
           }
-          sip = u3nc(tot_l, sip);
+          sip = u3i_cell(tot_l, sip);
           a_w = (*mem_w)++;
           if ( a_w <= 0xFF ) {
             siz_y[i_w] = 2;
@@ -653,7 +653,7 @@ _n_melt(u3_noun ops, c3_w* byc_w, c3_w* cal_w,
     }
 
     *(byc_w) += siz_y[i_w--];
-    ops = u3t(ops);
+    ops = u3x_t(ops);
   }
 
   u3a_free(siz_y);
@@ -767,11 +767,11 @@ _n_prog_asm(u3_noun ops, u3n_prog* pog_u, u3_noun sip)
   buf_y[i_w] = HALT;
 
   while ( i_w-- > 0 ) {
-    u3_noun op = u3h(ops);
-    if ( c3y == u3ud(op) ) {
+    u3_noun op = u3x_h(ops);
+    if ( c3y == u3a_is_atom(op) ) {
       switch ( op ) {
         default:
-          buf_y[i_w] = (c3_y) u3h(ops);
+          buf_y[i_w] = (c3_y) u3x_h(ops);
           break;
 
         /* registration site index args */
@@ -786,7 +786,7 @@ _n_prog_asm(u3_noun ops, u3n_prog* pog_u, u3_noun sip)
       }
     }
     else {
-      u3_noun cod = u3h(op);
+      u3_noun cod = u3x_h(op);
       switch ( cod ) {
         default:
           c3_assert(0);
@@ -795,23 +795,23 @@ _n_prog_asm(u3_noun ops, u3n_prog* pog_u, u3_noun sip)
         /* memo index args */
         case SKIB: case SLIB: {
           u3n_memo* mem_u;
-          c3_l sip_l  = u3h(sip);
+          c3_l sip_l  = u3x_h(sip);
           u3_noun tmp = sip;
-          sip = u3k(u3t(sip));
-          u3z(tmp);
+          sip = u3a_gain(u3x_t(sip));
+          u3a_lose(tmp);
           _n_prog_asm_inx(buf_y, &i_w, mem_s, cod);
           mem_u        = &(pog_u->mem_u.sot_u[mem_s++]);
           mem_u->sip_l = sip_l;
-          mem_u->key   = u3k(u3t(u3t(op)));
+          mem_u->key   = u3a_gain(u3x_t(u3x_t(op)));
           break;
         }
 
         /* skips */
         case SBIP: case SBIN: {
-          c3_l sip_l  = u3h(sip);
+          c3_l sip_l  = u3x_h(sip);
           u3_noun tmp = sip;
-          sip = u3k(u3t(sip));
-          u3z(tmp);
+          sip = u3a_gain(u3x_t(sip));
+          u3a_lose(tmp);
           if ( sip_l <= 0xFF ) {
             buf_y[i_w--] = (c3_y) sip_l;
             buf_y[i_w]   = (c3_y) cod;
@@ -836,7 +836,7 @@ _n_prog_asm(u3_noun ops, u3n_prog* pog_u, u3_noun sip)
         case LITB: case LILB:
         case MUTB: case KUTB:
         case SAMB:
-          buf_y[i_w--] = (c3_y) u3t(op);
+          buf_y[i_w--] = (c3_y) u3x_t(op);
           buf_y[i_w]   = (c3_y) cod;
           break;
 
@@ -845,7 +845,7 @@ _n_prog_asm(u3_noun ops, u3n_prog* pog_u, u3_noun sip)
         case LILS: case LITS:
         case MUTS: case KUTS:
         case SAMS: case SIPS: case SINS: {
-          c3_s off_s   = u3t(op);
+          c3_s off_s   = u3x_t(op);
           buf_y[i_w--] = (c3_y) (off_s >> 8);
           buf_y[i_w--] = (c3_y) off_s;
           buf_y[i_w]   = (c3_y) cod;
@@ -854,7 +854,7 @@ _n_prog_asm(u3_noun ops, u3n_prog* pog_u, u3_noun sip)
 
         /* 31-bit direct args */
         case SWIP: case SWIN: {
-          c3_w off_l   = u3t(op);
+          c3_w off_l   = u3x_t(op);
           buf_y[i_w--] = (c3_y) (off_l >> 24);
           buf_y[i_w--] = (c3_y) (off_l >> 16);
           buf_y[i_w--] = (c3_y) (off_l >> 8);
@@ -870,14 +870,14 @@ _n_prog_asm(u3_noun ops, u3n_prog* pog_u, u3_noun sip)
         case KITB: case MITB:
         case HILB: case HINB:
           _n_prog_asm_inx(buf_y, &i_w, lit_s, cod);
-          pog_u->lit_u.non[lit_s++] = u3k(u3t(op));
+          pog_u->lit_u.non[lit_s++] = u3a_gain(u3x_t(op));
           break;
 
         /* call site index args */
         case TICB: case KICB: {
           _n_prog_asm_inx(buf_y, &i_w, cal_s, cod);
           u3j_site* sit_u = &(pog_u->cal_u.sit_u[cal_s++]);
-          sit_u->axe   = u3k(u3t(op));
+          sit_u->axe   = u3a_gain(u3x_t(op));
           sit_u->pog_p = 0;
           sit_u->bat   = u3_none;
           sit_u->bas   = u3_none;
@@ -892,9 +892,9 @@ _n_prog_asm(u3_noun ops, u3n_prog* pog_u, u3_noun sip)
         }
       }
     }
-    ops = u3t(ops);
+    ops = u3x_t(ops);
   }
-  u3z(top);
+  u3a_lose(top);
   // this assert will fail if we overflow a c3_w worth of instructions
   c3_assert(u3_nul == ops);
   // this is just a sanity check
@@ -998,7 +998,7 @@ _n_apen(u3_noun* dst, u3_noun src)
 static inline void
 _n_emit(u3_noun *ops, u3_noun op)
 {
-  *ops = u3nc(op, *ops);
+  *ops = u3i_cell(op, *ops);
 }
 
 static c3_w _n_comp(u3_noun*, u3_noun, c3_o, c3_o);
@@ -1012,7 +1012,7 @@ _n_bint(u3_noun* ops, u3_noun hif, u3_noun nef, c3_o los_o, c3_o tel_o)
 {
   c3_w tot_w = 0;
 
-  if ( c3n == u3du(hif) ) {
+  if ( c3n == u3a_is_cell(hif) ) {
     //  compile whitelisted atomic hints to dispatch protocol;
     //  compute and drop all others;
     //
@@ -1027,13 +1027,13 @@ _n_bint(u3_noun* ops, u3_noun hif, u3_noun nef, c3_o los_o, c3_o tel_o)
         // add appropriate hind opcode
         ++nef_w; _n_emit(&fen, ( c3y == los_o ) ? HILL : HILK);
         // skip over the cleanup opcode
-        ++nef_w; _n_emit(&fen, u3nc(SBIP, 1));
+        ++nef_w; _n_emit(&fen, u3i_cell(SBIP, 1));
 
         //  call hilt_fore
         //  HILB overflows to HILS
-        ++tot_w; _n_emit(ops, u3nc(HILB, u3nc(u3k(hif), u3k(nef))));
+        ++tot_w; _n_emit(ops, u3i_cell(HILB, u3i_cell(u3a_gain(hif), u3a_gain(nef))));
         // if fore return c3n, skip fen
-        ++tot_w; _n_emit(ops, u3nc(SBIN, nef_w));
+        ++tot_w; _n_emit(ops, u3i_cell(SBIN, nef_w));
         tot_w += nef_w; _n_apen(ops, fen);
         // post-skip cleanup opcode
         ++tot_w; _n_emit(ops, ( c3y == los_o ) ? TOSS : SWAP);
@@ -1062,15 +1062,15 @@ _n_bint(u3_noun* ops, u3_noun hif, u3_noun nef, c3_o los_o, c3_o tel_o)
             // add appropriate hind opcode
             ++nef_w; _n_emit(&fen, ( c3y == los_o ) ? HINL : HINK);
             // skip over the cleanup opcode
-            ++nef_w; _n_emit(&fen, u3nc(SBIP, 1));
+            ++nef_w; _n_emit(&fen, u3i_cell(SBIP, 1));
 
             // push clue
             tot_w += _n_comp(ops, hod, c3n, c3n);
             //  call hint_fore
             //  HINB overflows to HINS
-            ++tot_w; _n_emit(ops, u3nc(HINB, u3nc(u3k(zep), u3k(nef))));
+            ++tot_w; _n_emit(ops, u3i_cell(HINB, u3i_cell(u3a_gain(zep), u3a_gain(nef))));
             // if fore return c3n, skip fen
-            ++tot_w; _n_emit(ops, u3nc(SBIN, nef_w));
+            ++tot_w; _n_emit(ops, u3i_cell(SBIN, nef_w));
             tot_w += nef_w; _n_apen(ops, fen);
             // post-skip cleanup opcode
             ++tot_w; _n_emit(ops, ( c3y == los_o ) ? TOSS : SWAP);
@@ -1083,7 +1083,7 @@ _n_bint(u3_noun* ops, u3_noun hif, u3_noun nef, c3_o los_o, c3_o tel_o)
       case c3__mean:
       case c3__spot:
         tot_w += _n_comp(ops, hod, c3n, c3n);
-        ++tot_w; _n_emit(ops, u3nc(BUSH, zep)); // overflows to SUSH
+        ++tot_w; _n_emit(ops, u3i_cell(BUSH, zep)); // overflows to SUSH
         tot_w += _n_comp(ops, nef, los_o, c3n);
         ++tot_w; _n_emit(ops, DROP);
         break;
@@ -1124,7 +1124,7 @@ _n_bint(u3_noun* ops, u3_noun hif, u3_noun nef, c3_o los_o, c3_o tel_o)
         ++mem_w; _n_emit(&mem, SAVE);
 
         op_y   = (c3y == los_o) ? SLIB : SKIB; // overflows to SLIS / SKIS
-        ++tot_w; _n_emit(ops, u3nt(op_y, mem_w, u3k(nef)));
+        ++tot_w; _n_emit(ops, u3i_trel(op_y, mem_w, u3a_gain(nef)));
         tot_w += mem_w; _n_apen(ops, mem);
         break;
       }
@@ -1141,12 +1141,12 @@ _n_formulaic(u3_noun fol)
   if ( c3n == u3r_cell(fol, &op, &ar) ) {
     return 0;
   }
-  if ( c3y == u3du(op) ) {
+  if ( c3y == u3a_is_cell(op) ) {
     return _n_formulaic(op) && _n_formulaic(ar);
   }
   else switch ( op ) {
     case 0:
-      return ( c3y == u3ud(ar) );
+      return ( c3y == u3a_is_atom(ar) );
     case 1:
       return 1;
     case 3:
@@ -1165,19 +1165,19 @@ _n_formulaic(u3_noun fol)
         (_n_formulaic(b) || _n_formulaic(c));
     case 9:
       return (c3y == u3r_cell(ar, &a, &b))
-        && (c3y == u3ud(a))
+        && (c3y == u3a_is_atom(a))
         && _n_formulaic(b);
     case 10:
       if ( c3n == u3r_cell(ar, &a, &b) ) {
         return 0;
       }
-      if ( c3n == u3du(a) ) {
+      if ( c3n == u3a_is_cell(a) ) {
         return 0;
       }
-      if ( c3n == u3ud(u3h(a)) ) {
+      if ( c3n == u3a_is_atom(u3x_h(a)) ) {
         return 0;
       }
-      return _n_formulaic(u3t(a)) && _n_formulaic(b);
+      return _n_formulaic(u3x_t(a)) && _n_formulaic(b);
     case 11:
       if ( c3n == u3r_cell(ar, &a, &b) ) {
         return 0;
@@ -1185,11 +1185,11 @@ _n_formulaic(u3_noun fol)
       if ( !_n_formulaic(b) ) {
         return 0;
       }
-      if ( c3y == u3ud(a) ) {
+      if ( c3y == u3a_is_atom(a) ) {
         return 1;
       }
       else {
-        return ( c3y == u3ud(u3h(a)) ) && _n_formulaic(u3t(a));
+        return ( c3y == u3a_is_atom(u3x_h(a)) ) && _n_formulaic(u3x_t(a));
       }
     default:
       return 0;
@@ -1211,7 +1211,7 @@ _n_comp(u3_noun* ops, u3_noun fol, c3_o los_o, c3_o tel_o)
   c3_w tot_w = 0;
   u3_noun cod, arg, hed, tel;
   u3x_cell(fol, &cod, &arg);
-  if ( c3y == u3du(cod) ) {
+  if ( c3y == u3a_is_cell(cod) ) {
     tot_w += _n_comp(ops, cod, c3n, c3n);
     ++tot_w; _n_emit(ops, SWAP);
     tot_w += _n_comp(ops, arg, c3n, c3n);
@@ -1219,7 +1219,7 @@ _n_comp(u3_noun* ops, u3_noun fol, c3_o los_o, c3_o tel_o)
   }
   else switch ( cod ) {
     case 0:
-      if ( c3n == u3ud(arg) ) {
+      if ( c3n == u3a_is_atom(arg) ) {
         u3m_bail(c3__exit);
         return 0;
       }
@@ -1242,7 +1242,7 @@ _n_comp(u3_noun* ops, u3_noun fol, c3_o los_o, c3_o tel_o)
           op_y = (c3y == los_o)
                ? (arg <= 0xFF ? FABL : arg <= 0xFFFF ? FASL : FIBL)  // overflows to FISL
                : (arg <= 0xFF ? FABK : arg <= 0xFFFF ? FASK : FIBK); // overflows to FISK
-          ++tot_w; _n_emit(ops, u3nc(op_y, u3k(arg)));
+          ++tot_w; _n_emit(ops, u3i_cell(op_y, u3a_gain(arg)));
           break;
       }
       break;
@@ -1259,7 +1259,7 @@ _n_comp(u3_noun* ops, u3_noun fol, c3_o los_o, c3_o tel_o)
           op_y = (c3y == los_o)
                ? (arg <= 0xFF ? LILB : arg <= 0xFFFF ? LILS : LIBL)  // overflows to LISL
                : (arg <= 0xFF ? LITB : arg <= 0xFFFF ? LITS : LIBK); // overflows to LISK
-          ++tot_w; _n_emit(ops, u3nc(op_y, u3k(arg)));
+          ++tot_w; _n_emit(ops, u3i_cell(op_y, u3a_gain(arg)));
           break;
       }
       break;
@@ -1289,22 +1289,22 @@ _n_comp(u3_noun* ops, u3_noun fol, c3_o los_o, c3_o tel_o)
     case 5: {
       u3x_cell(arg, &hed, &tel);
 
-      if ( c3n == u3du(hed) ) {
+      if ( c3n == u3a_is_cell(hed) ) {
         u3m_bail(c3__exit);
         return 0;
       }
       else {
         c3_t hec_t, tec_t;
-        hec_t = (1 == u3h(hed));
-        if ( c3n == u3du(tel) ) {
+        hec_t = (1 == u3x_h(hed));
+        if ( c3n == u3a_is_cell(tel) ) {
           u3m_bail(c3__exit);
           break;
         }
         else {
-          tec_t = (1 == u3h(tel));
+          tec_t = (1 == u3x_h(tel));
         }
         if ( hec_t && tec_t ) {
-          if ( c3y == u3r_sing(u3t(hed), u3t(tel)) ) {
+          if ( c3y == u3r_sing(u3x_t(hed), u3x_t(tel)) ) {
             ++tot_w; _n_emit(ops, (c3y == los_o) ? LIL0 : LIT0);
           }
           else {
@@ -1319,7 +1319,7 @@ _n_comp(u3_noun* ops, u3_noun fol, c3_o los_o, c3_o tel_o)
         }
         else {
           tot_w += _n_comp(ops, (hec_t ? tel : hed), los_o, c3n);
-          u3_noun lit = u3t(hec_t ? hed : tel);
+          u3_noun lit = u3x_t(hec_t ? hed : tel);
           switch ( lit ) {
             case 0:
               ++tot_w; _n_emit(ops, SAM0);
@@ -1330,7 +1330,7 @@ _n_comp(u3_noun* ops, u3_noun fol, c3_o los_o, c3_o tel_o)
             default:
               // overflows to SANS
               op_y = lit <= 0xFF ? SAMB : lit <= 0xFFFF ? SAMS : SANB;
-              ++tot_w; _n_emit(ops, u3nc(op_y, u3k(lit)));
+              ++tot_w; _n_emit(ops, u3i_cell(op_y, u3a_gain(lit)));
           }
         }
       }
@@ -1369,8 +1369,8 @@ _n_comp(u3_noun* ops, u3_noun fol, c3_o los_o, c3_o tel_o)
       }
 
       // SBIP and SBIN get sized during assembly
-      ++yep_w; _n_emit(&yep, u3nc(SBIP, nop_w));
-      ++tot_w; _n_emit(ops, u3nc(SBIN, yep_w));
+      ++yep_w; _n_emit(&yep, u3i_cell(SBIP, nop_w));
+      ++tot_w; _n_emit(ops, u3i_cell(SBIN, yep_w));
       tot_w += yep_w; _n_apen(ops, yep);
       tot_w += nop_w; _n_apen(ops, nop);
       break;
@@ -1392,14 +1392,14 @@ _n_comp(u3_noun* ops, u3_noun fol, c3_o los_o, c3_o tel_o)
     case 9:
       u3x_cell(arg, &hed, &tel);
       if ( (1 == hed) || (3 == u3qc_cap(hed)) ) {
-        u3_noun mac = u3nq(7, u3k(tel), 2, u3nt(u3nc(0, 1), 0, u3k(hed)));
+        u3_noun mac = u3i_qual(7, u3a_gain(tel), 2, u3i_trel(u3i_cell(0, 1), 0, u3a_gain(hed)));
         tot_w += _n_comp(ops, mac, los_o, tel_o);
-        u3z(mac);
+        u3a_lose(mac);
       }
       else {
         tot_w += _n_comp(ops, tel, (c3y == tel_o ? c3y : los_o), c3n);
         op_y = (c3y == tel_o) ? TICB : KICB; // overflows to TICS/KICS
-        ++tot_w; _n_emit(ops, u3nc(op_y, u3k(hed)));
+        ++tot_w; _n_emit(ops, u3i_cell(op_y, u3a_gain(hed)));
       }
       break;
 
@@ -1429,7 +1429,7 @@ _n_comp(u3_noun* ops, u3_noun fol, c3_o los_o, c3_o tel_o)
           op_y = (c3y == los_o)
                ? (axe <= 0xFF) ? MUTB : (axe <= 0xFFFF) ? MUTS : MITB  // overflows to MITS
                : (axe <= 0xFF) ? KUTB : (axe <= 0xFFFF) ? KUTS : KITB; // overflows to KITS
-          _n_emit(ops, u3nc(op_y, u3k(axe)));
+          _n_emit(ops, u3i_cell(op_y, u3a_gain(axe)));
           break;
       }
       break;
@@ -1528,7 +1528,7 @@ _n_pep(c3_ys mov, c3_ys off)
 static inline void
 _n_toss(c3_ys mov, c3_ys off)
 {
-  u3z(_n_pep(mov, off));
+  u3a_lose(_n_pep(mov, off));
 }
 
 /* _n_resh(): read a c3_s from the bytecode stream
@@ -1633,10 +1633,10 @@ _n_bite(u3_noun fol) {
 static u3n_prog*
 _n_find(u3_noun pre, u3_noun fol)
 {
-  u3_noun key = u3nc(u3k(pre), u3k(fol));
+  u3_noun key = u3i_cell(u3a_gain(pre), u3a_gain(fol));
   u3_weak pog = u3h_git(u3R->byc.har_p, key);
   if ( u3_none != pog ) {
-    u3z(key);
+    u3a_lose(key);
     return u3to(u3n_prog, pog);
   }
   else if ( u3R != &u3H->rod_u ) {
@@ -1658,7 +1658,7 @@ _n_find(u3_noun pre, u3_noun fol)
           sit_u->fon_o = c3n;
         }
         u3h_put(u3R->byc.har_p, key, u3a_outa(old));
-        u3z(key);
+        u3a_lose(key);
         return old;
       }
     }
@@ -1667,7 +1667,7 @@ _n_find(u3_noun pre, u3_noun fol)
   {
     u3n_prog* gop = _n_bite(fol);
     u3h_put(u3R->byc.har_p, key, u3a_outa(gop));
-    u3z(key);
+    u3a_lose(key);
     return gop;
   }
 }
@@ -1696,15 +1696,15 @@ u3n_find(u3_noun key, u3_noun fol)
 static c3_o
 _n_hilt_fore(u3_noun hin, u3_noun bus, u3_noun* out)
 {
-  if ( c3__bout == u3h(hin) ) {
+  if ( c3__bout == u3x_h(hin) ) {
     u3_atom now = u3i_chub(u3t_trace_time());
-    *out = u3i_cell(u3h(hin), now);
+    *out = u3i_cell(u3x_h(hin), now);
   }
   else {
     *out = u3_nul;
   }
 
-  u3z(hin);
+  u3a_lose(hin);
   return c3y;
 }
 
@@ -1717,17 +1717,17 @@ _n_hilt_hind(u3_noun tok, u3_noun pro)
 {
   u3_noun p_tok, q_tok;
   if ( (c3y == u3r_cell(tok, &p_tok, &q_tok)) && (c3__bout == p_tok) ) {
-    u3_atom delta = u3ka_sub(u3i_chub(u3t_trace_time()), u3k(q_tok));
+    u3_atom delta = u3ka_sub(u3i_chub(u3t_trace_time()), u3a_gain(q_tok));
     c3_c    str_c[64];
     snprintf(str_c, 63, "took %" PRIu64 "\xc2\xb5s", u3r_chub(0, delta) );
-    u3t_slog(u3nc(0, u3i_string(str_c)));
-    u3z(delta);
+    u3t_slog(u3i_cell(0, u3i_string(str_c)));
+    u3a_lose(delta);
   }
   else {
     c3_assert( u3_nul == tok );
   }
 
-  u3z(tok);
+  u3a_lose(tok);
 }
 
 /* _n_hint_fore(): arbitrary dynamic hint, before formula evaluation
@@ -1742,16 +1742,16 @@ _n_hilt_hind(u3_noun tok, u3_noun pro)
 static c3_o
 _n_hint_fore(u3_cell hin, u3_noun bus, u3_noun* clu)
 {
-  if ( c3__bout == u3h(hin) ) {
+  if ( c3__bout == u3x_h(hin) ) {
     u3_atom now = u3i_chub(u3t_trace_time());
-    *clu = u3i_trel(u3h(hin), *clu, now);
+    *clu = u3i_trel(u3x_h(hin), *clu, now);
   }
   else {
-    u3z(*clu);
+    u3a_lose(*clu);
     *clu = u3_nul;
   }
 
-  u3z(hin);
+  u3a_lose(hin);
   return c3y;
 }
 
@@ -1767,7 +1767,7 @@ _n_hint_hind(u3_noun tok, u3_noun pro)
       && (c3__bout == p_tok) )
   {
     // get the microseconds elapsed
-    u3_atom delta = u3ka_sub(u3i_chub(u3t_trace_time()), u3k(r_tok));
+    u3_atom delta = u3ka_sub(u3i_chub(u3t_trace_time()), u3a_gain(r_tok));
 
     // unpack q_tok to get the priority integer and the tank
     // p_q_tok is the priority, q_q_tok is the tank we will work with
@@ -1783,23 +1783,23 @@ _n_hint_hind(u3_noun tok, u3_noun pro)
     // prepend the priority to form a cell of the same shape q_tok
     // send this to ut3_slog so that it can be logged out
     u3t_slog(
-      u3nc(
-        u3k(p_q_tok),
-        u3nt(
+      u3i_cell(
+        u3a_gain(p_q_tok),
+        u3i_trel(
           c3__rose,
-          u3nt(u3nt(':', ' ', u3_nul), u3_nul, u3_nul),
-          u3nt(u3k(q_q_tok), u3i_string(str_c), u3_nul)
+          u3i_trel(u3i_trel(':', ' ', u3_nul), u3_nul, u3_nul),
+          u3i_trel(u3a_gain(q_q_tok), u3i_string(str_c), u3_nul)
         )
       )
     );
 
-    u3z(delta);
+    u3a_lose(delta);
   }
   else {
     c3_assert( u3_nul == tok );
   }
 
-  u3z(tok);
+  u3a_lose(tok);
 }
 
 /* _n_kick(): stop tracing noc and kick a u3j_site.
@@ -1819,7 +1819,7 @@ _n_kick(u3_noun cor, u3j_site* sit_u)
 static inline u3_noun
 _n_kale(u3_noun a)
 {
-  if ( c3n == u3du(a) ) {
+  if ( c3n == u3a_is_cell(a) ) {
     u3m_bail(c3__exit);
   }
   return a;
@@ -1924,7 +1924,7 @@ _n_burn(u3n_prog* pog_u, u3_noun bus, c3_ys mov, c3_ys off)
 
     do_copy:
       top = _n_peek(off);
-      _n_push(mov, off, u3k(*top));
+      _n_push(mov, off, u3a_gain(*top));
       BURN();
 
     do_swap:
@@ -1938,50 +1938,50 @@ _n_burn(u3n_prog* pog_u, u3_noun bus, c3_ys mov, c3_ys off)
     do_auto:                         // [tel bus hed]
       x    = _n_pep(mov, off);       // [bus hed]
       top  = _n_swap(mov, off);      // [hed bus]
-      *top = u3nc(*top, x);          // [pro bus]
+      *top = u3i_cell(*top, x);          // [pro bus]
       BURN();
 
     do_ault:                         // [tel bus hed]
       x    = _n_pep(mov, off);       // [bus hed]
       _n_toss(mov, off);             // [hed]
       top  = _n_peek(off);
-      *top = u3nc(*top, x);          // [pro]
+      *top = u3i_cell(*top, x);          // [pro]
       BURN();
 
     do_snoc: // [hed tel]
       x    = _n_pep(mov, off);
       top  = _n_peek(off);
-      _n_push(mov, off, u3nc(x, u3k(*top)));
+      _n_push(mov, off, u3i_cell(x, u3a_gain(*top)));
       BURN();
 
     do_snol:
       x    = _n_pep(mov, off);
       top  = _n_peek(off);
-      *top = u3nc(x, *top);
+      *top = u3i_cell(x, *top);
       BURN();
 
     do_head:
       top  = _n_peek(off);
-      _n_push(mov, off, u3k(u3h(_n_kale(*top))));
+      _n_push(mov, off, u3a_gain(u3x_h(_n_kale(*top))));
       BURN();
 
     do_held:
       top  = _n_peek(off);
       o    = _n_kale(*top);
-      *top = u3k(u3h(o));
-      u3z(o);
+      *top = u3a_gain(u3x_h(o));
+      u3a_lose(o);
       BURN();
 
     do_tail:
       top = _n_peek(off);
-      _n_push(mov, off, u3k(u3t(_n_kale(*top))));
+      _n_push(mov, off, u3a_gain(u3x_t(_n_kale(*top))));
       BURN();
 
     do_tall:
       top  = _n_peek(off);
       o    = _n_kale(*top);
-      *top = u3k(u3t(o));
-      u3z(o);
+      *top = u3a_gain(u3x_t(o));
+      u3a_lose(o);
       BURN();
 
     do_fisk:
@@ -2000,7 +2000,7 @@ _n_burn(u3n_prog* pog_u, u3_noun bus, c3_ys mov, c3_ys off)
       x = pog[ip_w++];
     frag_in:
       top = _n_peek(off);
-      _n_push(mov, off, u3k(u3x_at(x, *top)));
+      _n_push(mov, off, u3a_gain(u3x_at(x, *top)));
       BURN();
 
     do_fisl:
@@ -2020,8 +2020,8 @@ _n_burn(u3n_prog* pog_u, u3_noun bus, c3_ys mov, c3_ys off)
     flag_in:
       top  = _n_peek(off);
       o    = *top;
-      *top = u3k(u3x_at(x, o));
-      u3z(o);
+      *top = u3a_gain(u3x_at(x, o));
+      u3a_lose(o);
       BURN();
 
     do_lit0:
@@ -2041,11 +2041,11 @@ _n_burn(u3n_prog* pog_u, u3_noun bus, c3_ys mov, c3_ys off)
       BURN();
 
     do_libk:
-      _n_push(mov, off, u3k(pog_u->lit_u.non[pog[ip_w++]]));
+      _n_push(mov, off, u3a_gain(pog_u->lit_u.non[pog[ip_w++]]));
       BURN();
 
     do_lisk:
-      _n_push(mov, off, u3k(pog_u->lit_u.non[_n_resh(pog, &ip_w)]));
+      _n_push(mov, off, u3a_gain(pog_u->lit_u.non[_n_resh(pog, &ip_w)]));
       BURN();
 
     do_lil1:
@@ -2061,18 +2061,18 @@ _n_burn(u3n_prog* pog_u, u3_noun bus, c3_ys mov, c3_ys off)
       goto lil_in;
 
     do_libl:
-      x = u3k(pog_u->lit_u.non[pog[ip_w++]]);
+      x = u3a_gain(pog_u->lit_u.non[pog[ip_w++]]);
       goto lil_in;
 
     do_lisl:
-      x = u3k(pog_u->lit_u.non[_n_resh(pog, &ip_w)]);
+      x = u3a_gain(pog_u->lit_u.non[_n_resh(pog, &ip_w)]);
       goto lil_in;
 
     do_lil0:
       x = 0;
     lil_in:
       top = _n_peek(off);
-      u3z(*top);
+      u3a_lose(*top);
       *top = x;
       BURN();
 
@@ -2107,14 +2107,14 @@ _n_burn(u3n_prog* pog_u, u3_noun bus, c3_ys mov, c3_ys off)
       fprintf(stderr, "\r\nnock jump: %u\r\n", o);
       _n_print_byc(pog, ip_w);
 #endif
-      u3z(o);
+      u3a_lose(o);
       BURN();
 
     do_deep:
       top  = _n_peek(off);
       o    = *top;
-      *top = u3du(o);
-      u3z(o);
+      *top = u3a_is_cell(o);
+      u3a_lose(o);
       BURN();
 
     do_bump:
@@ -2128,7 +2128,7 @@ _n_burn(u3n_prog* pog_u, u3_noun bus, c3_ys mov, c3_ys off)
         *top = c3y;
       }
       else {
-        u3z(*top);
+        u3a_lose(*top);
         *top = c3n;
       }
       BURN();
@@ -2139,7 +2139,7 @@ _n_burn(u3n_prog* pog_u, u3_noun bus, c3_ys mov, c3_ys off)
         *top = c3y;
       }
       else {
-        u3z(*top);
+        u3a_lose(*top);
         *top = c3n;
       }
       BURN();
@@ -2150,7 +2150,7 @@ _n_burn(u3n_prog* pog_u, u3_noun bus, c3_ys mov, c3_ys off)
         *top = c3y;
       }
       else {
-        u3z(*top);
+        u3a_lose(*top);
         *top = c3n;
       }
       BURN();
@@ -2161,7 +2161,7 @@ _n_burn(u3n_prog* pog_u, u3_noun bus, c3_ys mov, c3_ys off)
         *top = c3y;
       }
       else {
-        u3z(*top);
+        u3a_lose(*top);
         *top = c3n;
       }
       BURN();
@@ -2175,7 +2175,7 @@ _n_burn(u3n_prog* pog_u, u3_noun bus, c3_ys mov, c3_ys off)
       top  = _n_peek(off);
       o    = *top;
       *top = u3r_sing(o, x);
-      u3z(o);
+      u3a_lose(o);
       BURN();
 
     do_same:
@@ -2192,15 +2192,15 @@ _n_burn(u3n_prog* pog_u, u3_noun bus, c3_ys mov, c3_ys off)
       top  = _n_peek(off);
       o    = *top;
       *top = u3r_sing(x, o);
-      u3z(o);
-      u3z(x);
+      u3a_lose(o);
+      u3a_lose(x);
       BURN();
 
     do_samc:
       top  = _n_peek(off);
       o    = *top;
-      *top = u3r_sing(u3h(o), u3t(o));
-      u3z(o);
+      *top = u3r_sing(u3x_h(o), u3x_t(o));
+      u3a_lose(o);
       BURN();
 
     do_sbip:
@@ -2319,23 +2319,23 @@ _n_burn(u3n_prog* pog_u, u3_noun bus, c3_ys mov, c3_ys off)
       top = _n_swap(mov, off); // [ref bus]
     wish_in:
       u3t_off(noc_o);
-      x   = u3m_soft_esc(u3k(*top), u3k(o));
+      x   = u3m_soft_esc(u3a_gain(*top), u3a_gain(o));
       u3t_on(noc_o);
 
-      if ( c3n == u3du(x) ) {
-        u3m_bail(u3nc(1, o));
+      if ( c3n == u3a_is_cell(x) ) {
+        u3m_bail(u3i_cell(1, o));
         return u3_none;
       }
-      else if ( c3n == u3du(u3t(x)) ) {
-        u3t_push(u3nt(c3__hunk, *top, o));
+      else if ( c3n == u3a_is_cell(u3x_t(x)) ) {
+        u3t_push(u3i_trel(c3__hunk, *top, o));
         u3m_bail(c3__exit);
         return u3_none;
       }
       else {
-        u3z(o);
-        u3z(*top);
-        *top = u3k(u3t(u3t(x)));
-        u3z(x);
+        u3a_lose(o);
+        u3a_lose(*top);
+        *top = u3a_gain(u3x_t(u3x_t(x)));
+        u3a_lose(x);
         BURN();
       }
 
@@ -2346,9 +2346,9 @@ _n_burn(u3n_prog* pog_u, u3_noun bus, c3_ys mov, c3_ys off)
     do_bush:
       x = pog[ip_w++];
     cush_in:
-      x = u3k(pog_u->lit_u.non[x]);
+      x = u3a_gain(pog_u->lit_u.non[x]);
       o = _n_pep(mov, off);
-      u3t_push(u3nc(x, o));
+      u3t_push(u3i_cell(x, o));
       BURN();
 
     do_drop:
@@ -2357,13 +2357,13 @@ _n_burn(u3n_prog* pog_u, u3_noun bus, c3_ys mov, c3_ys off)
 
     do_heck:
       x = _n_pep(mov, off);
-      if ( c3y == u3ud(x) ) {
+      if ( c3y == u3a_is_atom(x) ) {
         u3t_off(noc_o);
         u3t_heck(x);
         u3t_on(noc_o);
       }
       else {
-        u3z(x);
+        u3a_lose(x);
       }
       BURN();
 
@@ -2375,7 +2375,7 @@ _n_burn(u3n_prog* pog_u, u3_noun bus, c3_ys mov, c3_ys off)
         u3t_on(noc_o);
       }
       else {
-        u3z(x);
+        u3a_lose(x);
       }
       BURN();
 
@@ -2405,7 +2405,7 @@ _n_burn(u3n_prog* pog_u, u3_noun bus, c3_ys mov, c3_ys off)
     fast_out:
       rit_u = &(pog_u->reg_u.rit_u[x]);
       u3t_off(noc_o);
-      u3j_rite_mine(rit_u, *top, u3k(o));
+      u3j_rite_mine(rit_u, *top, u3a_gain(o));
       u3t_on(noc_o);
       *top = o;
       BURN();
@@ -2419,7 +2419,7 @@ _n_burn(u3n_prog* pog_u, u3_noun bus, c3_ys mov, c3_ys off)
     skim_in:
       mem_u = &(pog_u->mem_u.sot_u[x]);
       top   = _n_peek(off);
-      x     = u3k(*top);
+      x     = u3a_gain(*top);
       goto skim_out;
 
     do_slis:
@@ -2432,17 +2432,17 @@ _n_burn(u3n_prog* pog_u, u3_noun bus, c3_ys mov, c3_ys off)
       mem_u = &(pog_u->mem_u.sot_u[x]);
       x     = _n_pep(mov, off);
     skim_out:
-      o     = u3k(mem_u->key);
-      x     = u3nc(x, o);
+      o     = u3a_gain(mem_u->key);
+      x     = u3i_cell(x, o);
       o     = u3z_find_m(144 + c3__nock, x);
       if ( u3_none == o ) {
         _n_push(mov, off, x);
-        _n_push(mov, off, u3k(u3h(x)));
+        _n_push(mov, off, u3a_gain(u3x_h(x)));
       }
       else {
         ip_w += mem_u->sip_l;
         _n_push(mov, off, o);
-        u3z(x);
+        u3a_lose(x);
       }
       BURN();
 
@@ -2454,7 +2454,7 @@ _n_burn(u3n_prog* pog_u, u3_noun bus, c3_ys mov, c3_ys off)
         u3z_save_m(144 + c3__nock, o, x);
       }
       *top = x;
-      u3z(o);
+      u3a_lose(o);
       BURN();
 
     do_hilb:
@@ -2464,7 +2464,7 @@ _n_burn(u3n_prog* pog_u, u3_noun bus, c3_ys mov, c3_ys off)
     do_hils:
       x = _n_resh(pog, &ip_w);
     hilt_fore_in:
-      x   = u3k(pog_u->lit_u.non[x]);
+      x   = u3a_gain(pog_u->lit_u.non[x]);
       top = _n_peek(off);   // bus
       x   = _n_hilt_fore(x, *top, &o);
       _n_push(mov, off, o);
@@ -2479,7 +2479,7 @@ _n_burn(u3n_prog* pog_u, u3_noun bus, c3_ys mov, c3_ys off)
     do_hins:
       x = _n_resh(pog, &ip_w);
     hint_fore_in:               //  [clu bus]
-      x   = u3k(pog_u->lit_u.non[x]);
+      x   = u3a_gain(pog_u->lit_u.non[x]);
       o   = _n_pep(mov, off);   //  [bus]
       top = _n_peek(off);
       x   = _n_hint_fore(x, *top, &o);
@@ -2528,8 +2528,8 @@ _n_burn(u3n_prog* pog_u, u3_noun bus, c3_ys mov, c3_ys off)
       top  = _n_peek(off);
     muth_in:
       o    = *top;
-      *top = u3nc(x, u3k(u3t(o)));
-      u3z(o);
+      *top = u3i_cell(x, u3a_gain(u3x_t(o)));
+      u3a_lose(o);
       BURN();
 
     do_kutt:
@@ -2542,8 +2542,8 @@ _n_burn(u3n_prog* pog_u, u3_noun bus, c3_ys mov, c3_ys off)
       top  = _n_peek(off);
     mutt_in:
       o    = *top;
-      *top = u3nc(u3k(u3h(o)), x);
-      u3z(o);
+      *top = u3i_cell(u3a_gain(u3x_h(o)), x);
+      u3a_lose(o);
       BURN();
 
     do_kusm:
@@ -2556,8 +2556,8 @@ _n_burn(u3n_prog* pog_u, u3_noun bus, c3_ys mov, c3_ys off)
       top  = _n_peek(off);
     musm_in:
       o    = *top;
-      *top = u3nt(u3k(u3h(o)), x, u3k(u3t(u3t(o))));
-      u3z(o);
+      *top = u3i_trel(u3a_gain(u3x_h(o)), x, u3a_gain(u3x_t(u3x_t(o))));
+      u3a_lose(o);
       BURN();
 
     do_kitb:
@@ -2639,7 +2639,7 @@ _n_burn_on(u3_noun bus, u3_noun fol)
 {
   u3n_prog* pog_u = _n_find(u3_nul, fol);
 
-  u3z(fol);
+  u3a_lose(fol);
   return _n_burn_out(bus, pog_u);
 }
 
@@ -2669,11 +2669,11 @@ _n_prog_free(u3n_prog* pog_u)
   c3_w i_w;
 
   for ( i_w = 0; i_w < pog_u->lit_u.len_w; ++i_w ) {
-    u3z(pog_u->lit_u.non[i_w]);
+    u3a_lose(pog_u->lit_u.non[i_w]);
   }
 
   for ( i_w = 0; i_w < pog_u->mem_u.len_w; ++i_w ) {
-    u3z(pog_u->mem_u.sot_u[i_w].key);
+    u3a_lose(pog_u->mem_u.sot_u[i_w].key);
   }
 
   for ( i_w = 0; i_w < pog_u->cal_u.len_w; ++i_w ) {
@@ -2758,14 +2758,14 @@ _cn_merge_prog_dat(u3n_prog* dst_u, u3n_prog* src_u)
   c3_w i_w;
 
   for ( i_w = 0; i_w < src_u->lit_u.len_w; ++i_w ) {
-    u3z(dst_u->lit_u.non[i_w]);
+    u3a_lose(dst_u->lit_u.non[i_w]);
     dst_u->lit_u.non[i_w] = src_u->lit_u.non[i_w];
   }
 
   for ( i_w = 0; i_w < src_u->mem_u.len_w; ++i_w ) {
     u3n_memo* emo_u = &(dst_u->mem_u.sot_u[i_w]);
     u3n_memo* ome_u = &(src_u->mem_u.sot_u[i_w]);
-    u3z(emo_u->key);
+    u3a_lose(emo_u->key);
     emo_u->sip_l    = ome_u->sip_l;
     emo_u->key      = ome_u->key;
   }
@@ -2822,7 +2822,7 @@ void
 _n_ream(u3_noun kev)
 {
   c3_w i_w;
-  u3n_prog* pog_u = u3to(u3n_prog, u3t(kev));
+  u3n_prog* pog_u = u3to(u3n_prog, u3x_t(kev));
 
   // fix up pointers for loom portability
   pog_u->byc_u.ops_y = (c3_y*) _n_prog_dat(pog_u);
@@ -2877,7 +2877,7 @@ static void
 _n_bam(u3_noun kev, void* dat)
 {
   c3_w* bam_w  = dat;
-  u3n_prog* pog = u3to(u3n_prog, u3t(kev));
+  u3n_prog* pog = u3to(u3n_prog, u3x_t(kev));
   *bam_w += _n_prog_mark(pog);
 }
 
@@ -2935,7 +2935,7 @@ u3n_rewrite_compact()
 static void
 _n_feb(u3_noun kev)
 {
-  _n_prog_free(u3to(u3n_prog, u3t(kev)));
+  _n_prog_free(u3to(u3n_prog, u3x_t(kev)));
 }
 
 /* u3n_free(): free bytecode cache
@@ -2963,7 +2963,7 @@ c3_w exc_w;
 u3_noun
 u3n_slam_on(u3_noun gat, u3_noun sam)
 {
-  u3_noun cor = u3nc(u3k(u3h(gat)), u3nc(sam, u3k(u3t(u3t(gat)))));
+  u3_noun cor = u3i_cell(u3a_gain(u3x_h(gat)), u3i_cell(sam, u3a_gain(u3x_t(u3x_t(gat)))));
 
 #if 0
   if ( &u3H->rod_u == u3R ) {
@@ -2973,7 +2973,7 @@ u3n_slam_on(u3_noun gat, u3_noun sam)
     exc_w++;
   }
 #endif
-  u3z(gat);
+  u3a_lose(gat);
   return u3n_kick_on(cor);
 }
 
@@ -2998,7 +2998,7 @@ u3n_slam_et(u3_noun gul, u3_noun gat, u3_noun sam)
 u3_noun
 u3n_nock_an(u3_noun bus, u3_noun fol)
 {
-  u3_noun gul = u3nt(u3nt(1, 0, 0), 0, 0);  //  |=(a/{* *} ~)
+  u3_noun gul = u3i_trel(u3i_trel(1, 0, 0), 0, 0);  //  |=(a/{* *} ~)
 
   return u3n_nock_et(gul, bus, fol);
 }

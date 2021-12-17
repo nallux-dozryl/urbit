@@ -10,7 +10,7 @@ u3qb_flop(u3_noun a)
 
   while ( u3_nul != t ) {
     u3x_cell(t, &i, &t);
-    b = u3nc(u3k(i), b);
+    b = u3i_cell(u3a_gain(i), b);
   }
 
   return b;
@@ -26,6 +26,6 @@ u3_noun
 u3kb_flop(u3_noun a)
 {
   u3_noun b = u3qb_flop(a);
-  u3z(a);
+  u3a_lose(a);
   return b;
 }

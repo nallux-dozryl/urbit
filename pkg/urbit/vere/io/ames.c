@@ -400,7 +400,7 @@ u3_ames_decode_lane(u3_atom lan) {
     return (u3_lane){0, 0};
   }
 
-  u3z(lan);
+  u3a_lose(lan);
 
   lan_u.pip_w = (c3_w)lan_d;
   lan_u.por_s = (c3_s)(lan_d >> 32);
@@ -428,9 +428,9 @@ _ames_lane_into_cache(u3p(u3h_root) lax_p, u3_noun who, u3_noun las) {
   struct timeval tim_tv;
   gettimeofday(&tim_tv, 0);
   u3_noun now = u3_time_in_tv(&tim_tv);
-  u3_noun val = u3nc(las, now);
+  u3_noun val = u3i_cell(las, now);
   u3h_put(lax_p, who, val);
-  u3z(who);
+  u3a_lose(who);
 }
 
 /* _ames_lane_from_cache(): retrieve lane for who from cache, if any & fresh
@@ -443,18 +443,18 @@ _ames_lane_from_cache(u3p(u3h_root) lax_p, u3_noun who) {
     struct timeval tim_tv;
     gettimeofday(&tim_tv, 0);
     u3_noun now = u3_time_in_tv(&tim_tv);
-    u3_noun den = u3t(lac);
+    u3_noun den = u3x_t(lac);
 
     //  consider entries older than 2 minutes stale, ignore them
     //
-    if ( 120000 > u3_time_gap_ms(u3k(den), now) ) {
-      lac = u3k(u3h(lac));
+    if ( 120000 > u3_time_gap_ms(u3a_gain(den), now) ) {
+      lac = u3a_gain(u3x_h(lac));
     } else {
       lac = u3_none;
     }
   }
 
-  u3z(who);
+  u3a_lose(who);
   return lac;
 }
 
@@ -543,13 +543,13 @@ _ames_czar_here(u3_pact* pac_u, time_t now, struct sockaddr_in* add_u)
   c3_w     pip_w = ntohl(add_u->sin_addr.s_addr);
 
   if ( pip_w != old_w ) {
-    u3_noun nam = u3dc("scot", c3__if, u3i_word(pip_w));
+    u3_noun nam = u3v_dc("scot", c3__if, u3i_word(pip_w));
     c3_c* nam_c = u3r_string(nam);
 
     u3l_log("ames: czar %s: ip %s\n", pac_u->dns_c, nam_c);
 
     c3_free(nam_c);
-    u3z(nam);
+    u3a_lose(nam);
   }
 
   sam_u->imp_w[pac_u->imp_y] = pip_w;
@@ -609,12 +609,12 @@ _ames_czar(u3_pact* pac_u)
   //  if we don't have a galaxy domain, no-op
   //
   if ( !sam_u->dns_c ) {
-    u3_noun nam = u3dc("scot", 'p', pac_u->imp_y);
+    u3_noun nam = u3v_dc("scot", 'p', pac_u->imp_y);
     c3_c*  nam_c = u3r_string(nam);
     u3l_log("ames: no galaxy domain for %s, no-op\r\n", nam_c);
 
     c3_free(nam_c);
-    u3z(nam);
+    u3a_lose(nam);
     return;
   }
 
@@ -643,7 +643,7 @@ _ames_czar(u3_pact* pac_u)
       c3_i sas_i;
 
       {
-        u3_noun nam = u3dc("scot", 'p', pac_u->imp_y);
+        u3_noun nam = u3v_dc("scot", 'p', pac_u->imp_y);
         c3_c* nam_c = u3r_string(nam);
 
         //  NB: . separator not counted, as [nam_c] includes a ~ that we skip
@@ -652,7 +652,7 @@ _ames_czar(u3_pact* pac_u)
         sas_i = snprintf(pac_u->dns_c, 255, "%s.%s", nam_c + 1, sam_u->dns_c);
 
         c3_free(nam_c);
-        u3z(nam);
+        u3a_lose(nam);
       }
 
       if ( 255 <= sas_i ) {
@@ -685,7 +685,7 @@ _ames_ef_send(u3_ames* sam_u, u3_noun lan, u3_noun pac)
 {
   if ( c3n == sam_u->car_u.liv_o ) {
     u3l_log("ames: not yet live, dropping outbound\r\n");
-    u3z(lan); u3z(pac);
+    u3a_lose(lan); u3a_lose(pac);
     return;
   }
 
@@ -712,7 +712,7 @@ _ames_ef_send(u3_ames* sam_u, u3_noun lan, u3_noun pac)
   //  non-galaxy lane
   //
   else {
-    u3_lane lan_u = u3_ames_decode_lane(u3k(val));
+    u3_lane lan_u = u3_ames_decode_lane(u3a_gain(val));
     //  convert incoming localhost to outgoing localhost
     //
     lan_u.pip_w = ( 0 == lan_u.pip_w )? 0x7f000001 : lan_u.pip_w;
@@ -736,7 +736,7 @@ _ames_ef_send(u3_ames* sam_u, u3_noun lan, u3_noun pac)
       _ames_send(pac_u);
     }
   }
-  u3z(lan); u3z(pac);
+  u3a_lose(lan); u3a_lose(pac);
 }
 
 /* _ames_cap_queue(): cap ovum queue at 1k, dropping oldest packets.
@@ -749,7 +749,7 @@ _ames_cap_queue(u3_ames* sam_u)
   while ( egg_u && (1000 < sam_u->car_u.dep_w) ) {
     u3_ovum* nex_u = egg_u->nex_u;
 
-    if ( c3__hear == u3h(egg_u->cad) ) {
+    if ( c3__hear == u3x_h(egg_u->cad) ) {
       u3_auto_drop(&sam_u->car_u, egg_u);
       sam_u->sat_u.dop_d++;
 
@@ -774,8 +774,8 @@ static void
 _ames_punt_goof(u3_noun lud)
 {
   if ( 2 == u3qb_lent(lud) ) {
-    u3_pier_punt_goof("hear", u3k(u3h(lud)));
-    u3_pier_punt_goof("crud", u3k(u3h(u3t(lud))));
+    u3_pier_punt_goof("hear", u3a_gain(u3x_h(lud)));
+    u3_pier_punt_goof("crud", u3a_gain(u3x_h(u3x_t(lud))));
   }
   else {
     u3_noun dul = lud;
@@ -783,12 +783,12 @@ _ames_punt_goof(u3_noun lud)
 
     while ( u3_nul != dul ) {
       u3l_log("ames: bail %u\r\n", len_w++);
-      u3_pier_punt_goof("ames", u3k(u3h(dul)));
-      dul = u3t(dul);
+      u3_pier_punt_goof("ames", u3a_gain(u3x_h(dul)));
+      dul = u3x_t(dul);
     }
   }
 
-  u3z(lud);
+  u3a_lose(lud);
 }
 
 /* _ames_hear_bail(): handle packet failure.
@@ -806,7 +806,7 @@ _ames_hear_bail(u3_ovum* egg_u, u3_noun lud)
     u3l_log("ames: packet failed (%" PRIu64 " total)\n\n", sam_u->sat_u.fal_d);
   }
   else {
-    u3z(lud);
+    u3a_lose(lud);
 
     if (  0 == (sam_u->sat_u.fal_d % 1000) )  {
       u3l_log("ames: packet failed (%" PRIu64 " total)\n\n", sam_u->sat_u.fal_d);
@@ -823,8 +823,8 @@ _ames_put_packet(u3_ames* sam_u,
                  u3_noun  msg,
                  u3_lane  lan_u)
 {
-  u3_noun wir = u3nc(c3__ames, u3_nul);
-  u3_noun cad = u3nt(c3__hear, u3nc(c3n, u3_ames_encode_lane(lan_u)), msg);
+  u3_noun wir = u3i_cell(c3__ames, u3_nul);
+  u3_noun cad = u3i_trel(c3__hear, u3i_cell(c3n, u3_ames_encode_lane(lan_u)), msg);
 
   u3_auto_peer(
     u3_auto_plan(&sam_u->car_u,
@@ -847,8 +847,8 @@ _ames_forward(u3_panc* pac_u, u3_noun las)
   }
 
   if ( u3C.wag_w & u3o_verbose ) {
-    u3_noun sen = u3dc("scot", 'p', u3i_chubs(2, pac_u->bod_u.sen_d));
-    u3_noun rec = u3dc("scot", 'p', u3i_chubs(2, pac_u->bod_u.rec_d));
+    u3_noun sen = u3v_dc("scot", 'p', u3i_chubs(2, pac_u->bod_u.sen_d));
+    u3_noun rec = u3v_dc("scot", 'p', u3i_chubs(2, pac_u->bod_u.rec_d));
     c3_c* sen_c = u3r_string(sen);
     c3_c* rec_c = u3r_string(rec);
     c3_y* pip_y = (c3_y*)&pac_u->ore_u.pip_w;
@@ -859,7 +859,7 @@ _ames_forward(u3_panc* pac_u, u3_noun las)
             pac_u->ore_u.por_s);
 
     c3_free(sen_c); c3_free(rec_c);
-    u3z(sen); u3z(rec);
+    u3a_lose(sen); u3a_lose(rec);
   }
 
   {
@@ -893,16 +893,16 @@ _ames_forward(u3_panc* pac_u, u3_noun las)
         }
 
         if ( c3y == sen_o ) {
-          _ames_ef_send(sam_u, u3k(lan), u3k(pac));
+          _ames_ef_send(sam_u, u3a_gain(lan), u3a_gain(pac));
         }
       }
     }
 
-    u3z(pac);
+    u3a_lose(pac);
   }
 
   _ames_panc_free(pac_u);
-  u3z(las);
+  u3a_lose(las);
 }
 
 /*  _ames_lane_scry_cb(): learn lane to forward packet on
@@ -933,7 +933,7 @@ _ames_lane_scry_cb(void* vod_p, u3_noun nun)
     //
     _ames_lane_into_cache(sam_u->lax_p,
                           u3i_chubs(2, pac_u->bod_u.rec_d),
-                          u3k(las));
+                          u3a_gain(las));
 
     //  if there is no lane, drop the packet
     //
@@ -943,11 +943,11 @@ _ames_lane_scry_cb(void* vod_p, u3_noun nun)
     //  if there is a lane, forward the packet on it
     //
     else {
-      _ames_forward(pac_u, u3k(las));
+      _ames_forward(pac_u, u3a_gain(las));
     }
   }
 
-  u3z(nun);
+  u3a_lose(nun);
 }
 
 /* _ames_try_forward(): try to forward a packet for another ship.
@@ -966,7 +966,7 @@ _ames_try_forward(u3_ames* sam_u,
   if (  (256 > bod_u->rec_d[0])
      && (0  == bod_u->rec_d[1]) )
   {
-    lac = u3nc(c3y, (c3_y)bod_u->rec_d[0]);
+    lac = u3i_cell(c3y, (c3_y)bod_u->rec_d[0]);
   }
   //  otherwise, try to get the lane from cache
   //
@@ -1028,8 +1028,8 @@ _ames_try_forward(u3_ames* sam_u,
     //
     else {
       sam_u->sat_u.foq_d++;
-      u3_noun pax = u3nq(u3i_string("peers"),
-                         u3dc("scot", 'p', u3i_chubs(2, bod_u->rec_d)),
+      u3_noun pax = u3i_qual(u3i_string("peers"),
+                         u3v_dc("scot", 'p', u3i_chubs(2, bod_u->rec_d)),
                          u3i_string("forward-lane"),
                          u3_nul);
       u3_pier_peek_last(sam_u->pir_u, u3_nul, c3__ax,
@@ -1161,7 +1161,7 @@ _ames_hear(u3_ames* sam_u,
     c3_free(hun_y);
 #ifdef AMES_SKIP
     if (_ames_skip(&bod_u) == c3y ) {
-      u3z(msg);
+      u3a_lose(msg);
     }
     else {
 #endif
@@ -1217,7 +1217,7 @@ _ames_io_start(u3_ames* sam_u)
 {
   c3_s     por_s = sam_u->pir_u->por_s;
   u3_noun    who = u3i_chubs(2, sam_u->pir_u->who_d);
-  u3_noun    rac = u3do("clan:title", u3k(who));
+  u3_noun    rac = u3v_do("clan:title", u3a_gain(who));
   c3_i     ret_i;
 
   if ( c3__czar == rac ) {
@@ -1277,8 +1277,8 @@ _ames_io_start(u3_ames* sam_u)
   uv_udp_recv_start(&sam_u->wax_u, _ames_alloc, _ames_recv_cb);
 
   sam_u->car_u.liv_o = c3y;
-  u3z(rac);
-  u3z(who);
+  u3a_lose(rac);
+  u3a_lose(who);
 }
 
 /* _ames_ef_turf(): initialize ames I/O on domain(s).
@@ -1289,8 +1289,8 @@ _ames_ef_turf(u3_ames* sam_u, u3_noun tuf)
   if ( u3_nul != tuf ) {
     //  XX save all for fallback, not just first
     //
-    u3_noun hot = u3k(u3h(tuf));
-    c3_w  len_w = u3_mcut_host(0, 0, u3k(hot));
+    u3_noun hot = u3a_gain(u3x_h(tuf));
+    c3_w  len_w = u3_mcut_host(0, 0, u3a_gain(hot));
 
     sam_u->dns_c = c3_malloc(1 + len_w);
     u3_mcut_host(sam_u->dns_c, 0, hot);
@@ -1299,7 +1299,7 @@ _ames_ef_turf(u3_ames* sam_u, u3_noun tuf)
     //  XX invalidate sam_u->imp_w &c ?
     //
 
-    u3z(tuf);
+    u3a_lose(tuf);
   }
   else if ( (c3n == sam_u->pir_u->fak_o) && (0 == sam_u->dns_c) ) {
     u3l_log("ames: turf: no domains\n");
@@ -1338,7 +1338,7 @@ _ames_prot_scry_cb(void* vod_p, u3_noun nun)
   //  we get a protocol version above the latest one we know
   //
   sam_u->fig_u.fit_o = c3y;
-  u3z(nun);
+  u3a_lose(nun);
 }
 
 /* _ames_io_talk(): start receiving ames traffic.
@@ -1354,10 +1354,10 @@ _ames_io_talk(u3_auto* car_u)
   {
     //  XX remove [sev_l]
     //
-    u3_noun wir = u3nt(c3__newt,
-                       u3dc("scot", c3__uv, sam_u->sev_l),
+    u3_noun wir = u3i_trel(c3__newt,
+                       u3v_dc("scot", c3__uv, sam_u->sev_l),
                        u3_nul);
-    u3_noun cad = u3nc(c3__born, u3_nul);
+    u3_noun cad = u3i_cell(c3__born, u3_nul);
 
     u3_auto_plan(car_u, u3_ovum_init(0, c3__a, wir, cad));
   }
@@ -1369,7 +1369,7 @@ _ames_io_talk(u3_auto* car_u)
   //    (or some other reconfig) effect when it is reset.
   //
   u3_pier_peek_last(car_u->pir_u, u3_nul, c3__ax, u3_nul,
-                    u3nt(u3i_string("protocol"), u3i_string("version"), u3_nul),
+                    u3i_trel(u3i_string("protocol"), u3i_string("version"), u3_nul),
                     sam_u, _ames_prot_scry_cb);
 }
 
@@ -1386,19 +1386,19 @@ _ames_kick_newt(u3_ames* sam_u, u3_noun tag, u3_noun dat)
     } break;
 
     case c3__send: {
-      u3_noun lan = u3k(u3h(dat));
-      u3_noun pac = u3k(u3t(dat));
+      u3_noun lan = u3a_gain(u3x_h(dat));
+      u3_noun pac = u3a_gain(u3x_t(dat));
       _ames_ef_send(sam_u, lan, pac);
       ret_o = c3y;
     } break;
 
     case c3__turf: {
-      _ames_ef_turf(sam_u, u3k(dat));
+      _ames_ef_turf(sam_u, u3a_gain(dat));
       ret_o = c3y;
     } break;
   }
 
-  u3z(tag); u3z(dat);
+  u3a_lose(tag); u3a_lose(dat);
   return ret_o;
 }
 
@@ -1426,7 +1426,7 @@ _ames_io_kick(u3_auto* car_u, u3_noun wir, u3_noun cad)
       //  XX should also be c3__ames
       //
       case c3__newt: {
-        ret_o = _ames_kick_newt(sam_u, u3k(tag), u3k(dat));
+        ret_o = _ames_kick_newt(sam_u, u3a_gain(tag), u3a_gain(dat));
       } break;
 
       //  XX obsolete
@@ -1447,13 +1447,13 @@ _ames_io_kick(u3_auto* car_u, u3_noun wir, u3_noun cad)
         }
         else {
           u3l_log("kick: strange send\r\n");
-          ret_o = _ames_kick_newt(sam_u, u3k(tag), u3k(dat));
+          ret_o = _ames_kick_newt(sam_u, u3a_gain(tag), u3a_gain(dat));
         }
       } break;
     }
   }
 
-  u3z(wir); u3z(cad);
+  u3a_lose(wir); u3a_lose(cad);
   return ret_o;
 }
 
@@ -1569,7 +1569,7 @@ u3_ames_io_init(u3_pier* pir_u)
 
     now = u3_time_in_tv(&tim_u);
     sam_u->sev_l = u3r_mug(now);
-    u3z(now);
+    u3a_lose(now);
   }
 
   return car_u;

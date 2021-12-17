@@ -14,10 +14,10 @@
     if ( (c3__void == lup) || (c3__void == mar) ) {
       return c3__void;
     } else {
-      return u3nq(c3__fine,
-                  u3k(fuv),
-                  u3k(lup),
-                  u3k(mar));
+      return u3i_qual(c3__fine,
+                  u3a_gain(fuv),
+                  u3a_gain(lup),
+                  u3a_gain(mar));
     }
   }
   u3_noun

@@ -15,18 +15,18 @@ u3qb_murn(u3_noun a, u3_noun b)
     u3_noun res, i, t = a;
     u3j_site sit_u;
 
-    u3j_gate_prep(&sit_u, u3k(b));
+    u3j_gate_prep(&sit_u, u3a_gain(b));
 
     do {
       u3x_cell(t, &i, &t);
 
-      res = u3j_gate_slam(&sit_u, u3k(i));
+      res = u3j_gate_slam(&sit_u, u3a_gain(i));
 
       if ( u3_nul != res ) {
         *lit = u3i_defcons(&hed, &tel);
-        *hed = u3k(u3t(res));
+        *hed = u3a_gain(u3x_t(res));
         lit  = tel;
-        u3z(res);
+        u3a_lose(res);
       }
     }
     while ( u3_nul != t );

@@ -14,15 +14,15 @@ u3qb_skim(u3_noun a, u3_noun b)
     u3_noun*   hed;
     u3_noun*   tel;
     u3j_site sit_u;
-    u3j_gate_prep(&sit_u, u3k(b));
+    u3j_gate_prep(&sit_u, u3a_gain(b));
 
     do {
       u3x_cell(t, &i, &t);
 
-      switch ( u3j_gate_slam(&sit_u, u3k(i)) ) {
+      switch ( u3j_gate_slam(&sit_u, u3a_gain(i)) ) {
         case c3y: {
           *lit = u3i_defcons(&hed, &tel);
-          *hed = u3k(i);
+          *hed = u3a_gain(i);
           lit  = tel;
         } break;
 

@@ -60,7 +60,7 @@ u3_noun
 _add_year(c3_w year, u3_noun out)
 {
   while (year > 0) {
-    out = u3nc(to_digit(year % 10), out);
+    out = u3i_cell(to_digit(year % 10), out);
     year = year / 10;
   }
 
@@ -71,8 +71,8 @@ static
 u3_noun
 _print_da(u3_noun cor, u3_atom raw_da)
 {
-  u3_noun hok = u3j_cook("u3we_scow_print_da", u3k(cor), "yore");
-  u3_noun yod = u3n_slam_on(hok, u3k(raw_da));
+  u3_noun hok = u3j_cook("u3we_scow_print_da", u3a_gain(cor), "yore");
+  u3_noun yod = u3n_slam_on(hok, u3a_gain(raw_da));
 
   u3_noun out = 0;
 
@@ -94,22 +94,22 @@ _print_da(u3_noun cor, u3_atom raw_da)
 
     for (u3_noun cur = f_list;
          _(u3a_is_cell(cur));
-         cur = u3t(cur)) {
-      if (_(u3a_is_cat(u3h(cur)))) {
+         cur = u3x_t(cur)) {
+      if (_(u3a_is_cat(u3x_h(cur)))) {
         c3_y a, b, c, d;
-        _x_co_four(u3h(cur), &a, &b, &c, &d);
-        out = u3nq('.', a, b, u3nt(c, d, out));
+        _x_co_four(u3x_h(cur), &a, &b, &c, &d);
+        out = u3i_qual('.', a, b, u3i_trel(c, d, out));
       } else {
         // No way to deal with big atoms. fall back.
-        u3z(yod);
-        u3z(out);
-        u3z(f_list);
+        u3a_lose(yod);
+        u3a_lose(out);
+        u3a_lose(f_list);
         return u3_none;
       }
     }
 
-    u3z(f_list);
-    out = u3nc('.', out);
+    u3a_lose(f_list);
+    out = u3i_cell('.', out);
   }
 
   // if there isn't a hex list and the h/m/s are all 0, skip printing hours.
@@ -118,22 +118,22 @@ _print_da(u3_noun cor, u3_atom raw_da)
         !_(u3a_is_cat(min)) ||
         !_(u3a_is_cat(sec))) {
       // Input is weird, fallback to nock.
-      u3z(yod);
-      u3z(out);
+      u3a_lose(yod);
+      u3a_lose(out);
       return u3_none;
     }
 
     c3_y sa, sb, ma, mb, ha, hb;
     _y_co_two(sec, &sa, &sb);
-    out = u3nq('.', sa, sb, out);
+    out = u3i_qual('.', sa, sb, out);
 
     _y_co_two(min, &ma, &mb);
-    out = u3nq('.', ma, mb, out);
+    out = u3i_qual('.', ma, mb, out);
 
     _y_co_two(hour, &ha, &hb);
-    out = u3nq('.', ha, hb, out);
+    out = u3i_qual('.', ha, hb, out);
 
-    out = u3nc('.', out);
+    out = u3i_cell('.', out);
   }
 
   // We always print the Y.M.D. Unlike others, these numbers are unconstrained
@@ -144,39 +144,39 @@ _print_da(u3_noun cor, u3_atom raw_da)
       !_(u3a_is_cat(month)) || month > 99 ||
       !_(u3a_is_cat(year))) {
     // Input is weird, fallback to nock.
-    u3z(yod);
-    u3z(out);
+    u3a_lose(yod);
+    u3a_lose(out);
     return u3_none;
   }
 
   c3_y da, db;
   _y_co_two(day, &da, &db);
-  out = u3nc(db, out);
+  out = u3i_cell(db, out);
   if (da != '0') {
-    out = u3nc(da, out);
+    out = u3i_cell(da, out);
   }
-  out = u3nc('.', out);
+  out = u3i_cell('.', out);
 
   c3_y ma, mb;
   _y_co_two(month, &ma, &mb);
-  out = u3nc(mb, out);
+  out = u3i_cell(mb, out);
   if (ma != '0') {
-    out = u3nc(ma, out);
+    out = u3i_cell(ma, out);
   }
-  out = u3nc('.', out);
+  out = u3i_cell('.', out);
 
   // suffix the year with a '-' for BC dates
   if (age == c3n) {
-    out = u3nc('-', out);
+    out = u3i_cell('-', out);
   }
 
   // The year part is the only place where we have to explicitly loop over the
   // input because it can be arbitrarily large or small.
   out = _add_year(year, out);
 
-  out = u3nc('~', out);
+  out = u3i_cell('~', out);
 
-  u3z(yod);
+  u3a_lose(yod);
   return out;
 }
 
@@ -185,22 +185,22 @@ u3_noun
 _print_p(u3_atom cor, u3_atom p)
 {
   // Scramble the raw number to the concealed version.
-  u3_noun ob = u3j_cook("u3we_scow_ob_p", u3k(cor), "ob");
+  u3_noun ob = u3j_cook("u3we_scow_ob_p", u3a_gain(cor), "ob");
   u3_noun hok = u3j_cook("u3we_scow_fein_p", ob, "fein");
-  u3_atom sxz = u3n_slam_on(hok, u3k(p));
+  u3_atom sxz = u3n_slam_on(hok, u3a_gain(p));
 
   // Simple galaxy case
   if (c3y == u3qa_lth(sxz, 256)) {
     c3_y a, b, c;
     u3_po_to_suffix(sxz, &a, &b, &c);
-    u3z(sxz);
-    return u3nq('~', a, b, u3nc(c, 0));
+    u3a_lose(sxz);
+    return u3i_qual('~', a, b, u3i_cell(c, 0));
   }
 
   u3_atom dyy = u3qc_met(4, sxz);
   if (!_(u3a_is_cat(dyy))) {
-    u3z(sxz);
-    u3z(dyy);
+    u3a_lose(sxz);
+    u3a_lose(dyy);
     return u3_none;
   }
 
@@ -216,19 +216,19 @@ _print_p(u3_atom cor, u3_atom p)
 
     if (imp % 4 == 0) {
       if (imp != 0) {
-        list = u3nt('-', '-', list);
+        list = u3i_trel('-', '-', list);
       }
     } else {
-      list = u3nc('-', list);
+      list = u3i_cell('-', list);
     }
 
-    list = u3nq(a, b, c, u3nq(d, e, f, list));
+    list = u3i_qual(a, b, c, u3i_qual(d, e, f, list));
 
     sxz = u3qc_rsh(4, 1, sxz);
   }
 
-  u3z(sxz);
-  return u3nc('~', list);
+  u3a_lose(sxz);
+  return u3i_cell('~', list);
 }
 
 static
@@ -241,15 +241,15 @@ _print_ud(u3_atom ud)
 
   // increase input refcount to be consumed in u3ka_div(), which will free each
   // intermediary state.
-  u3k(ud);
+  u3a_gain(ud);
 
   do {
     if (between == 3) {
-      list = u3nc('.', list);
+      list = u3i_cell('.', list);
       between = 0;
     }
 
-    list = u3nc(u3ka_add(u3qa_mod(ud, 10), '0'), list);
+    list = u3i_cell(u3ka_add(u3qa_mod(ud, 10), '0'), list);
     between++;
     ud = u3ka_div(ud, 10);
   } while (ud != 0);
@@ -267,21 +267,21 @@ _print_uv(u3_atom uv)
 
   // increase input refcount to be consumed in u3ka_div(), which will free each
   // intermediary state.
-  u3k(uv);
+  u3a_gain(uv);
 
   do {
     if (between == 5) {
-      list = u3nc('.', list);
+      list = u3i_cell('.', list);
       between = 0;
     }
 
     c3_y tig = u3qa_mod(uv, 32);
-    list = u3nc(to_digit(tig), list);
+    list = u3i_cell(to_digit(tig), list);
     between++;
     uv = u3ka_div(uv, 32);
   } while (uv != 0);
 
-  return u3nt('0', 'v', list);
+  return u3i_trel('0', 'v', list);
 }
 
 static
@@ -294,21 +294,21 @@ _print_uw(u3_atom uw)
 
   // increase input refcount to be consumed in u3ka_div(), which will free each
   // intermediary state.
-  u3k(uw);
+  u3a_gain(uw);
 
   do {
     if (between == 5) {
-      list = u3nc('.', list);
+      list = u3i_cell('.', list);
       between = 0;
     }
 
     c3_y tig = u3qa_mod(uw, 64);
-    list = u3nc(to_w_digit(tig), list);
+    list = u3i_cell(to_w_digit(tig), list);
     between++;
     uw = u3ka_div(uw, 64);
   } while (uw != 0);
 
-  return u3nt('0', 'w', list);
+  return u3i_trel('0', 'w', list);
 }
 
 u3_noun
@@ -384,6 +384,6 @@ u3we_scot(u3_noun cor)
     return tape;
   }
   u3_noun ret = u3qc_rap(3, tape);
-  u3z(tape);
+  u3a_lose(tape);
   return ret;
 }

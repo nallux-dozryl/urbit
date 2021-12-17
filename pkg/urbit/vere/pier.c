@@ -91,8 +91,8 @@ _pier_work_send(u3_work* wok_u)
 
     while ( len_w && car_u && (egg_u = u3_auto_next(car_u, &ovo)) ) {
       len_w--;
-      u3_lord_work(god_u, egg_u, u3nc(u3k(now), ovo));
-      now = u3ka_add(now, u3k(bit));
+      u3_lord_work(god_u, egg_u, u3i_cell(u3a_gain(now), ovo));
+      now = u3ka_add(now, u3a_gain(bit));
 
       //  queue events depth first
       //
@@ -116,7 +116,7 @@ _pier_work_send(u3_work* wok_u)
       u3_pico_free(pic_u);
     }
 
-    u3z(now); u3z(bit);
+    u3a_lose(now); u3a_lose(bit);
   }
 }
 
@@ -460,7 +460,7 @@ u3_pier_peek_last(u3_pier*   pir_u,
 static u3_noun
 _pier_stab(u3_noun pac)
 {
-  return u3do("stab", pac);
+  return u3v_do("stab", pac);
 }
 
 /* _pier_on_scry_done(): scry callback.
@@ -496,31 +496,31 @@ _pier_on_scry_done(void* ptr_v, u3_noun nun)
         ext_c = "jam";
       }
       else if ( c3y == u3a_is_atom(res) ) {
-        out   = u3dc("scot", u3k(puf), u3k(res));
+        out   = u3v_dc("scot", u3a_gain(puf), u3a_gain(res));
         ext_c = "txt";
       }
       else {
         u3l_log("pier: cannot export cell as %s\n", u3_Host.ops_u.puf_c);
         out   = u3_none;
       }
-      u3z(puf);
+      u3a_lose(puf);
     }
 
     //  try to build export target path
     //
     {
       u3_noun pro = u3m_soft(0, _pier_stab, u3i_string(pac_c));
-      if ( 0 == u3h(pro) ) {
-        c3_w len_w = u3kb_lent(u3k(u3t(pro)));
-        pad = u3nt(c3_s4('.', 'u', 'r', 'b'),
+      if ( 0 == u3x_h(pro) ) {
+        c3_w len_w = u3kb_lent(u3a_gain(u3x_t(pro)));
+        pad = u3i_trel(c3_s4('.', 'u', 'r', 'b'),
                    c3_s3('p', 'u', 't'),
-                   u3qb_scag(len_w - 1, u3t(pro)));
+                   u3qb_scag(len_w - 1, u3x_t(pro)));
       }
       else {
         u3l_log("pier: invalid export path %s\n", pac_c);
         pad = u3_none;
       }
-      u3z(pro);
+      u3a_lose(pro);
     }
 
     //  if serialization and export path succeeded, write to disk
@@ -538,7 +538,7 @@ _pier_on_scry_done(void* ptr_v, u3_noun nun)
   u3l_log("pier: exit\n");
   u3_pier_exit(pir_u);
 
-  u3z(nun);
+  u3a_lose(nun);
 }
 
 /* _pier_work_init(): begin processing new events
@@ -602,7 +602,7 @@ _pier_work_init(u3_pier* pir_u)
   //  XX this is messy, revise
   //
   if ( u3_Host.ops_u.pek_c ) {
-    u3_noun pex = u3do("stab", u3i_string(u3_Host.ops_u.pek_c));
+    u3_noun pex = u3v_do("stab", u3i_string(u3_Host.ops_u.pek_c));
     u3_noun car;
     u3_noun dek;
     u3_noun pax;
@@ -615,10 +615,10 @@ _pier_work_init(u3_pier* pir_u)
       //  run the requested scry, jam to disk, then exit
       //
       u3l_log("pier: scry\n");
-      u3_pier_peek_last(pir_u, u3_nul, u3k(car), u3k(dek), u3k(pax),
+      u3_pier_peek_last(pir_u, u3_nul, u3a_gain(car), u3a_gain(dek), u3a_gain(pax),
                         pir_u, _pier_on_scry_done);
     }
-    u3z(pex);
+    u3a_lose(pex);
   }
   else {
     //  initialize i/o drivers
@@ -668,10 +668,10 @@ _pier_wyrd_fail(u3_pier* pir_u, u3_ovum* egg_u, u3_noun lud)
   //  XX only print trace with -v ?
   //
   if ( u3_nul != lud ) {
-    u3_auto_bail_slog(egg_u, u3k(u3t(lud)));
+    u3_auto_bail_slog(egg_u, u3a_gain(u3x_t(lud)));
   }
 
-  u3z(lud);
+  u3a_lose(lud);
 
   //  free %wyrd driver and ovum
   //
@@ -701,8 +701,8 @@ _pier_wyrd_aver(u3_noun act)
   while ( u3_nul != act ) {
     u3x_cell(act, &fec, &act);
 
-    if ( c3__wend == u3h(fec) ) {
-      kel = u3t(fec);
+    if ( c3__wend == u3x_h(fec) ) {
+      kel = u3x_t(fec);
 
       //  traverse $wynn, check for downgrades
       //
@@ -711,8 +711,8 @@ _pier_wyrd_aver(u3_noun act)
 
         //  check for %zuse downgrade
         //
-        if (  (c3__zuse == u3h(ver))
-           && (VERE_ZUSE != u3t(ver)) )
+        if (  (c3__zuse == u3x_h(ver))
+           && (VERE_ZUSE != u3x_t(ver)) )
         {
           return c3n;
         }
@@ -789,7 +789,7 @@ _pier_on_lord_wyrd_bail(void* ptr_v, u3_ovum* egg_u, u3_noun lud)
   //
   {
     _pier_wyrd_good(pir_u, egg_u);
-    u3z(lud);
+    u3a_lose(lud);
   }
 #endif
 }
@@ -812,24 +812,24 @@ _pier_wyrd_card(u3_pier* pir_u)
 
     now   = u3_time_in_tv(&tim_u);
     sev_l = u3r_mug(now);
-    sen   = u3dc("scot", c3__uv, sev_l);
+    sen   = u3v_dc("scot", c3__uv, sev_l);
 
-    u3z(now);
+    u3a_lose(now);
   }
 
   //  XX god_u not necessarily available yet, refactor call sites
   //
-  u3_noun ver = u3nt(u3i_string(VERE_NAME),
-                     u3dc("scot", c3__ta, u3i_string(URBIT_VERSION)),
+  u3_noun ver = u3i_trel(u3i_string(VERE_NAME),
+                     u3v_dc("scot", c3__ta, u3i_string(URBIT_VERSION)),
                      u3_nul);
-  u3_noun kel = u3nl(u3nc(c3__zuse, VERE_ZUSE),  //  XX from both king and serf?
-                     u3nc(c3__lull, 330),        //  XX define
-                     u3nc(c3__arvo, 240),        //  XX from both king and serf?
-                     u3nc(c3__hoon, 140),        //  god_u->hon_y
-                     u3nc(c3__nock, 4),          //  god_u->noc_y
+  u3_noun kel = u3i_list(u3i_cell(c3__zuse, VERE_ZUSE),  //  XX from both king and serf?
+                     u3i_cell(c3__lull, 330),        //  XX define
+                     u3i_cell(c3__arvo, 240),        //  XX from both king and serf?
+                     u3i_cell(c3__hoon, 140),        //  god_u->hon_y
+                     u3i_cell(c3__nock, 4),          //  god_u->noc_y
                      u3_none);
-  u3_noun wir = u3nc(c3__arvo, u3_nul);
-  return u3nt(c3__wyrd, u3nc(sen, ver), kel);
+  u3_noun wir = u3i_cell(c3__arvo, u3_nul);
+  return u3i_trel(c3__wyrd, u3i_cell(sen, ver), kel);
 }
 
 /* _pier_wyrd_init(): send %wyrd.
@@ -838,7 +838,7 @@ static void
 _pier_wyrd_init(u3_pier* pir_u)
 {
   u3_noun cad = _pier_wyrd_card(pir_u);
-  u3_noun wir = u3nc(c3__arvo, u3_nul);
+  u3_noun wir = u3i_cell(c3__arvo, u3_nul);
 
   pir_u->sat_e = u3_psat_wyrd;
 
@@ -866,7 +866,7 @@ _pier_wyrd_init(u3_pier* pir_u)
     {
       struct timeval tim_tv;
       gettimeofday(&tim_tv, 0);
-      u3_lord_work(god_u, egg_u, u3nc(u3_time_in_tv(&tim_tv), ovo));
+      u3_lord_work(god_u, egg_u, u3i_cell(u3_time_in_tv(&tim_tv), ovo));
     }
   }
 }
@@ -1152,7 +1152,7 @@ _pier_on_lord_play_bail(void* ptr_v, u3_info fon_u,
       }
 
       _pier_play(pir_u->pay_u);
-      u3z(dud);
+      u3a_lose(dud);
     }
 #else
     {
@@ -1161,7 +1161,7 @@ _pier_on_lord_play_bail(void* ptr_v, u3_info fon_u,
       {
         u3_noun wir, tag;
         u3x_qual(tac_u->job, 0, &wir, &tag, 0);
-        u3_pier_punt_ovum("play", u3k(wir), u3k(tag));
+        u3_pier_punt_ovum("play", u3a_gain(wir), u3a_gain(tag));
       }
 
       u3_pier_bail(pir_u);
@@ -1292,7 +1292,7 @@ _pier_on_lord_slog(void* ptr_v, c3_w pri_w, u3_noun tan)
   u3_pier* pir_u = ptr_v;
 
   if ( 0 != pir_u->sog_f ) {
-    pir_u->sog_f(pir_u->sop_p, pri_w, u3k(tan));
+    pir_u->sog_f(pir_u->sop_p, pri_w, u3a_gain(tan));
   }
 
   u3_pier_tank(0, pri_w, tan);
@@ -1614,7 +1614,7 @@ u3_pier_stay(c3_w wag_w, u3_noun pax)
     u3_term_io_loja(1);
   }
 
-  u3z(pax);
+  u3a_lose(pax);
 
   return pir_u;
 }
@@ -1627,19 +1627,19 @@ _pier_pill_parse(u3_noun pil)
   u3_boot bot_u;
   u3_noun pil_p, pil_q;
 
-  c3_assert( c3y == u3du(pil) );
+  c3_assert( c3y == u3a_is_cell(pil) );
   u3x_cell(pil, &pil_p, &pil_q);
 
   {
     //  XX use faster cue
     //
-    u3_noun pro = u3m_soft(0, u3ke_cue, u3k(pil_p));
+    u3_noun pro = u3m_soft(0, u3ke_cue, u3a_gain(pil_p));
     u3_noun mot, tag, dat;
 
     if (  (c3n == u3r_trel(pro, &mot, &tag, &dat))
        || (u3_blip != mot) )
     {
-      u3m_p("mot", u3h(pro));
+      u3m_p("mot", u3x_h(pro));
       fprintf(stderr, "boot: failed: unable to parse pill\r\n");
       u3_king_bail();
       exit(1);
@@ -1676,8 +1676,8 @@ _pier_pill_parse(u3_noun pil)
       }
     }
 
-    u3k(bot_u.bot); u3k(bot_u.mod); u3k(bot_u.use);
-    u3z(pro);
+    u3a_gain(bot_u.bot); u3a_gain(bot_u.mod); u3a_gain(bot_u.use);
+    u3a_lose(pro);
   }
 
   //  optionally replace filesystem in userspace
@@ -1689,26 +1689,26 @@ _pier_pill_parse(u3_noun pil)
     u3_noun ovo;
 
     while ( u3_nul != ova ) {
-      ovo = u3h(ova);
+      ovo = u3x_h(ova);
 
-      u3_noun tag = u3h(u3t(ovo));
+      u3_noun tag = u3x_h(u3x_t(ovo));
       if ( ( c3__into == tag ) || ( c3__park == tag ) ) {
         c3_assert( 0 == len_w );
         len_w++;
-        ovo = u3t(pil_q);
+        ovo = u3x_t(pil_q);
       }
 
-      new = u3nc(u3k(ovo), new);
-      ova = u3t(ova);
+      new = u3i_cell(u3a_gain(ovo), new);
+      ova = u3x_t(ova);
     }
 
     c3_assert( 1 == len_w );
 
-    u3z(bot_u.use);
+    u3a_lose(bot_u.use);
     bot_u.use = u3kb_flop(new);
   }
 
-  u3z(pil);
+  u3a_lose(pil);
 
   return bot_u;
 }
@@ -1727,35 +1727,35 @@ _pier_boot_make(u3_noun who,
   //  prepend entropy and identity to the module sequence
   //
   {
-    u3_noun cad, wir = u3nt(u3_blip, c3__arvo, u3_nul);
+    u3_noun cad, wir = u3i_trel(u3_blip, c3__arvo, u3_nul);
     c3_w    eny_w[16];
     c3_rand(eny_w);
 
-    cad = u3nt(c3__verb, u3_nul, ( c3y == u3_Host.ops_u.veb ) ? c3n : c3y);
-    bot_u.mod = u3nc(u3nc(u3k(wir), cad), bot_u.mod);
+    cad = u3i_trel(c3__verb, u3_nul, ( c3y == u3_Host.ops_u.veb ) ? c3n : c3y);
+    bot_u.mod = u3i_cell(u3i_cell(u3a_gain(wir), cad), bot_u.mod);
 
-    cad = u3nc(c3__wack, u3i_words(16, eny_w));
-    bot_u.mod = u3nc(u3nc(u3k(wir), cad), bot_u.mod);
+    cad = u3i_cell(c3__wack, u3i_words(16, eny_w));
+    bot_u.mod = u3i_cell(u3i_cell(u3a_gain(wir), cad), bot_u.mod);
 
-    cad = u3nc(c3__whom, who);                    // transfer [who]
-    bot_u.mod = u3nc(u3nc(u3k(wir), cad), bot_u.mod);
+    cad = u3i_cell(c3__whom, who);                    // transfer [who]
+    bot_u.mod = u3i_cell(u3i_cell(u3a_gain(wir), cad), bot_u.mod);
 
-    wir = u3nt(u3_blip, c3__arvo, u3_nul);
-    bot_u.mod = u3nc(u3nc(wir, wyr), bot_u.mod);  // transfer [wir] and [wyr]
+    wir = u3i_trel(u3_blip, c3__arvo, u3_nul);
+    bot_u.mod = u3i_cell(u3i_cell(wir, wyr), bot_u.mod);  // transfer [wir] and [wyr]
   }
 
   //  include additional key configuration events if we have multiple keys
   //
-  if ( (u3_none != fed) && (c3y == u3du(u3h(fed))) ) {
-    u3_noun wir = u3nt(c3__j, c3__seed, u3_nul);
+  if ( (u3_none != fed) && (c3y == u3a_is_cell(u3x_h(fed))) ) {
+    u3_noun wir = u3i_trel(c3__j, c3__seed, u3_nul);
     u3_noun tag = u3i_string("rekey");
-    u3_noun kyz = u3t(u3t(fed));
+    u3_noun kyz = u3x_t(u3x_t(fed));
     while ( u3_nul != kyz ) {
-      u3_noun cad = u3nc(u3k(tag), u3k(u3h(kyz)));
-      bot_u.use = u3nc(u3nc(u3k(wir), cad), bot_u.use);
-      kyz = u3t(kyz);
+      u3_noun cad = u3i_cell(u3a_gain(tag), u3a_gain(u3x_h(kyz)));
+      bot_u.use = u3i_cell(u3i_cell(u3a_gain(wir), cad), bot_u.use);
+      kyz = u3x_t(kyz);
     }
-    u3z(tag); u3z(wir);
+    u3a_lose(tag); u3a_lose(wir);
   }
 
   //  prepend legacy boot event to the userspace sequence
@@ -1766,13 +1766,13 @@ _pier_boot_make(u3_noun who,
     //
     c3_assert( c3y == u3a_is_cell(ven) );
 
-    u3_noun wir = u3nq(c3__d, c3__term, '1', u3_nul);
-    u3_noun cad = u3nt(c3__boot, u3_Host.ops_u.lit, ven); // transfer
+    u3_noun wir = u3i_qual(c3__d, c3__term, '1', u3_nul);
+    u3_noun cad = u3i_trel(c3__boot, u3_Host.ops_u.lit, ven); // transfer
 
-    bot_u.use = u3nc(u3nc(wir, cad), bot_u.use);
+    bot_u.use = u3i_cell(u3i_cell(wir, cad), bot_u.use);
   }
 
-  u3z(fed);
+  u3a_lose(fed);
   return bot_u;
 }
 
@@ -1788,7 +1788,7 @@ _pier_boot_plan(u3_pier* pir_u,
   u3_boot bot_u;
   {
     pir_u->sat_e = u3_psat_boot;
-    pir_u->fak_o = ( c3__fake == u3h(ven) ) ? c3y : c3n;
+    pir_u->fak_o = ( c3__fake == u3x_h(ven) ) ? c3y : c3n;
     u3r_chubs(0, 2, pir_u->who_d, who);
 
     bot_u = _pier_boot_make(who, _pier_wyrd_card(pir_u), ven, pil, fed);
@@ -1814,8 +1814,8 @@ _pier_boot_plan(u3_pier* pir_u,
     u3_noun fol = bot_u.bot;
 
     while ( u3_nul != fol ) {
-      u3_disk_boot_plan(pir_u->log_u, u3k(u3h(fol)));
-      fol = u3t(fol);
+      u3_disk_boot_plan(pir_u->log_u, u3a_gain(u3x_h(fol)));
+      fol = u3x_t(fol);
     }
   }
 
@@ -1834,27 +1834,27 @@ _pier_boot_plan(u3_pier* pir_u,
 
 
     while ( u3_nul != ova ) {
-      u3_disk_boot_plan(pir_u->log_u, u3nc(u3k(now), u3k(u3h(ova))));
-      now = u3ka_add(now, u3k(bit));
-      ova = u3t(ova);
+      u3_disk_boot_plan(pir_u->log_u, u3i_cell(u3a_gain(now), u3a_gain(u3x_h(ova))));
+      now = u3ka_add(now, u3a_gain(bit));
+      ova = u3x_t(ova);
     }
 
     ova = bot_u.use;
 
     while ( u3_nul != ova ) {
-      u3_disk_boot_plan(pir_u->log_u, u3nc(u3k(now), u3k(u3h(ova))));
-      now = u3ka_add(now, u3k(bit));
-      ova = u3t(ova);
+      u3_disk_boot_plan(pir_u->log_u, u3i_cell(u3a_gain(now), u3a_gain(u3x_h(ova))));
+      now = u3ka_add(now, u3a_gain(bit));
+      ova = u3x_t(ova);
     }
 
-    u3z(bit); u3z(now);
+    u3a_lose(bit); u3a_lose(now);
   }
 
   u3_disk_boot_save(pir_u->log_u);
 
-  u3z(bot_u.bot);
-  u3z(bot_u.mod);
-  u3z(bot_u.use);
+  u3a_lose(bot_u.bot);
+  u3a_lose(bot_u.mod);
+  u3a_lose(bot_u.use);
 
   return c3y;
 }
@@ -1887,7 +1887,7 @@ u3_pier_boot(c3_w  wag_w,                   //  config flags
     exit(1);
   }
 
-  u3z(pax);
+  u3a_lose(pax);
 
   return pir_u;
 }
@@ -2193,23 +2193,23 @@ _pier_dump_tape(FILE* fil_u, u3_noun tep)
 {
   u3_noun tap = tep;
 
-  while ( c3y == u3du(tap) ) {
+  while ( c3y == u3a_is_cell(tap) ) {
     c3_c car_c;
 
     //  XX this utf-8 caution is unwarranted
     //
     //    we already write() utf8 directly to streams in term.c
     //
-    // if ( u3h(tap) >= 127 ) {
+    // if ( u3x_h(tap) >= 127 ) {
     //   car_c = '?';
     // } else
-    car_c = u3h(tap);
+    car_c = u3x_h(tap);
 
     putc(car_c, fil_u);
-    tap = u3t(tap);
+    tap = u3x_t(tap);
   }
 
-  u3z(tep);
+  u3a_lose(tep);
 }
 
 /* _pier_dump_wall(): dump a wall, old style.  Don't do this.
@@ -2220,15 +2220,15 @@ _pier_dump_wall(FILE* fil_u, u3_noun wol)
   u3_noun wal = wol;
 
   while ( u3_nul != wal ) {
-    _pier_dump_tape(fil_u, u3k(u3h(wal)));
+    _pier_dump_tape(fil_u, u3a_gain(u3x_h(wal)));
 
     putc(13, fil_u);
     putc(10, fil_u);
 
-    wal = u3t(wal);
+    wal = u3x_t(wal);
   }
 
-  u3z(wol);
+  u3a_lose(wol);
 }
 
 /* u3_pier_tank(): dump single tank.
@@ -2237,7 +2237,7 @@ void
 u3_pier_tank(c3_l tab_l, c3_w pri_w, u3_noun tac)
 {
   u3_noun blu = u3_term_get_blew(0);
-  c3_l  col_l = u3h(blu);
+  c3_l  col_l = u3x_h(blu);
   FILE* fil_u = u3_term_io_hija();
 
   //  XX temporary, for urb.py test runner
@@ -2265,8 +2265,8 @@ u3_pier_tank(c3_l tab_l, c3_w pri_w, u3_noun tac)
   //  only print %leaf tanks
   //
   if ( 0 == u3A->roc ) {
-    if ( c3__leaf == u3h(tac) ) {
-      _pier_dump_tape(fil_u, u3k(u3t(tac)));
+    if ( c3__leaf == u3x_h(tac) ) {
+      _pier_dump_tape(fil_u, u3a_gain(u3x_t(tac)));
       putc(13, fil_u);
       putc(10, fil_u);
     }
@@ -2274,7 +2274,7 @@ u3_pier_tank(c3_l tab_l, c3_w pri_w, u3_noun tac)
   //  We are calling nock here, but hopefully need no protection.
   //
   else {
-    u3_noun wol = u3dc("wash", u3nc(tab_l, col_l), u3k(tac));
+    u3_noun wol = u3v_dc("wash", u3i_cell(tab_l, col_l), u3a_gain(tac));
 
     _pier_dump_wall(fil_u, wol);
   }
@@ -2286,8 +2286,8 @@ u3_pier_tank(c3_l tab_l, c3_w pri_w, u3_noun tac)
   fflush(fil_u);
 
   u3_term_io_loja(0);
-  u3z(blu);
-  u3z(tac);
+  u3a_lose(blu);
+  u3a_lose(tac);
 }
 
 /* u3_pier_punt(): dump tank list.
@@ -2297,12 +2297,12 @@ u3_pier_punt(c3_l tab_l, u3_noun tac)
 {
   u3_noun cat = tac;
 
-  while ( c3y == u3r_du(cat) ) {
-    u3_pier_tank(tab_l, 0, u3k(u3h(cat)));
-    cat = u3t(cat);
+  while ( c3y == u3a_is_cell(cat) ) {
+    u3_pier_tank(tab_l, 0, u3a_gain(u3x_h(cat)));
+    cat = u3x_t(cat);
   }
 
-  u3z(tac);
+  u3a_lose(tac);
 }
 
 /* u3_pier_punt_goof(): dump a [mote tang] crash report.
@@ -2324,7 +2324,7 @@ u3_pier_punt_goof(const c3_c* cap_c, u3_noun dud)
     c3_free(mot_c);
   }
 
-  u3z(bud);
+  u3a_lose(bud);
 }
 
 /* u3_pier_punt_ovum(): print ovum details.
@@ -2333,14 +2333,14 @@ void
 u3_pier_punt_ovum(const c3_c* cap_c, u3_noun wir, u3_noun tag)
 {
   c3_c* tag_c = u3r_string(tag);
-  u3_noun riw = u3do("spat", wir);
+  u3_noun riw = u3v_do("spat", wir);
   c3_c* wir_c = u3r_string(riw);
 
   u3l_log("%s: %%%s event on %s failed\r\n\n", cap_c, tag_c, wir_c);
 
   c3_free(tag_c);
   c3_free(wir_c);
-  u3z(riw);
+  u3a_lose(riw);
 }
 
 /* u3_pier_sway(): print trace.
@@ -2348,10 +2348,10 @@ u3_pier_punt_ovum(const c3_c* cap_c, u3_noun wir, u3_noun tag)
 void
 u3_pier_sway(c3_l tab_l, u3_noun tax)
 {
-  u3_noun mok = u3dc("mook", 2, tax);
+  u3_noun mok = u3v_dc("mook", 2, tax);
 
-  u3_pier_punt(tab_l, u3k(u3t(mok)));
-  u3z(mok);
+  u3_pier_punt(tab_l, u3a_gain(u3x_t(mok)));
+  u3a_lose(mok);
 }
 
 /* u3_pier_mark(): mark all Loom allocations in all u3_pier structs.

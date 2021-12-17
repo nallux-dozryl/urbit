@@ -55,6 +55,6 @@ u3kc_lsh(u3_noun a,
 {
   u3_noun d = u3qc_lsh(a, b, c);
 
-  u3z(a); u3z(b); u3z(c);
+  u3a_lose(a); u3a_lose(b); u3a_lose(c);
   return d;
 }

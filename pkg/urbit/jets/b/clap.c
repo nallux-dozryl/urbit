@@ -12,13 +12,13 @@
             u3_noun c)
   {
     if ( 0 == a ) {
-      return u3k(b);
+      return u3a_gain(b);
     }
     else if ( 0 == b ) {
-      return u3k(a);
+      return u3a_gain(a);
     }
     else {
-      return u3nc(0, u3n_slam_on(u3k(c), u3nc(u3k(u3t(a)), u3k(u3t(b)))));
+      return u3i_cell(0, u3n_slam_on(u3a_gain(c), u3i_cell(u3a_gain(u3x_t(a)), u3a_gain(u3x_t(b)))));
     }
   }
   u3_noun

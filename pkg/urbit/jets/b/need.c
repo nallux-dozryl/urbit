@@ -13,7 +13,7 @@
       return u3m_bail(c3__exit);
     }
     else {
-      return u3k(u3t(a));
+      return u3a_gain(u3x_t(a));
     }
   }
   u3_noun

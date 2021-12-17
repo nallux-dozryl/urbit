@@ -26,7 +26,7 @@ u3qb_scag(u3_atom a, u3_noun b)
         u3x_cell(t, &i, &t);
 
         *lit = u3i_defcons(&hed, &tel);
-        *hed = u3k(i);
+        *hed = u3a_gain(i);
         lit  = tel;
       }
     }
@@ -43,7 +43,7 @@ u3wb_scag(u3_noun cor)
   u3_noun a, b;
   u3x_mean(cor, u3x_sam_2, &a, u3x_sam_3, &b, 0);
 
-  if ( (c3n == u3ud(a)) && (u3_nul != b) ) {
+  if ( (c3n == u3a_is_atom(a)) && (u3_nul != b) ) {
     return u3m_bail(c3__exit);
   }
 

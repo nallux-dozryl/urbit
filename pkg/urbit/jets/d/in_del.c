@@ -12,10 +12,10 @@ _rebalance(u3_noun a)
   u3x_trel(a, &n_a, &l_a, &r_a);
 
   if ( u3_nul == l_a) {
-    return u3k(r_a);
+    return u3a_gain(r_a);
   }
   else if ( u3_nul == r_a) {
-    return u3k(l_a);
+    return u3a_gain(l_a);
   }
   else {
     u3_noun n_l_a, l_l_a, r_l_a;
@@ -24,26 +24,26 @@ _rebalance(u3_noun a)
     u3x_trel(r_a, &n_r_a, &l_r_a, &r_r_a);
 
     if ( c3y == u3qc_mor(n_l_a, n_r_a) ) {
-      u3_noun new_right = u3nt(u3k(n_a),
-                               u3k(r_l_a),
-                               u3k(r_a));
+      u3_noun new_right = u3i_trel(u3a_gain(n_a),
+                               u3a_gain(r_l_a),
+                               u3a_gain(r_a));
 
-      u3_noun ret = u3nt(u3k(n_l_a),
-                         u3k(l_l_a),
+      u3_noun ret = u3i_trel(u3a_gain(n_l_a),
+                         u3a_gain(l_l_a),
                          _rebalance(new_right));
-      u3z(new_right);
+      u3a_lose(new_right);
 
       return ret;
     }
     else {
-      u3_noun new_left = u3nt(u3k(n_a),
-                              u3k(l_a),
-                              u3k(l_r_a));
+      u3_noun new_left = u3i_trel(u3a_gain(n_a),
+                              u3a_gain(l_a),
+                              u3a_gain(l_r_a));
 
-      u3_noun ret = u3nt(u3k(n_r_a),
+      u3_noun ret = u3i_trel(u3a_gain(n_r_a),
                          _rebalance(new_left),
-                         u3k(r_r_a));
-      u3z(new_left);
+                         u3a_gain(r_r_a));
+      u3a_lose(new_left);
 
       return ret;
     }
@@ -66,13 +66,13 @@ u3qdi_del(u3_noun a,
     }
     else {
       if ( c3y == u3qc_gor(b, n_a) ) {
-        return u3nt(u3k(n_a),
+        return u3i_trel(u3a_gain(n_a),
                     u3qdi_del(l_a, b),
-                    u3k(r_a));
+                    u3a_gain(r_a));
       }
       else {
-        return u3nt(u3k(n_a),
-                    u3k(l_a),
+        return u3i_trel(u3a_gain(n_a),
+                    u3a_gain(l_a),
                     u3qdi_del(r_a, b));
       }
     }

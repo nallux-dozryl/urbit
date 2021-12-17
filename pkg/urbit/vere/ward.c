@@ -83,7 +83,7 @@ u3_fact_init(c3_d eve_d, c3_l mug_l, u3_noun job)
 void
 u3_fact_free(u3_fact *tac_u)
 {
-  u3z(tac_u->job);
+  u3a_lose(tac_u->job);
   c3_free(tac_u);
 }
 
@@ -105,7 +105,7 @@ u3_gift_init(c3_d eve_d, u3_noun act)
 void
 u3_gift_free(u3_gift *gif_u)
 {
-  u3z(gif_u->act);
+  u3a_lose(gif_u->act);
   c3_free(gif_u);
 }
 
@@ -133,7 +133,7 @@ u3_ovum_init(c3_w     mil_w,
 
   //  spinner defaults
   //
-  egg_u->pin_u.lab   = u3k(u3h(wir));
+  egg_u->pin_u.lab   = u3a_gain(u3x_h(wir));
   egg_u->pin_u.del_o = c3y;
 
   return egg_u;
@@ -144,10 +144,10 @@ u3_ovum_init(c3_w     mil_w,
 void
 u3_ovum_free(u3_ovum *egg_u)
 {
-  u3z(egg_u->pin_u.lab);
-  u3z(egg_u->tar);
-  u3z(egg_u->wir);
-  u3z(egg_u->cad);
+  u3a_lose(egg_u->pin_u.lab);
+  u3a_lose(egg_u->tar);
+  u3a_lose(egg_u->wir);
+  u3a_lose(egg_u->cad);
 
   c3_free(egg_u);
 }
@@ -166,18 +166,18 @@ u3_pico_init()
 void
 u3_pico_free(u3_pico* pic_u)
 {
-  u3z(pic_u->gan);
+  u3a_lose(pic_u->gan);
 
   switch ( pic_u->typ_e ) {
     default: c3_assert(0);
 
     case u3_pico_full: {
-      u3z(pic_u->ful);
+      u3a_lose(pic_u->ful);
     } break;
 
     case u3_pico_once: {
-      u3z(pic_u->las_u.des);
-      u3z(pic_u->las_u.pax);
+      u3a_lose(pic_u->las_u.des);
+      u3a_lose(pic_u->las_u.pax);
     } break;
   }
 
@@ -205,7 +205,7 @@ u3_mcut_cord(c3_c* buf_c, c3_w len_w, u3_noun san)
   if ( buf_c ) {
     u3r_bytes(0, ten_w, (c3_y *)(buf_c + len_w), san);
   }
-  u3z(san);
+  u3a_lose(san);
   return (len_w + ten_w);
 }
 
@@ -217,16 +217,16 @@ u3_mcut_path(c3_c* buf_c, c3_w len_w, c3_c sep_c, u3_noun pax)
   u3_noun axp = pax;
 
   while ( u3_nul != axp ) {
-    u3_noun h_axp = u3h(axp);
+    u3_noun h_axp = u3x_h(axp);
 
-    len_w = u3_mcut_cord(buf_c, len_w, u3k(h_axp));
-    axp = u3t(axp);
+    len_w = u3_mcut_cord(buf_c, len_w, u3a_gain(h_axp));
+    axp = u3x_t(axp);
 
     if ( u3_nul != axp ) {
       len_w = u3_mcut_char(buf_c, len_w, sep_c);
     }
   }
-  u3z(pax);
+  u3a_lose(pax);
   return len_w;
 }
 
@@ -235,7 +235,7 @@ u3_mcut_path(c3_c* buf_c, c3_w len_w, c3_c sep_c, u3_noun pax)
 c3_w
 u3_mcut_host(c3_c* buf_c, c3_w len_w, u3_noun hot)
 {
-  len_w = u3_mcut_path(buf_c, len_w, '.', u3kb_flop(u3k(hot)));
-  u3z(hot);
+  len_w = u3_mcut_path(buf_c, len_w, '.', u3kb_flop(u3a_gain(hot)));
+  u3a_lose(hot);
   return len_w;
 }

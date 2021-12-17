@@ -16,11 +16,11 @@ _in_run(u3_noun a, u3j_site* sit_u, u3_noun* out)
     u3x_trel(a, &n_a, &l_a, &r_a);
 
     {
-      u3_noun new = u3j_gate_slam(sit_u, u3k(n_a));
+      u3_noun new = u3j_gate_slam(sit_u, u3a_gain(n_a));
       u3_noun pro = u3qdi_put(*out, new);
 
-      u3z(new);
-      u3z(*out);
+      u3a_lose(new);
+      u3a_lose(*out);
       *out = pro;
     }
 
@@ -35,7 +35,7 @@ u3qdi_run(u3_noun a, u3_noun b)
   u3_noun    out = u3_nul;
   u3j_site sit_u;
 
-  u3j_gate_prep(&sit_u, u3k(b));
+  u3j_gate_prep(&sit_u, u3a_gain(b));
   _in_run(a, &sit_u, &out);
   u3j_gate_lose(&sit_u);
 

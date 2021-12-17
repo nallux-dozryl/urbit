@@ -41,7 +41,7 @@ _behn_wake_bail(u3_ovum* egg_u, u3_noun lud)
   if (  (2 > egg_u->try_w)
      && (c3n == _behn_bail_dire(lud)) )
   {
-    u3z(lud);
+    u3a_lose(lud);
     u3_auto_redo(car_u, egg_u);
   }
   else {
@@ -80,8 +80,8 @@ _behn_time_cb(uv_timer_t* tim_u)
   // send timer event
   //
   {
-    u3_noun wir = u3nc(c3__behn, u3_nul);
-    u3_noun cad = u3nc(c3__wake, u3_nul);
+    u3_noun wir = u3i_cell(c3__behn, u3_nul);
+    u3_noun cad = u3i_cell(c3__wake, u3_nul);
 
     u3_auto_peer(
       u3_auto_plan(&teh_u->car_u, u3_ovum_init(0, c3__b, wir, cad)),
@@ -104,20 +104,20 @@ _behn_ef_doze(u3_behn* teh_u, u3_noun wen)
   }
 
   if ( (u3_nul != wen) &&
-       (c3y == u3du(wen)) &&
-       (c3y == u3ud(u3t(wen))) )
+       (c3y == u3a_is_cell(wen)) &&
+       (c3y == u3a_is_atom(u3x_t(wen))) )
   {
     struct timeval tim_tv;
     gettimeofday(&tim_tv, 0);
 
     u3_noun now = u3_time_in_tv(&tim_tv);
-    c3_d gap_d = u3_time_gap_ms(now, u3k(u3t(wen)));
+    c3_d gap_d = u3_time_gap_ms(now, u3a_gain(u3x_t(wen)));
 
     teh_u->alm_o = c3y;
     uv_timer_start(&teh_u->tim_u, _behn_time_cb, gap_d, 0);
   }
 
-  u3z(wen);
+  u3a_lose(wen);
 }
 
 /* _behn_born_news(): initialization complete on %born.
@@ -142,7 +142,7 @@ _behn_born_bail(u3_ovum* egg_u, u3_noun lud)
   if (  (2 > egg_u->try_w)
      && (c3n == _behn_bail_dire(lud)) )
   {
-    u3z(lud);
+    u3a_lose(lud);
     u3_auto_redo(car_u, egg_u);
   }
   else {
@@ -165,10 +165,10 @@ _behn_io_talk(u3_auto* car_u)
 
   //  XX remove [sev_l]
   //
-  u3_noun wir = u3nt(c3__behn,
-                     u3dc("scot", c3__uv, teh_u->sev_l),
+  u3_noun wir = u3i_trel(c3__behn,
+                     u3v_dc("scot", c3__uv, teh_u->sev_l),
                      u3_nul);
-  u3_noun cad = u3nc(c3__born, u3_nul);
+  u3_noun cad = u3i_cell(c3__born, u3_nul);
 
   u3_auto_peer(
     u3_auto_plan(car_u, u3_ovum_init(0, c3__b, wir, cad)),
@@ -196,10 +196,10 @@ _behn_io_kick(u3_auto* car_u, u3_noun wir, u3_noun cad)
   }
   else {
     ret_o = c3y;
-    _behn_ef_doze(teh_u, u3k(dat));
+    _behn_ef_doze(teh_u, u3a_gain(dat));
   }
 
-  u3z(wir); u3z(cad);
+  u3a_lose(wir); u3a_lose(cad);
   return ret_o;
 }
 
@@ -247,7 +247,7 @@ u3_behn_io_init(u3_pier* pir_u)
 
     now = u3_time_in_tv(&tim_u);
     teh_u->sev_l = u3r_mug(now);
-    u3z(now);
+    u3a_lose(now);
   }
 
   return car_u;

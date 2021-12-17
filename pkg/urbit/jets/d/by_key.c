@@ -16,8 +16,8 @@ _by_key(u3_noun a, u3_noun set)
     u3x_trel(a, &n_a, &l_a, &r_a);
 
     {
-      u3_noun new = u3qdi_put(set, u3h(n_a));
-      u3z(set);
+      u3_noun new = u3qdi_put(set, u3x_h(n_a));
+      u3a_lose(set);
       set = new;
     }
 

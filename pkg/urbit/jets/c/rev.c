@@ -29,9 +29,9 @@
     if ( (c3n == u3r_mean(cor, u3x_sam_2, &boz,
                                u3x_sam_6, &len,
                                u3x_sam_7, &dat, 0)) ||
-         (c3n == u3ud(boz)) ||
-         (c3n == u3ud(len)) ||
-         (c3n == u3ud(dat)) )
+         (c3n == u3a_is_atom(boz)) ||
+         (c3n == u3a_is_atom(len)) ||
+         (c3n == u3a_is_atom(dat)) )
     {
       return u3m_bail(c3__exit);
     } else {
@@ -45,6 +45,6 @@
            u3_atom dat)
   {
     u3_noun res = u3qc_rev(boz, len, dat);
-    u3z(boz); u3z(len); u3z(dat);
+    u3a_lose(boz); u3a_lose(len); u3a_lose(dat);
     return res;
   }

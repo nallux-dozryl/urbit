@@ -30,7 +30,7 @@ _newt_encode(u3_atom mat, c3_w* len_w)
   buf_y[4] = buf_y[5] = buf_y[6] = buf_y[7] = 0;
 
   u3r_bytes(0, met_w, buf_y + 8, mat);
-  u3z(mat);
+  u3a_lose(mat);
 
   return buf_y;
 }
@@ -68,7 +68,7 @@ _test_newt_smol(void)
   {
     mot_u.ent_u = mot_u.ext_u = 0;
 
-    buf_y = _newt_encode(u3k(a), &len_w);
+    buf_y = _newt_encode(u3a_gain(a), &len_w);
     u3_newt_decode(&mot_u, buf_y, len_w);
 
     if ( 1 != _moat_length(&mot_u) ) {
@@ -82,7 +82,7 @@ _test_newt_smol(void)
   {
     mot_u.ent_u = mot_u.ext_u = 0;
 
-    buf_y = _newt_encode(u3k(a), &len_w);
+    buf_y = _newt_encode(u3a_gain(a), &len_w);
 
     buf_y = c3_realloc(buf_y, 2 * len_w);
     memcpy(buf_y + len_w, buf_y, len_w);
@@ -103,7 +103,7 @@ _test_newt_smol(void)
 
     mot_u.ent_u = mot_u.ext_u = 0;
 
-    buf_y = _newt_encode(u3k(a), &len_w);
+    buf_y = _newt_encode(u3a_gain(a), &len_w);
 
     end_y = c3_malloc(1);
     end_y[0] = buf_y[len_w - 1];
@@ -131,7 +131,7 @@ _test_newt_smol(void)
 
     mot_u.ent_u = mot_u.ext_u = 0;
 
-    buf_y = _newt_encode(u3k(a), &len_w);
+    buf_y = _newt_encode(u3a_gain(a), &len_w);
 
     dub_w = 2 * len_w;
     haf_w = len_w / 2;
@@ -161,7 +161,7 @@ _test_newt_smol(void)
     }
   }
 
-  u3z(a);
+  u3a_lose(a);
 }
 
 /* _test_newt_vast(): various scenarios with larger messages
@@ -183,7 +183,7 @@ _test_newt_vast(void)
   {
     mot_u.ent_u = mot_u.ext_u = 0;
 
-    buf_y = _newt_encode(u3k(a), &len_w);
+    buf_y = _newt_encode(u3a_gain(a), &len_w);
     u3_newt_decode(&mot_u, buf_y, len_w);
 
     if ( 1 != _moat_length(&mot_u) ) {
@@ -197,7 +197,7 @@ _test_newt_vast(void)
   {
     mot_u.ent_u = mot_u.ext_u = 0;
 
-    buf_y = _newt_encode(u3k(a), &len_w);
+    buf_y = _newt_encode(u3a_gain(a), &len_w);
 
     buf_y = c3_realloc(buf_y, 2 * len_w);
     memcpy(buf_y + len_w, buf_y, len_w);
@@ -216,7 +216,7 @@ _test_newt_vast(void)
   {
     mot_u.ent_u = mot_u.ext_u = 0;
 
-    buf_y = _newt_encode(u3k(a), &len_w);
+    buf_y = _newt_encode(u3a_gain(a), &len_w);
 
     {
       c3_y* cop_y = c3_malloc(len_w);
@@ -255,7 +255,7 @@ _test_newt_vast(void)
 
     mot_u.ent_u = mot_u.ext_u = 0;
 
-    buf_y = _newt_encode(u3k(a), &len_w);
+    buf_y = _newt_encode(u3a_gain(a), &len_w);
 
     dub_w = 2 * len_w;
     haf_w = len_w / 2;
@@ -292,7 +292,7 @@ _test_newt_vast(void)
 
     mot_u.ent_u = mot_u.ext_u = 0;
 
-    buf_y = _newt_encode(u3k(a), &len_w);
+    buf_y = _newt_encode(u3a_gain(a), &len_w);
 
     dub_w = 2 * len_w;
 
@@ -330,7 +330,7 @@ _test_newt_vast(void)
     }
   }
 
-  u3z(a);
+  u3a_lose(a);
 }
 
 /* main(): run all test cases.

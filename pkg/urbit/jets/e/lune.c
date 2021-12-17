@@ -21,22 +21,22 @@
       }
 
       if (pos_w == 0) {
-        return u3nc(u3_nul, lin);
+        return u3i_cell(u3_nul, lin);
       }
 
       while (--pos_w) {
         if (u3r_byte(pos_w, lub) == 10) {
-          lin = u3nc(u3qc_cut(3, (pos_w + 1), (end_w - pos_w - 1), lub), lin);
+          lin = u3i_cell(u3qc_cut(3, (pos_w + 1), (end_w - pos_w - 1), lub), lin);
           end_w = pos_w;
         }
       }
 
       if (u3r_byte(pos_w, lub) == 10) {
-        return u3nc(u3_nul,
-                    u3nc(u3qc_cut(3, (pos_w + 1), (end_w - pos_w - 1), lub), lin));
+        return u3i_cell(u3_nul,
+                    u3i_cell(u3qc_cut(3, (pos_w + 1), (end_w - pos_w - 1), lub), lin));
       }
 
-      return u3nc(u3qc_cut(3, pos_w, (end_w - pos_w), lub), lin);
+      return u3i_cell(u3qc_cut(3, pos_w, (end_w - pos_w), lub), lin);
     }
   }
 
@@ -46,7 +46,7 @@
     u3_noun lub;
 
     if ( (u3_none == (lub = u3r_at(u3x_sam, cor))) ||
-         (c3n == u3ud(lub)) )
+         (c3n == u3a_is_atom(lub)) )
     {
       return u3m_bail(c3__fail);
     } else {

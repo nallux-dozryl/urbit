@@ -14,9 +14,9 @@
 
     if ( c3y == u3r_p(vur, 1, &p_vur) &&
          c3y == u3r_p(sed, 1, &p_sed) ) {
-      return u3nt(1,
-                  u3k(p_vur),
-                  u3k(p_sed));
+      return u3i_trel(1,
+                  u3a_gain(p_vur),
+                  u3a_gain(p_sed));
     }
 #if 0
     else if ( c3y == u3r_p(vur, 0, &p_vur) &&
@@ -29,17 +29,17 @@
       u3_atom nof = u3qa_div(p_sed, 2);
 
       if ( c3y == u3r_sing(fub, nof) ) {
-        u3z(nof);
+        u3a_lose(nof);
 
-        return u3nc(0, fub);
+        return u3i_cell(0, fub);
       }
       else {
-        u3z(fub);
-        u3z(nof);
+        u3a_lose(fub);
+        u3a_lose(nof);
       }
     }
 #endif
-    return u3nc(u3k(vur), u3k(sed));
+    return u3i_cell(u3a_gain(vur), u3a_gain(sed));
   }
   u3_noun
   u3wf_cons(u3_noun cor)

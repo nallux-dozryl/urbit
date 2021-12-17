@@ -18,7 +18,7 @@
     else {
       u3_noun som;
 
-      som = u3n_nock_et(u3k(gul), u3k(bus), u3k(fol));
+      som = u3n_nock_et(u3a_gain(gul), u3a_gain(bus), u3a_gain(fol));
 
       return som;
     }

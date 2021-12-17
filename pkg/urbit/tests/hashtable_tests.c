@@ -145,18 +145,18 @@ _test_cache_trimming(void)
   u3h_root*     har_u = u3to(u3h_root, har_p);
 
   for ( i_w = 0; i_w < max_w; i_w++ ) {
-    u3_noun cel = u3nc(i_w, i_w);
+    u3_noun cel = u3i_cell(i_w, i_w);
     u3h_put(har_p, cel, cel);
   }
 
   {
     // last thing we put in is still there
     c3_w  las_w = max_w - 1;
-    u3_noun key = u3nc(las_w, las_w);
+    u3_noun key = u3i_cell(las_w, las_w);
     u3_noun val = u3h_get(har_p, key);
-    u3z(key);
+    u3a_lose(key);
 
-    if ( las_w != u3t(val) ) {
+    if ( las_w != u3x_t(val) ) {
       fprintf(stderr, "cache_trimming (a): fail\r\n");
       ret_i = 0;
     }
@@ -167,7 +167,7 @@ _test_cache_trimming(void)
       ret_i = 0;
     }
 
-    u3z(val);
+    u3a_lose(val);
   }
 
   u3h_free(har_p);

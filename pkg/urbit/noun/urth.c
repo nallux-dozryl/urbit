@@ -319,7 +319,7 @@ _cu_all_to_loom(ur_root_t* rot_u, ur_nref ken, ur_nvec_t* cod_u)
     lom_u.cel = c3_calloc(fil_d * sizeof(u3_noun));
 
     for ( i_d = 0; i_d < fil_d; i_d++ ) {
-      cel = u3nc(_cu_ref_to_noun(rot_u, hed[i_d], &lom_u),
+      cel = u3i_cell(_cu_ref_to_noun(rot_u, hed[i_d], &lom_u),
                  _cu_ref_to_noun(rot_u, tal[i_d], &lom_u));
       lom_u.cel[i_d] = cel;
       u3r_mug(cel);
@@ -341,8 +341,8 @@ _cu_all_to_loom(ur_root_t* rot_u, ur_nref ken, ur_nvec_t* cod_u)
     for ( i_d = 0; i_d < max_d; i_d++) {
       ref = cod_u->refs[i_d];
       kev = lom_u.cel[ur_nref_idx(ref)];
-      u3h_put(u3R->jed.cod_p, u3h(kev), u3k(u3t(kev)));
-      u3z(kev);
+      u3h_put(u3R->jed.cod_p, u3x_h(kev), u3a_gain(u3x_t(kev)));
+      u3a_lose(kev);
     }
   }
 
@@ -867,15 +867,15 @@ u3u_uncram(c3_c* dir_c, c3_d eve_d)
             || (c3n == u3r_sing_c("hashboard", tag)) )
    {
       fprintf(stderr, "uncram: failed: invalid rock format\r\n");
-      u3z(ref);
+      u3a_lose(ref);
       c3_free(nam_c);
       return c3n;
     }
 
-    u3A->roc = u3k(roc);
-    u3j_load(u3k(cod));
+    u3A->roc = u3a_gain(roc);
+    u3j_load(u3a_gain(cod));
 
-    u3z(ref);
+    u3a_lose(ref);
   }
 
   u3u_munmap(len_d, byt_y);

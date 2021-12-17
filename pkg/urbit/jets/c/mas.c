@@ -22,9 +22,9 @@
       e = u3qa_sub(a, c);
       f = u3qc_con(e, d);
 
-      u3z(c);
-      u3z(d);
-      u3z(e);
+      u3a_lose(c);
+      u3a_lose(d);
+      u3a_lose(e);
 
       return f;
     }
@@ -35,7 +35,7 @@
     u3_noun a;
 
     if ( (u3_none == (a = u3r_at(u3x_sam, cor))) ||
-         (c3n == u3ud(a)) )
+         (c3n == u3a_is_atom(a)) )
     {
       return u3m_bail(c3__exit);
     } else {

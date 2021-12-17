@@ -92,14 +92,14 @@ u3_auto_bail_slog(u3_ovum* egg_u, u3_noun lud)
 
   while ( u3_nul != dul ) {
     u3l_log("%s: bail %u\r\n", car_c, len_w++);
-    u3_pier_punt_goof(car_c, u3k(u3h(dul)));
+    u3_pier_punt_goof(car_c, u3a_gain(u3x_h(dul)));
 
-    dul = u3t(dul);
+    dul = u3x_t(dul);
   }
 
-  u3_pier_punt_ovum(car_c, u3k(egg_u->wir), u3k(u3h(egg_u->cad)));
+  u3_pier_punt_ovum(car_c, u3a_gain(egg_u->wir), u3a_gain(u3x_h(egg_u->cad)));
 
-  u3z(lud);
+  u3a_lose(lud);
   c3_free(car_c);
 }
 
@@ -221,8 +221,8 @@ u3_auto_next(u3_auto* car_u, u3_noun* ovo)
 
       u3_auto_work(egg_u);
 
-      *ovo = u3nc(u3nc(u3k(egg_u->tar), u3k(egg_u->wir)),
-                  u3k(egg_u->cad));
+      *ovo = u3i_cell(u3i_cell(u3a_gain(egg_u->tar), u3a_gain(egg_u->wir)),
+                  u3a_gain(egg_u->cad));
 
       return egg_u;
     }
@@ -236,15 +236,15 @@ u3_auto_next(u3_auto* car_u, u3_noun* ovo)
 static void
 _auto_kick_lost(u3_noun pax, u3_noun fav)
 {
-  u3_noun tox = u3do("spat", u3k(pax));
-  c3_c* tag_c = u3r_string(u3h(fav));
+  u3_noun tox = u3v_do("spat", u3a_gain(pax));
+  c3_c* tag_c = u3r_string(u3x_h(fav));
   c3_c* pax_c = u3r_string(tox);
 
   u3l_log("kick: lost %%%s on %s\n", tag_c, pax_c);
 
   c3_free(pax_c);
   c3_free(tag_c);
-  u3z(tox);
+  u3a_lose(tox);
 }
 
 /* _auto_kick(): kick with leak label.
@@ -267,7 +267,7 @@ u3_auto_kick(u3_auto* car_u, u3_noun act)
   u3_noun    fec, pax, wir, cad;
 
   while ( u3_nul != act ) {
-    fec = u3h(act);
+    fec = u3x_h(act);
     u3x_cell(fec, &pax, &cad);
 
     //  XX temporary backwards compatibility, remove
@@ -276,7 +276,7 @@ u3_auto_kick(u3_auto* car_u, u3_noun act)
       wir = pax;
     }
 
-    while ( c3n == _auto_kick(car_u, u3k(wir), u3k(cad)) ) {
+    while ( c3n == _auto_kick(car_u, u3a_gain(wir), u3a_gain(cad)) ) {
       if ( car_u->nex_u ) {
         car_u = car_u->nex_u;
         continue;
@@ -288,7 +288,7 @@ u3_auto_kick(u3_auto* car_u, u3_noun act)
     }
 
     car_u = rac_u;
-    act   = u3t(act);
+    act   = u3x_t(act);
   }
 }
 

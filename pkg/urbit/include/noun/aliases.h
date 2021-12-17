@@ -71,39 +71,25 @@
 
   /**  Aliases.
   **/
-    /* u3h(), u3t(), u3at(): noun fragments.
+    /* u3x_h(), u3x_t(), u3x_at(): noun fragments.
     */
-#     define u3h(som)          u3x_h(som)
-#     define u3t(som)          u3x_t(som)
-#     define u3at(axe, som)    u3x_at(axe, som)
 
-    /* u3nc(), u3nt(), u3nq(): tuple composition.
+    /* u3i_cell(), u3i_trel(), u3i_qual(): tuple composition.
     */
-#     define u3nc(a, b)        u3i_cell(a, b)
-#     define u3nt(a, b, c)     u3i_trel(a, b, c)
-#     define u3nq(a, b, c, d)  u3i_qual(a, b, c, d)
 
 
-    /* u3nl(), u3_none-terminated varargs list
+    /* u3i_list(), u3_none-terminated varargs list
     */
 #     define u3nl              u3i_list
 
-    /* u3du(), u3ud(): noun/cell test.
+    /* u3a_is_cell(), u3a_is_atom(): noun/cell test.
     */
-#     define u3du(som)         (u3r_du(som))
-#     define u3ud(som)         (u3r_ud(som))
 
-    /* u3k(), u3z(): reference counts.
+    /* u3a_gain(), u3a_lose(): reference counts.
     */
-#     define u3k(som)          u3a_gain(som)
-#     define u3z(som)          u3a_lose(som)
 
-    /* u3do(), u3dc(), u3dt(), u3dq(): arvo calls.
+    /* u3v_do(), u3v_dc(), u3v_dt(), u3v_dq(): arvo calls.
     */
-#     define  u3do(txt_c, arg)         u3v_do(txt_c, arg)
-#     define  u3dc(txt_c, a, b)        u3v_do(txt_c, u3nc(a, b))
-#     define  u3dt(txt_c, a, b, c)     u3v_do(txt_c, u3nt(a, b, c))
-#     define  u3dq(txt_c, a, b, c, d)  u3v_do(txt_c, u3nq(a, b, c, d))
 
     /* u3to(), u3of(): offset/pointer conversion.
     */

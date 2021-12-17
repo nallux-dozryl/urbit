@@ -299,7 +299,7 @@ static inline u3_noun
 _cs_rub(u3_atom cur, u3_atom a)
 {
   u3_noun pro = u3qe_rub(cur, a);
-  u3z(cur);
+  u3a_lose(cur);
   return pro;
 }
 
@@ -324,12 +324,12 @@ _cs_cue_next(u3a_pile*     pil_u,
     //
     if ( 0 == tag_y ) {
       u3_noun bur = _cs_rub(u3i_vint(cur), a);
-      u3_noun pro = u3k(u3t(bur));
+      u3_noun pro = u3a_gain(u3x_t(bur));
 
-      u3h_put(har_p, cur, u3k(pro));
-      *wid = u3qa_inc(u3h(bur));
+      u3h_put(har_p, cur, u3a_gain(pro));
+      *wid = u3qa_inc(u3x_h(bur));
 
-      u3z(bur);
+      u3a_lose(bur);
       return pro;
     }
     else {
@@ -338,7 +338,7 @@ _cs_cue_next(u3a_pile*     pil_u,
       {
         u3_noun x = u3qa_inc(cur);
         tag_y = u3qc_cut(0, x, 1, a);
-        u3z(x);
+        u3a_lose(x);
       }
 
       //  next bit set, (2 + cur) points to a backref
@@ -347,11 +347,11 @@ _cs_cue_next(u3a_pile*     pil_u,
       //
       if ( 1 == tag_y ) {
         u3_noun bur = _cs_rub(u3ka_add(2, cur), a);
-        u3_noun pro = u3x_good(u3h_get(har_p, u3t(bur)));
+        u3_noun pro = u3x_good(u3h_get(har_p, u3x_t(bur)));
 
-        *wid = u3qa_add(2, u3h(bur));
+        *wid = u3qa_add(2, u3x_h(bur));
 
-        u3z(bur);
+        u3a_lose(bur);
         return pro;
       }
       //  next bit unset, (2 + cur) points to the head of a cell
@@ -422,16 +422,16 @@ u3s_cue(u3_atom a)
       //  tail-frame: cons cell, recalculate [wid], and pop the stack
       //
       else {
-        pro   = u3nc(fam_u->hed, pro);
-        u3h_put(har_p, fam_u->cur, u3k(pro));
-        u3z(fam_u->cur);
+        pro   = u3i_cell(fam_u->hed, pro);
+        u3h_put(har_p, fam_u->cur, u3a_gain(pro));
+        u3a_lose(fam_u->cur);
         wid   = u3ka_add(2, u3ka_add(wid, fam_u->wid));
         fam_u = u3a_pop(&pil_u);
       }
     } while ( c3n == u3a_pile_done(&pil_u) );
   }
 
-  u3z(wid);
+  u3a_lose(wid);
   u3h_free(har_p);
 
   return pro;
@@ -494,7 +494,7 @@ _cs_cue_xeno_next(u3a_pile*    pil_u,
             return ur_cue_back;
           }
 
-          *out = u3k((u3_noun)bak_w);
+          *out = u3a_gain((u3_noun)bak_w);
           return ur_cue_good;
         }
       }
@@ -585,7 +585,7 @@ _cs_cue_xeno(u3_cue_xeno* sil_u,
       else {
         ur_root_t* rot_u = 0;
 
-        ref   = u3nc(fam_u->ref, ref);
+        ref   = u3i_cell(fam_u->ref, ref);
         ur_dict32_put(rot_u, dic_u, fam_u->bit_d, ref);
         fam_u = u3a_pop(&pil_u);
       }
@@ -602,7 +602,7 @@ _cs_cue_xeno(u3_cue_xeno* sil_u,
   else if ( c3n == u3a_pile_done(&pil_u) ) {
     do {
       if ( u3_none != fam_u->ref ) {
-        u3z(fam_u->ref);
+        u3a_lose(fam_u->ref);
       }
       fam_u = u3a_pop(&pil_u);
     }
@@ -698,7 +698,7 @@ _cs_cue_get(u3p(u3h_root) har_p, c3_d key_d)
 {
   u3_atom key = _cs_coin_chub(key_d);
   u3_weak pro = u3h_get(har_p, key);
-  u3z(key);
+  u3a_lose(key);
   return pro;
 }
 
@@ -708,8 +708,8 @@ static inline u3_noun
 _cs_cue_put(u3p(u3h_root) har_p, c3_d key_d, u3_noun val)
 {
   u3_atom key = _cs_coin_chub(key_d);
-  u3h_put(har_p, key, u3k(val));
-  u3z(key);
+  u3h_put(har_p, key, u3a_gain(val));
+  u3a_lose(key);
   return val;
 }
 
@@ -822,7 +822,7 @@ u3s_cue_bytes(c3_d len_d, const c3_y* byt_y)
       //  f is a tail-frame; pop the stack and continue
       //
       else {
-        ref   = u3nc(fam_u->ref, ref);
+        ref   = u3i_cell(fam_u->ref, ref);
         _cs_cue_put(har_p, fam_u->bit_d, ref);
         fam_u = u3a_pop(&pil_u);
       }

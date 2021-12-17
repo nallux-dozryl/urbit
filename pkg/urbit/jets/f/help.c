@@ -13,9 +13,9 @@
     if ( c3__void == tip ) {
       return c3__void;
     }
-    else return u3nt(c3__help,
-                     u3k(sag),
-                     u3k(tip));
+    else return u3i_trel(c3__help,
+                     u3a_gain(sag),
+                     u3a_gain(tip));
   }
   u3_noun
   u3wf_help(u3_noun cor)

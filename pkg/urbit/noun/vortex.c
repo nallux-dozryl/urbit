@@ -14,11 +14,11 @@
 u3_noun
 u3v_life(u3_noun eve)
 {
-  u3_noun lyf = u3nt(2, u3nc(0, 3), u3nc(0, 2));
+  u3_noun lyf = u3i_trel(2, u3i_cell(0, 3), u3i_cell(0, 2));
   u3_noun gat = u3n_nock_on(eve, lyf);
-  u3_noun cor = u3k(u3x_at(7, gat));
+  u3_noun cor = u3a_gain(u3x_at(7, gat));
 
-  u3z(gat);
+  u3a_lose(gat);
   return cor;
 }
 
@@ -34,13 +34,13 @@ u3v_boot(u3_noun eve)
   {
     u3_noun pro = u3m_soft(0, u3v_life, eve);
 
-    if ( u3_blip != u3h(pro) ) {
-      u3z(pro);
+    if ( u3_blip != u3x_h(pro) ) {
+      u3a_lose(pro);
       return c3n;
     }
 
-    u3A->roc = u3k(u3t(pro));
-    u3z(pro);
+    u3A->roc = u3a_gain(u3x_t(pro));
+    u3a_lose(pro);
   }
 
   return c3y;
@@ -61,10 +61,10 @@ _cv_lite(u3_noun pil)
   }
 
   u3l_log("lite: arvo formula %x\r\n", u3r_mug(pil));
-  pro = u3v_life(u3k(eve));
+  pro = u3v_life(u3a_gain(eve));
   u3l_log("lite: core %x\r\n", u3r_mug(pro));
 
-  u3z(pil);
+  u3a_lose(pil);
   return pro;
 }
 
@@ -80,13 +80,13 @@ u3v_boot_lite(u3_noun pil)
   {
     u3_noun pro = u3m_soft(0, _cv_lite, pil);
 
-    if ( u3_blip != u3h(pro) ) {
-      u3z(pro);
+    if ( u3_blip != u3x_h(pro) ) {
+      u3a_lose(pro);
       return c3n;
     }
 
-    u3A->roc = u3k(u3t(pro));
-    u3z(pro);
+    u3A->roc = u3a_gain(u3x_t(pro));
+    u3a_lose(pro);
   }
 
   u3l_log("lite: final state %x\r\n", u3r_mug(u3A->roc));
@@ -101,7 +101,7 @@ _cv_nock_wish(u3_noun txt)
 {
   u3_noun fun, pro;
 
-  fun = u3n_nock_on(u3k(u3A->roc), u3k(u3x_at(_CVX_WISH, u3A->roc)));
+  fun = u3n_nock_on(u3a_gain(u3A->roc), u3a_gain(u3x_at(_CVX_WISH, u3A->roc)));
   pro = u3n_slam_on(fun, txt);
 
   return pro;
@@ -114,22 +114,22 @@ u3v_wish(const c3_c* str_c)
 {
   u3t_event_trace("u3v_wish", 'b');
   u3_noun txt = u3i_string(str_c);
-  u3_weak exp = u3kdb_get(u3k(u3A->yot), u3k(txt));
+  u3_weak exp = u3kdb_get(u3a_gain(u3A->yot), u3a_gain(txt));
 
   if ( u3_none == exp ) {
-    exp = _cv_nock_wish(u3k(txt));
+    exp = _cv_nock_wish(u3a_gain(txt));
 
     //  It's probably not a good idea to use u3v_wish()
     //  outside the top level... (as the result is uncached)
     //
     if ( u3R == &u3H->rod_u ) {
-      u3A->yot = u3kdb_put(u3A->yot, u3k(txt), u3k(exp));
+      u3A->yot = u3kdb_put(u3A->yot, u3a_gain(txt), u3a_gain(exp));
     }
   }
 
   u3t_event_trace("u3v_wish", 'e');
 
-  u3z(txt);
+  u3a_lose(txt);
   return exp;
 }
 
@@ -160,7 +160,7 @@ u3v_do(const c3_c* txt_c, u3_noun sam)
 static u3_noun
 _cv_scot(u3_noun dim)
 {
-  return u3do("scot", dim);
+  return u3v_do("scot", dim);
 }
 
 /* u3v_time(): set the reck time.
@@ -168,7 +168,7 @@ _cv_scot(u3_noun dim)
 void
 u3v_time(u3_noun now)
 {
-  u3z(u3A->now);
+  u3a_lose(u3A->now);
   u3A->now = now;
 }
 
@@ -189,7 +189,7 @@ _cv_time_bump(u3_reck* rec_u)
 u3_noun
 u3v_peek(u3_noun sam)
 {
-  u3_noun fun = u3n_nock_on(u3k(u3A->roc), u3k(u3x_at(_CVX_PEEK, u3A->roc)));
+  u3_noun fun = u3n_nock_on(u3a_gain(u3A->roc), u3a_gain(u3x_at(_CVX_PEEK, u3A->roc)));
   return u3n_slam_on(fun, sam);
 }
 
@@ -201,7 +201,7 @@ _cv_mole(u3_noun  fot,
          u3_noun  san,
          c3_d*    ato_d)
 {
-  u3_noun uco = u3do("slay", san);
+  u3_noun uco = u3v_do("slay", san);
   u3_noun p_uco, q_uco, r_uco, s_uco;
 
   if ( (c3n == u3r_qual(uco, &p_uco, &q_uco, &r_uco, &s_uco)) ||
@@ -211,12 +211,12 @@ _cv_mole(u3_noun  fot,
   {
     u3l_log("strange mole %s\n", u3r_string(san)));
 
-    u3z(fot); u3z(uco); return c3n;
+    u3a_lose(fot); u3a_lose(uco); return c3n;
   }
   else {
     *ato_d = u3r_chub(0, s_uco);
 
-    u3z(fot); u3z(uco); return c3y;
+    u3a_lose(fot); u3a_lose(uco); return c3y;
   }
 }
 
@@ -246,12 +246,12 @@ _cv_lily(u3_noun fot, u3_noun txt, c3_l* tid_l)
 u3_noun
 u3v_poke(u3_noun ovo)
 {
-  u3_noun fun = u3n_nock_on(u3k(u3A->roc), u3k(u3x_at(_CVX_POKE, u3A->roc)));
-  u3_noun sam = u3nc(u3k(u3A->now), ovo);
+  u3_noun fun = u3n_nock_on(u3a_gain(u3A->roc), u3a_gain(u3x_at(_CVX_POKE, u3A->roc)));
+  u3_noun sam = u3i_cell(u3a_gain(u3A->now), ovo);
   u3_noun pro;
 
   {
-    c3_w cod_w = u3a_lush(u3h(u3t(ovo)));
+    c3_w cod_w = u3a_lush(u3x_h(u3x_t(ovo)));
     pro = u3n_slam_on(fun, sam);
     u3a_lop(cod_w);
   }
@@ -264,7 +264,7 @@ u3v_poke(u3_noun ovo)
 void
 u3v_tank(u3_noun blu, c3_l tab_l, u3_noun tac)
 {
-  u3v_punt(blu, tab_l, u3nc(tac, u3_nul));
+  u3v_punt(blu, tab_l, u3i_cell(tac, u3_nul));
 }
 
 /* u3v_punt(): dump tank list.
@@ -275,19 +275,19 @@ u3v_punt(u3_noun blu, c3_l tab_l, u3_noun tac)
 #if 0
   u3_noun blu   = u3_term_get_blew(0);
 #endif
-  c3_l    col_l = u3h(blu);
+  c3_l    col_l = u3x_h(blu);
   u3_noun cat   = tac;
 
   //  We are calling nock here, but hopefully need no protection.
   //
-  while ( c3y == u3r_du(cat) ) {
-    u3_noun wol = u3dc("wash", u3nc(tab_l, col_l), u3k(u3h(cat)));
+  while ( c3y == u3a_is_cell(cat) ) {
+    u3_noun wol = u3v_dc("wash", u3i_cell(tab_l, col_l), u3a_gain(u3x_h(cat)));
 
     u3m_wall(wol);
-    cat = u3t(cat);
+    cat = u3x_t(cat);
   }
-  u3z(tac);
-  u3z(blu);
+  u3a_lose(tac);
+  u3a_lose(blu);
 }
 
 /* u3v_sway(): print trace.
@@ -295,10 +295,10 @@ u3v_punt(u3_noun blu, c3_l tab_l, u3_noun tac)
 void
 u3v_sway(u3_noun blu, c3_l tab_l, u3_noun tax)
 {
-  u3_noun mok = u3dc("mook", 2, tax);
+  u3_noun mok = u3v_dc("mook", 2, tax);
 
-  u3v_punt(blu, tab_l, u3k(u3t(mok)));
-  u3z(mok);
+  u3v_punt(blu, tab_l, u3a_gain(u3x_t(mok)));
+  u3a_lose(mok);
 }
 
 /* u3v_mark(): mark arvo kernel.
@@ -325,7 +325,7 @@ u3v_reclaim(void)
   //    NB: this would leak if not on the home road
   //
   if ( &(u3H->rod_u) == u3R ) {
-    u3z(u3A->yot);
+    u3a_lose(u3A->yot);
     u3A->yot = u3_nul;
   }
 }

@@ -146,7 +146,7 @@ _http_vec_to_octs(h2o_iovec_t vec_u)
   }
 
   // XX correct size_t -> atom?
-  return u3nt(u3_nul, u3i_chubs(1, (const c3_d*)&vec_u.len),
+  return u3i_trel(u3_nul, u3i_chubs(1, (const c3_d*)&vec_u.len),
                       _http_vec_to_atom(vec_u));
 }
 
@@ -170,20 +170,20 @@ _cttp_bod_from_octs(u3_noun oct)
 {
   c3_w len_w;
 
-  if ( !_(u3a_is_cat(u3h(oct))) ) {     //  2GB max
+  if ( !_(u3a_is_cat(u3x_h(oct))) ) {     //  2GB max
     u3m_bail(c3__fail); return 0;
   }
-  len_w = u3h(oct);
+  len_w = u3x_h(oct);
 
   {
     u3_hbod* bod_u = c3_malloc(1 + len_w + sizeof(*bod_u));
     bod_u->hun_y[len_w] = 0;
     bod_u->len_w = len_w;
-    u3r_bytes(0, len_w, bod_u->hun_y, u3t(oct));
+    u3r_bytes(0, len_w, bod_u->hun_y, u3x_t(oct));
 
     bod_u->nex_u = 0;
 
-    u3z(oct);
+    u3a_lose(oct);
     return bod_u;
   }
 }
@@ -232,7 +232,7 @@ _http_heds_to_noun(h2o_header_t* hed_u, c3_d hed_d)
 
   while ( 0 < dex_d ) {
     deh_u = hed_u[--dex_d];
-    hed = u3nc(u3nc(_http_vec_to_atom(*deh_u.name),
+    hed = u3i_cell(u3i_cell(_http_vec_to_atom(*deh_u.name),
                     _http_vec_to_atom(deh_u.value)), hed);
   }
 
@@ -288,15 +288,15 @@ _http_heds_from_noun(u3_noun hed)
   u3_hhed* hed_u = 0;
 
   while ( u3_nul != hed ) {
-    i_hed = u3h(hed);
-    u3_hhed* nex_u = _http_hed_new(u3h(i_hed), u3t(i_hed));
+    i_hed = u3x_h(hed);
+    u3_hhed* nex_u = _http_hed_new(u3x_h(i_hed), u3x_t(i_hed));
     nex_u->nex_u = hed_u;
 
     hed_u = nex_u;
-    hed = u3t(hed);
+    hed = u3x_t(hed);
   }
 
-  u3z(deh);
+  u3a_lose(deh);
   return hed_u;
 }
 
@@ -397,10 +397,10 @@ _http_seq_unlink(u3_hreq* req_u)
 static u3_noun
 _http_req_to_duct(u3_hreq* req_u)
 {
-  return u3nc(u3i_string("http-server"),
-              u3nq(u3dc("scot", c3__uv, req_u->hon_u->htp_u->sev_l),
-                   u3dc("scot", c3__ud, req_u->hon_u->coq_l),
-                   u3dc("scot", c3__ud, req_u->seq_l),
+  return u3i_cell(u3i_string("http-server"),
+              u3i_qual(u3v_dc("scot", c3__uv, req_u->hon_u->htp_u->sev_l),
+                   u3v_dc("scot", c3__ud, req_u->hon_u->coq_l),
+                   u3v_dc("scot", c3__ud, req_u->seq_l),
                    u3_nul));
 }
 
@@ -411,7 +411,7 @@ _http_req_kill(u3_hreq* req_u)
 {
   u3_httd* htd_u = req_u->hon_u->htp_u->htd_u;
   u3_noun wir    = _http_req_to_duct(req_u);
-  u3_noun cad    = u3nc(u3i_string("cancel-request"), u3_nul);
+  u3_noun cad    = u3i_cell(u3i_string("cancel-request"), u3_nul);
 
   u3_auto_plan(&htd_u->car_u, u3_ovum_init(0, c3__e, wir, cad));
 }
@@ -530,14 +530,14 @@ _http_req_dispatch(u3_hreq* req_u, u3_noun req)
     u3_noun cad;
 
     {
-      u3_noun adr = u3nc(c3__ipv4, u3i_words(1, &req_u->hon_u->ipf_w));
+      u3_noun adr = u3i_cell(c3__ipv4, u3i_words(1, &req_u->hon_u->ipf_w));
       //  XX loopback automatically secure too?
      //
-      u3_noun dat = u3nt(htp_u->sec, adr, req);
+      u3_noun dat = u3i_trel(htp_u->sec, adr, req);
 
       cad = ( c3y == req_u->hon_u->htp_u->lop )
-            ? u3nc(u3i_string("request-local"), dat)
-            : u3nc(u3i_string("request"), dat);
+            ? u3i_cell(u3i_string("request-local"), dat)
+            : u3i_cell(u3i_string("request"), dat);
     }
 
     u3_auto_plan(&htd_u->car_u, u3_ovum_init(0, c3__e, wir, cad));
@@ -659,7 +659,7 @@ _http_start_respond(u3_hreq* req_u,
                       (status < 500) ? "missing" :
                       "hosed";
 
-  u3_hhed* hed_u = _http_heds_from_noun(u3k(headers));
+  u3_hhed* hed_u = _http_heds_from_noun(u3a_gain(headers));
   u3_hhed* deh_u = hed_u;
 
   c3_i has_len_i = 0;
@@ -683,7 +683,7 @@ _http_start_respond(u3_hreq* req_u,
   gen_u->red   = c3y;
   gen_u->dun   = complete;
   gen_u->bod_u = ( u3_nul == data ) ?
-                 0 : _cttp_bod_from_octs(u3k(u3t(data)));
+                 0 : _cttp_bod_from_octs(u3a_gain(u3x_t(data)));
   gen_u->nud_u = 0;
   gen_u->hed_u = deh_u;
   gen_u->req_u = req_u;
@@ -702,7 +702,7 @@ _http_start_respond(u3_hreq* req_u,
 
   _http_hgen_send(gen_u);
 
-  u3z(status); u3z(headers); u3z(data); u3z(complete);
+  u3a_lose(status); u3a_lose(headers); u3a_lose(data); u3a_lose(complete);
 }
 
 /* _http_continue_respond(): write a [%http-response %continue ...] to
@@ -740,7 +740,7 @@ _http_continue_respond(u3_hreq* req_u,
   gen_u->dun = complete;
 
   if ( u3_nul != data ) {
-    u3_hbod* bod_u = _cttp_bod_from_octs(u3k(u3t(data)));
+    u3_hbod* bod_u = _cttp_bod_from_octs(u3a_gain(u3x_t(data)));
 
     if ( 0 == gen_u->bod_u ) {
       gen_u->bod_u = bod_u;
@@ -760,7 +760,7 @@ _http_continue_respond(u3_hreq* req_u,
     _http_hgen_send(gen_u);
   }
 
-  u3z(data); u3z(complete);
+  u3a_lose(data); u3a_lose(complete);
 }
 
 /* _http_rec_to_httq(): convert h2o_req_t to httq
@@ -779,13 +779,13 @@ _http_rec_to_httq(h2o_req_t* rec_u)
                                    rec_u->headers.size);
 
   // restore host header
-  hed = u3nc(u3nc(u3i_string("host"),
+  hed = u3i_cell(u3i_cell(u3i_string("host"),
                   _http_vec_to_atom(rec_u->authority)),
              hed);
 
   u3_noun bod = _http_vec_to_octs(rec_u->entity);
 
-  return u3nq(med, url, hed, bod);
+  return u3i_qual(med, url, hed, bod);
 }
 
 typedef struct _h2o_uv_sock {         //  see private st_h2o_uv_socket_t
@@ -831,11 +831,11 @@ _http_seq_continue(void* vod_p, u3_noun nun)
   //
   if ( c3y == aut ) {
     u3_hreq* req_u = _http_req_prepare(rec_u, _http_seq_new);
-    u3_noun  hed   = u3nl(u3nc(u3i_string("Content-Type"),
+    u3_noun  hed   = u3i_list(u3i_cell(u3i_string("Content-Type"),
                                u3i_string("text/event-stream")),
-                          u3nc(u3i_string("Cache-Control"),
+                          u3i_cell(u3i_string("Cache-Control"),
                                u3i_string("no-cache")),
-                          u3nc(u3i_string("Connection"),
+                          u3i_cell(u3i_string("Connection"),
                                u3i_string("keep-alive")),
                           u3_none);
 
@@ -864,7 +864,7 @@ _http_seq_continue(void* vod_p, u3_noun nun)
     }
   }
 
-  u3z(nun);
+  u3a_lose(nun);
 }
 
 /* _http_seq_accept(): handle incoming http request on slogstream endpoint
@@ -897,9 +897,9 @@ _http_seq_accept(h2o_handler_t* han_u, h2o_req_t* rec_u)
                            callbacks->get_socket(rec_u->conn);
     u3_hcon* hon_u = (u3_hcon*)suv_u->han_u;
 
-    u3_noun pax = u3nq(u3i_string("authenticated"),
+    u3_noun pax = u3i_qual(u3i_string("authenticated"),
                        u3i_string("cookie"),
-                       u3dc("scot", 't', coo),
+                       u3v_dc("scot", 't', coo),
                        u3_nul);
     u3_pier_peek_last(hon_u->htp_u->htd_u->car_u.pir_u, u3_nul, c3__ex,
                       u3_nul, pax, rec_u, _http_seq_continue);
@@ -1419,7 +1419,7 @@ _http_serv_init_h2o(SSL_CTX* tls_u, c3_o log, c3_o red)
     // XX move this to post serv_start and put the port in the name
 #if 0
     c3_c* pax_c = u3_Host.dir_c;
-    u3_noun now = u3dc("scot", c3__da, u3k(u3A->now));
+    u3_noun now = u3v_dc("scot", c3__da, u3a_gain(u3A->now));
     c3_c* now_c = u3r_string(now);
     c3_c* nam_c = ".access.log";
     c3_w len_w = 1 + strlen(pax_c) + 1 + strlen(now_c) + strlen(nam_c);
@@ -1434,7 +1434,7 @@ _http_serv_init_h2o(SSL_CTX* tls_u, c3_o log, c3_o red)
 
     c3_free(paf_c);
     c3_free(now_c);
-    u3z(now);
+    u3a_lose(now);
 #endif
   }
 
@@ -1511,7 +1511,7 @@ _http_serv_start(u3_http* htp_u)
 static uv_buf_t
 _http_wain_to_buf(u3_noun wan)
 {
-  c3_w len_w = u3_mcut_path(0, 0, (c3_c)10, u3k(wan));
+  c3_w len_w = u3_mcut_path(0, 0, (c3_c)10, u3a_gain(wan));
   c3_c* buf_c = c3_malloc(1 + len_w);
 
   u3_mcut_path(buf_c, 0, (c3_c)10, wan);
@@ -1708,7 +1708,7 @@ _http_serv_start_all(u3_httd* htd_u)
       htp_u->h2o_u = _http_serv_init_h2o(htd_u->tls_u, for_u->log, for_u->red);
 
       _http_serv_start(htp_u);
-      sec = u3nc(u3_nul, htp_u->por_s);
+      sec = u3i_cell(u3_nul, htp_u->por_s);
     }
   }
 
@@ -1737,10 +1737,10 @@ _http_serv_start_all(u3_httd* htd_u)
 
     //  XX remove [sen]
     //
-    u3_noun wir = u3nt(u3i_string("http-server"),
-                       u3dc("scot", c3__uv, htd_u->sev_l),
+    u3_noun wir = u3i_trel(u3i_string("http-server"),
+                       u3v_dc("scot", c3__uv, htd_u->sev_l),
                        u3_nul);
-    u3_noun cad = u3nt(c3__live, non, sec);
+    u3_noun cad = u3i_trel(c3__live, non, sec);
 
     u3_auto_plan(&htd_u->car_u, u3_ovum_init(0, c3__e, wir, cad));
   }
@@ -1805,15 +1805,15 @@ u3_http_ef_form(u3_httd* htd_u, u3_noun fig)
 
   if ( (c3n == u3r_qual(fig, &sec, &pro, &log, &red) ) ||
        // confirm sec is a valid (unit ^)
-       !( u3_nul == sec || ( c3y == u3du(sec) &&
-                             c3y == u3du(u3t(sec)) &&
-                             u3_nul == u3h(sec) ) ) ||
+       !( u3_nul == sec || ( c3y == u3a_is_cell(sec) &&
+                             c3y == u3a_is_cell(u3x_t(sec)) &&
+                             u3_nul == u3x_h(sec) ) ) ||
        // confirm valid flags ("loobeans")
        !( c3y == pro || c3n == pro ) ||
        !( c3y == log || c3n == log ) ||
        !( c3y == red || c3n == red ) ) {
     u3l_log("http: form: invalid card\n");
-    u3z(fig);
+    u3a_lose(fig);
     return;
   }
 
@@ -1823,18 +1823,18 @@ u3_http_ef_form(u3_httd* htd_u, u3_noun fig)
   for_u->red = (c3_o)red;
 
   if ( u3_nul != sec ) {
-    u3_noun key = u3h(u3t(sec));
-    u3_noun cer = u3t(u3t(sec));
+    u3_noun key = u3x_h(u3x_t(sec));
+    u3_noun cer = u3x_t(u3x_t(sec));
 
-    for_u->key_u = _http_wain_to_buf(u3k(key));
-    for_u->cer_u = _http_wain_to_buf(u3k(cer));
+    for_u->key_u = _http_wain_to_buf(u3a_gain(key));
+    for_u->cer_u = _http_wain_to_buf(u3a_gain(cer));
   }
   else {
     for_u->key_u = uv_buf_init(0, 0);
     for_u->cer_u = uv_buf_init(0, 0);
   }
 
-  u3z(fig);
+  u3a_lose(fig);
   _http_form_free(htd_u);
 
   htd_u->fig_u.for_u = for_u;
@@ -1853,10 +1853,10 @@ _http_io_talk(u3_auto* car_u)
 
   //  XX remove [sen]
   //
-  u3_noun wir = u3nt(u3i_string("http-server"),
-                     u3dc("scot", c3__uv, htd_u->sev_l),
+  u3_noun wir = u3i_trel(u3i_string("http-server"),
+                     u3v_dc("scot", c3__uv, htd_u->sev_l),
                      u3_nul);
-  u3_noun cad = u3nc(c3__born, u3_nul);
+  u3_noun cad = u3i_cell(c3__born, u3_nul);
 
   u3_auto_plan(car_u, u3_ovum_init(0, c3__e, wir, cad));
 
@@ -1879,7 +1879,7 @@ _http_ef_http_server(u3_httd* htd_u,
   //  sets server configuration
   //
   if ( c3y == u3r_sing_c("set-config", tag) ) {
-    u3_http_ef_form(htd_u, u3k(dat));
+    u3_http_ef_form(htd_u, u3a_gain(dat));
   }
   //  responds to an open request
   //
@@ -1887,26 +1887,26 @@ _http_ef_http_server(u3_httd* htd_u,
     if ( c3y == u3r_sing_c("response", tag) ) {
       u3_noun response = dat;
 
-      if ( c3y == u3r_sing_c("start", u3h(response)) ) {
+      if ( c3y == u3r_sing_c("start", u3x_h(response)) ) {
         //  Separate the %start message into its components.
         //
         u3_noun response_header, data, complete;
         u3_noun status, headers;
-        u3x_trel(u3t(response), &response_header, &data, &complete);
+        u3x_trel(u3x_t(response), &response_header, &data, &complete);
         u3x_cell(response_header, &status, &headers);
 
-        _http_start_respond(req_u, u3k(status), u3k(headers), u3k(data),
-                            u3k(complete));
+        _http_start_respond(req_u, u3a_gain(status), u3a_gain(headers), u3a_gain(data),
+                            u3a_gain(complete));
       }
-      else if ( c3y == u3r_sing_c("continue", u3h(response)) ) {
+      else if ( c3y == u3r_sing_c("continue", u3x_h(response)) ) {
         //  Separate the %continue message into its components.
         //
         u3_noun data, complete;
-        u3x_cell(u3t(response), &data, &complete);
+        u3x_cell(u3x_t(response), &data, &complete);
 
-        _http_continue_respond(req_u, u3k(data), u3k(complete));
+        _http_continue_respond(req_u, u3a_gain(data), u3a_gain(complete));
       }
-      else if (c3y == u3r_sing_c("cancel", u3h(response))) {
+      else if (c3y == u3r_sing_c("cancel", u3x_h(response))) {
         u3l_log("http: %%cancel not handled yet\n");
       }
       else {
@@ -1918,8 +1918,8 @@ _http_ef_http_server(u3_httd* htd_u,
     }
   }
 
-  u3z(tag);
-  u3z(dat);
+  u3a_lose(tag);
+  u3a_lose(dat);
 }
 
 /* _http_stream_slog(): emit slog to open connections
@@ -1937,12 +1937,12 @@ _http_stream_slog(void* vop_p, c3_w pri_w, u3_noun tan)
 
     if ( c3y == u3a_is_atom(tan) ) {
       u3_noun lin = u3i_list(u3i_string("data:"),
-                             u3k(tan),
+                             u3a_gain(tan),
                              c3_s2('\n', '\n'),
                              u3_none);
       u3_atom txt = u3qc_rap(3, lin);
-      data = u3nt(u3_nul, u3r_met(3, txt), txt);
-      u3z(lin);
+      data = u3i_trel(u3_nul, u3r_met(3, txt), txt);
+      u3a_lose(lin);
     }
     else {
       u3_weak wol = u3_none;
@@ -1951,15 +1951,15 @@ _http_stream_slog(void* vop_p, c3_w pri_w, u3_noun tan)
       //  only send %leaf tanks
       //
       if ( 0 == u3A->roc ) {
-        if ( c3__leaf == u3h(tan) ) {
-          wol = u3nc(u3k(u3t(tan)), u3_nul);
+        if ( c3__leaf == u3x_h(tan) ) {
+          wol = u3i_cell(u3a_gain(u3x_t(tan)), u3_nul);
         }
       }
       else {
         u3_noun blu = u3_term_get_blew(0);
-        c3_l  col_l = u3h(blu);
-        wol = u3dc("wash", u3nc(0, col_l), u3k(tan));
-        u3z(blu);
+        c3_l  col_l = u3x_h(blu);
+        wol = u3v_dc("wash", u3i_cell(0, col_l), u3a_gain(tan));
+        u3a_lose(blu);
       }
 
       if ( u3_none != wol ) {
@@ -1967,31 +1967,31 @@ _http_stream_slog(void* vop_p, c3_w pri_w, u3_noun tan)
         u3_noun paz = u3_nul;
         while ( u3_nul != low ) {
           u3_noun lin = u3i_list(u3i_string("data:"),
-                                 u3qc_rap(3, u3h(low)),
+                                 u3qc_rap(3, u3x_h(low)),
                                  c3_s2('\n', '\n'),
                                  u3_none);
           paz = u3kb_weld(paz, lin);
-          low = u3t(low);
+          low = u3x_t(low);
         }
         u3_atom txt = u3qc_rap(3, paz);
-        data = u3nt(u3_nul, u3r_met(3, txt), txt);
-        u3z(paz);
+        data = u3i_trel(u3_nul, u3r_met(3, txt), txt);
+        u3a_lose(paz);
       }
 
-      u3z(wol);
+      u3a_lose(wol);
     }
 
     if ( u3_none != data ) {
       while ( 0 != seq_u ) {
-        _http_continue_respond(seq_u, u3k(data), c3n);
+        _http_continue_respond(seq_u, u3a_gain(data), c3n);
         seq_u = seq_u->nex_u;
       }
     }
 
-    u3z(data);
+    u3a_lose(data);
   }
 
-  u3z(tan);
+  u3a_lose(tan);
 }
 
 /* _http_seq_heartbeat_cb(): send heartbeat to slog streams and restart timer
@@ -2003,12 +2003,12 @@ _http_seq_heartbeat_cb(uv_timer_t* tim_u)
   u3_hreq* seq_u = htd_u->fig_u.seq_u;
 
   if ( 0 != seq_u ) {
-    u3_noun dat = u3nt(u3_nul, 1, c3_s1('\n'));
+    u3_noun dat = u3i_trel(u3_nul, 1, c3_s1('\n'));
     while ( 0 != seq_u ) {
-      _http_continue_respond(seq_u, u3k(dat), c3n);
+      _http_continue_respond(seq_u, u3a_gain(dat), c3n);
       seq_u = seq_u->nex_u;
     }
-    u3z(dat);
+    u3a_lose(dat);
   }
 
   uv_timer_start(htd_u->fig_u.sit_u, _http_seq_heartbeat_cb,
@@ -2022,7 +2022,7 @@ _reck_mole(u3_noun  fot,
            u3_noun  san,
            c3_d*    ato_d)
 {
-  u3_noun uco = u3dc("slaw", fot, san);
+  u3_noun uco = u3v_dc("slaw", fot, san);
   u3_noun p_uco, q_uco;
 
   if ( (c3n == u3r_cell(uco, &p_uco, &q_uco)) ||
@@ -2030,12 +2030,12 @@ _reck_mole(u3_noun  fot,
   {
     u3l_log("strange mole %s\n", u3r_string(san));
 
-    u3z(fot); u3z(uco); return c3n;
+    u3a_lose(fot); u3a_lose(uco); return c3n;
   }
   else {
     *ato_d = u3r_chub(0, q_uco);
 
-    u3z(fot); u3z(uco); return c3y;
+    u3a_lose(fot); u3a_lose(uco); return c3y;
   }
 }
 
@@ -2072,7 +2072,7 @@ _http_io_kick(u3_auto* car_u, u3_noun wir, u3_noun cad)
      || (c3n == u3r_cell(cad, &tag, &dat))
      || (c3n == u3r_sing_c("http-server", i_wir)) )
   {
-    u3z(wir); u3z(cad);
+    u3a_lose(wir); u3a_lose(cad);
     return c3n;
   }
 
@@ -2085,9 +2085,9 @@ _http_io_kick(u3_auto* car_u, u3_noun wir, u3_noun cad)
 
 
     if ( (c3n == u3r_cell(pud, &p_pud, &t_pud)) ||
-         (c3n == _reck_lily(c3__uv, u3k(p_pud), &sev_l)) )
+         (c3n == _reck_lily(c3__uv, u3a_gain(p_pud), &sev_l)) )
     {
-      u3z(wir); u3z(cad);
+      u3a_lose(wir); u3a_lose(cad);
       return c3n;
     }
 
@@ -2096,9 +2096,9 @@ _http_io_kick(u3_auto* car_u, u3_noun wir, u3_noun cad)
     }
     else {
       if ( (c3n == u3r_cell(t_pud, &q_pud, &tt_pud)) ||
-           (c3n == _reck_lily(c3__ud, u3k(q_pud), &coq_l)) )
+           (c3n == _reck_lily(c3__ud, u3a_gain(q_pud), &coq_l)) )
       {
-        u3z(wir); u3z(cad);
+        u3a_lose(wir); u3a_lose(cad);
         return c3n;
       }
 
@@ -2107,16 +2107,16 @@ _http_io_kick(u3_auto* car_u, u3_noun wir, u3_noun cad)
       } else {
         if ( (c3n == u3r_cell(tt_pud, &r_pud, &s_pud)) ||
              (u3_nul != s_pud) ||
-             (c3n == _reck_lily(c3__ud, u3k(r_pud), &seq_l)) )
+             (c3n == _reck_lily(c3__ud, u3a_gain(r_pud), &seq_l)) )
         {
-          u3z(wir); u3z(cad);
+          u3a_lose(wir); u3a_lose(cad);
           return c3n;
         }
       }
     }
 
-    _http_ef_http_server(htd_u, sev_l, coq_l, seq_l, u3k(tag), u3k(dat));
-    u3z(wir); u3z(cad);
+    _http_ef_http_server(htd_u, sev_l, coq_l, seq_l, u3a_gain(tag), u3a_gain(dat));
+    u3a_lose(wir); u3a_lose(cad);
     return c3y;
   }
 }
@@ -2142,13 +2142,13 @@ _http_io_exit(u3_auto* car_u)
 
   {
     u3_atom lin = u3i_string("data:urbit shutting down\n\n");
-    u3_noun dat = u3nt(u3_nul, u3r_met(3, lin), lin);
+    u3_noun dat = u3i_trel(u3_nul, u3r_met(3, lin), lin);
     u3_hreq* seq_u = htd_u->fig_u.seq_u;
     while ( 0 != seq_u ) {
-      _http_continue_respond(seq_u, u3k(dat), c3y);
+      _http_continue_respond(seq_u, u3a_gain(dat), c3y);
       seq_u = seq_u->nex_u;
     }
-    u3z(dat);
+    u3a_lose(dat);
   }
 
   _http_release_ports_file(u3_Host.dir_c);
@@ -2200,7 +2200,7 @@ u3_http_io_init(u3_pier* pir_u)
 
     now = u3_time_in_tv(&tim_u);
     htd_u->sev_l = u3r_mug(now);
-    u3z(now);
+    u3a_lose(now);
   }
 
   //  XX retry up to N?

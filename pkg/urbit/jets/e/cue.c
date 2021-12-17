@@ -19,6 +19,6 @@ u3_noun
 u3ke_cue(u3_atom a)
 {
   u3_noun b = u3qe_cue(a);
-  u3z(a);
+  u3a_lose(a);
   return b;
 }

@@ -15,7 +15,7 @@
     mpz_init(b_mp);
     mpz_sqrtrem(a_mp, b_mp, a_mp);
 
-    return u3nc(u3i_mp(a_mp), u3i_mp(b_mp));
+    return u3i_cell(u3i_mp(a_mp), u3i_mp(b_mp));
   }
   u3_noun
   u3wc_sqt(u3_noun cor)
@@ -23,7 +23,7 @@
     u3_noun a;
 
     if ( (u3_none == (a = u3r_at(u3x_sam, cor))) ||
-         (c3n == u3ud(a)) )
+         (c3n == u3a_is_atom(a)) )
     {
       return u3m_bail(c3__exit);
     } else {

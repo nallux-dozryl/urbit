@@ -16,7 +16,7 @@
     if ( c3__noun == tip ) {
       return c3__noun;
     }
-    else return u3nt(c3__hint, u3k(sag), u3k(tip));
+    else return u3i_trel(c3__hint, u3a_gain(sag), u3a_gain(tip));
   }
   u3_noun
   u3wf_hint(u3_noun cor)

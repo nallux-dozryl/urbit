@@ -76,7 +76,7 @@ _bit_rip(u3_atom bits, u3_atom atom)
 
     c3_w item = ins_word_bits | (sig_word_bits << nbits_ins);
 
-    res = u3nc(item, res);
+    res = u3i_cell(item, res);
   }
 
   return res;
@@ -111,7 +111,7 @@ _block_rip(u3_atom bloq, u3_atom b)
       c3_w src_w = u3r_word(wor_w, b);                  //  find word by index
       c3_w rip_w = (src_w >> sif_w) & bmask_w;          //  get item from word
 
-      acc = u3nc(rip_w, acc);
+      acc = u3i_cell(rip_w, acc);
     }
 
     return acc;
@@ -139,7 +139,7 @@ _block_rip(u3_atom bloq, u3_atom b)
     }
 
     rip = u3i_slab_mint(&sab_u);
-    acc = u3nc(rip, acc);
+    acc = u3i_cell(rip, acc);
     len_w -= san_w;
   }
 
@@ -181,6 +181,6 @@ u3kc_rip(u3_atom a,
          u3_atom c)
 {
   u3_noun pro = u3qc_rip(a, b, c);
-  u3z(a); u3z(b); u3z(c);
+  u3a_lose(a); u3a_lose(b); u3a_lose(c);
   return pro;
 }

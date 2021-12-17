@@ -12,11 +12,11 @@
 
     u3x_cell(naz, &p_naz, &q_naz);
     if ( 10 == weq ) {
-      return u3nc(u3x_good(u3i_vint(u3k(p_naz))),
+      return u3i_cell(u3x_good(u3i_vint(u3a_gain(p_naz))),
                            1);
     } else {
-      return u3nc(u3k(p_naz),
-                  u3x_good(u3i_vint(u3k(q_naz))));
+      return u3i_cell(u3a_gain(p_naz),
+                  u3x_good(u3i_vint(u3a_gain(q_naz))));
     }
   }
 
@@ -26,7 +26,7 @@
     u3_noun p_tub, q_tub;
 
     u3x_cell(tub, &p_tub, &q_tub);
-    return u3nc(u3k(p_tub), u3_nul);
+    return u3i_cell(u3a_gain(p_tub), u3_nul);
   }
 
   static u3_noun
@@ -44,10 +44,10 @@
       return u3m_bail(c3__fail);
     } else {
       if ( p_zyc == p_naz ) {
-        return (q_zyc > q_naz) ? u3k(zyc) : u3k(naz);
+        return (q_zyc > q_naz) ? u3a_gain(zyc) : u3a_gain(naz);
       }
       else {
-        return (p_zyc > p_naz) ? u3k(zyc) : u3k(naz);
+        return (p_zyc > p_naz) ? u3a_gain(zyc) : u3a_gain(naz);
       }
     }
   }
@@ -56,7 +56,7 @@
   _last_k(u3_noun zyc, u3_noun naz)
   {
     u3_noun pro = _last(zyc, naz);
-    u3z(zyc); u3z(naz);
+    u3a_lose(zyc); u3a_lose(naz);
     return pro;
   }
 
@@ -67,20 +67,20 @@
     u3_noun zac;
 
     u3x_cell(tub, &p_tub, &q_tub);
-    if ( c3n == u3du(q_tub) ) {
+    if ( c3n == u3a_is_cell(q_tub) ) {
       return _fail(tub);
     }
     else {
-      u3_noun iq_tub = u3h(q_tub);
-      u3_noun tq_tub = u3t(q_tub);
+      u3_noun iq_tub = u3x_h(q_tub);
+      u3_noun tq_tub = u3x_t(q_tub);
 
       zac = _slip(iq_tub, p_tub);
 
-      return u3nc(zac,
-                  u3nq(u3_nul,
-                       u3k(iq_tub),
-                       u3k(zac),
-                       u3k(tq_tub)));
+      return u3i_cell(zac,
+                  u3i_qual(u3_nul,
+                       u3a_gain(iq_tub),
+                       u3a_gain(zac),
+                       u3a_gain(tq_tub)));
     }
   }
 
@@ -94,46 +94,46 @@
     u3_noun p_vex, q_vex;
 
     u3x_cell(vex, &p_vex, &q_vex);
-    if ( c3n == u3du(q_vex) ) {
-      return u3k(vex);
+    if ( c3n == u3a_is_cell(q_vex) ) {
+      return u3a_gain(vex);
     } else {
-      u3_noun uq_vex = u3t(q_vex);
+      u3_noun uq_vex = u3x_t(q_vex);
       u3_noun puq_vex, quq_vex;
       u3_noun yit, yur;
       u3_noun p_yit, q_yit;
       u3_noun ret;
 
       u3x_cell(uq_vex, &puq_vex, &quq_vex);
-      yit = u3x_good(u3n_slam_on(u3k(sab), u3k(quq_vex)));
+      yit = u3x_good(u3n_slam_on(u3a_gain(sab), u3a_gain(quq_vex)));
 
       u3x_cell(yit, &p_yit, &q_yit);
       yur = _last(p_vex, p_yit);
 
-      if ( c3n == u3du(q_yit) ) {
-        ret = u3nc(yur, u3k(q_vex));
+      if ( c3n == u3a_is_cell(q_yit) ) {
+        ret = u3i_cell(yur, u3a_gain(q_vex));
       }
       else {
-        u3_noun uq_yit = u3t(q_yit);
+        u3_noun uq_yit = u3x_t(q_yit);
         u3_noun puq_yit, quq_yit;
         u3_noun vux;
 
         u3x_cell(uq_yit, &puq_yit, &quq_yit);
 
-        vux = u3x_good(u3n_slam_on(u3k(raq),
-                                   u3nc(u3k(puq_vex),
-                                   u3k(puq_yit))));
+        vux = u3x_good(u3n_slam_on(u3a_gain(raq),
+                                   u3i_cell(u3a_gain(puq_vex),
+                                   u3a_gain(puq_yit))));
         if ( u3_nul == vux ) {
-          ret = u3nc(yur, u3k(q_vex));
+          ret = u3i_cell(yur, u3a_gain(q_vex));
         }
         else {
-          ret = u3nq(yur,
+          ret = u3i_qual(yur,
                      u3_nul,
-                     u3k(u3t(vux)),
-                     u3k(quq_yit));
-          u3z(vux);
+                     u3a_gain(u3x_t(vux)),
+                     u3a_gain(quq_yit));
+          u3a_lose(vux);
         }
       }
-      u3z(yit);
+      u3a_lose(yit);
       return ret;
     }
   }
@@ -161,26 +161,26 @@
                 u3_noun sef,
                 u3_noun tub)
   {
-    u3_noun vex = u3x_good(u3n_slam_on(u3k(sef), u3k(tub)));
+    u3_noun vex = u3x_good(u3n_slam_on(u3a_gain(sef), u3a_gain(tub)));
     u3_noun p_vex, q_vex;
 
     u3x_cell(vex, &p_vex, &q_vex);
 
-    if ( c3n == u3du(q_vex) ) {
+    if ( c3n == u3a_is_cell(q_vex) ) {
       return vex;
     }
     else {
-      u3_noun uq_vex = u3t(q_vex);
+      u3_noun uq_vex = u3x_t(q_vex);
       u3_noun quq_vex;
       u3_noun ret;
 
       u3x_cell(uq_vex, 0, &quq_vex);
-      ret = u3nq(u3k(p_vex),
+      ret = u3i_qual(u3a_gain(p_vex),
                  u3_nul,
-                 u3k(cus),
-                 u3k(quq_vex));
+                 u3a_gain(cus),
+                 u3a_gain(quq_vex));
 
-      u3z(vex);
+      u3a_lose(vex);
       return ret;
     }
   }
@@ -206,28 +206,28 @@
                 u3_noun sef,
                 u3_noun tub)
   {
-    u3_noun vex = u3x_good(u3n_slam_on(u3k(sef), u3k(tub)));
+    u3_noun vex = u3x_good(u3n_slam_on(u3a_gain(sef), u3a_gain(tub)));
     u3_noun p_vex, q_vex;
 
     u3x_cell(vex, &p_vex, &q_vex);
 
-    if ( c3n == u3du(q_vex) ) {
+    if ( c3n == u3a_is_cell(q_vex) ) {
       return vex;
     }
     else {
-      u3_noun uq_vex = u3t(q_vex);
+      u3_noun uq_vex = u3x_t(q_vex);
       u3_noun puq_vex, quq_vex;
       u3_noun wag;
       u3_noun ret;
 
       u3x_cell(uq_vex, &puq_vex, &quq_vex);
-      wag = u3x_good(u3n_slam_on(u3k(poq), u3k(puq_vex)));
-      ret = u3nq(u3k(p_vex),
+      wag = u3x_good(u3n_slam_on(u3a_gain(poq), u3a_gain(puq_vex)));
+      ret = u3i_qual(u3a_gain(p_vex),
                  u3_nul,
                  wag,
-                 u3k(quq_vex));
+                 u3a_gain(quq_vex));
 
-      u3z(vex);
+      u3a_lose(vex);
       return ret;
     }
   }
@@ -256,37 +256,37 @@
     u3_noun p_vex, q_vex;
 
     u3x_cell(vex, &p_vex, &q_vex);
-    if ( c3n == u3du(q_vex) ) {
-      return u3k(vex);
+    if ( c3n == u3a_is_cell(q_vex) ) {
+      return u3a_gain(vex);
     } else {
-      u3_noun uq_vex = u3t(q_vex);
+      u3_noun uq_vex = u3x_t(q_vex);
       u3_noun puq_vex, quq_vex;
       u3_noun yit, yur;
       u3_noun p_yit, q_yit;
       u3_noun ret;
 
       u3x_cell(uq_vex, &puq_vex, &quq_vex);
-      yit = u3x_good(u3n_slam_on(u3k(sab), u3k(quq_vex)));
+      yit = u3x_good(u3n_slam_on(u3a_gain(sab), u3a_gain(quq_vex)));
 
       u3x_cell(yit, &p_yit, &q_yit);
       yur = _last(p_vex, p_yit);
 
-      if ( c3n == u3du(q_yit) ) {
-        ret = u3nc(yur, u3k(q_yit));
+      if ( c3n == u3a_is_cell(q_yit) ) {
+        ret = u3i_cell(yur, u3a_gain(q_yit));
       }
       else {
-        u3_noun uq_yit = u3t(q_yit);
+        u3_noun uq_yit = u3x_t(q_yit);
         u3_noun puq_yit, quq_yit;
 
         u3x_cell(uq_yit, &puq_yit, &quq_yit);
-        ret = u3nq(yur,
+        ret = u3i_qual(yur,
                    u3_nul,
-                   u3x_good(u3n_slam_on(u3k(raq),
-                                        u3nc(u3k(puq_vex),
-                                             u3k(puq_yit)))),
-                   u3k(quq_yit));
+                   u3x_good(u3n_slam_on(u3a_gain(raq),
+                                        u3i_cell(u3a_gain(puq_vex),
+                                             u3a_gain(puq_yit)))),
+                   u3a_gain(quq_yit));
       }
-      u3z(yit);
+      u3a_lose(yit);
       return ret;
     }
   }
@@ -316,10 +316,10 @@
     u3_noun p_tub, q_tub;
 
     u3x_cell(tub, &p_tub, &q_tub);
-    return u3nq(u3k(p_tub),
+    return u3i_qual(u3a_gain(p_tub),
                 u3_nul,
-                u3k(huf),
-                u3k(tub));
+                u3a_gain(huf),
+                u3a_gain(tub));
   }
 
   u3_noun
@@ -346,53 +346,53 @@
     u3_noun p_vex, q_vex;
 
     u3x_cell(vex, &p_vex, &q_vex);
-    if ( c3n == u3du(q_vex) ) {
-      return u3k(vex);
+    if ( c3n == u3a_is_cell(q_vex) ) {
+      return u3a_gain(vex);
     }
     else {
-      u3_noun uq_vex = u3t(q_vex);
+      u3_noun uq_vex = u3x_t(q_vex);
       u3_noun puq_vex, quq_vex;
       u3_noun yit, yur;
       u3_noun p_yit, q_yit;
       u3_noun ret;
 
       u3x_cell(uq_vex, &puq_vex, &quq_vex);
-      yit = u3x_good(u3n_slam_on(u3k(bus), u3k(quq_vex)));
+      yit = u3x_good(u3n_slam_on(u3a_gain(bus), u3a_gain(quq_vex)));
 
       u3x_cell(yit, &p_yit, &q_yit);
       yur = _last(p_vex, p_yit);
 
-      if ( c3n == u3du(q_yit) ) {
-        ret = u3nc(yur, u3_nul);
+      if ( c3n == u3a_is_cell(q_yit) ) {
+        ret = u3i_cell(yur, u3_nul);
       }
       else {
-        u3_noun uq_yit = u3t(q_yit);
+        u3_noun uq_yit = u3x_t(q_yit);
         u3_noun puq_yit, quq_yit;
         u3_noun wam, p_wam, q_wam, goy;
 
         u3x_cell(uq_yit, &puq_yit, &quq_yit);
-        wam = u3x_good(u3n_slam_on(u3k(sab), u3k(quq_yit)));
+        wam = u3x_good(u3n_slam_on(u3a_gain(sab), u3a_gain(quq_yit)));
 
         u3x_cell(wam, &p_wam, &q_wam);
         goy = _last(yur, p_wam);
-        u3z(yur);
+        u3a_lose(yur);
 
-        if ( c3n == u3du(q_wam) ) {
-          ret = u3nc(goy, u3_nul);
+        if ( c3n == u3a_is_cell(q_wam) ) {
+          ret = u3i_cell(goy, u3_nul);
         } else {
-          u3_noun uq_wam = u3t(q_wam);
+          u3_noun uq_wam = u3x_t(q_wam);
           u3_noun puq_wam, quq_wam;
 
           u3x_cell(uq_wam, &puq_wam, &quq_wam);
-          ret = u3nq(goy,
+          ret = u3i_qual(goy,
                      u3_nul,
-                     u3nc(u3k(puq_vex),
-                          u3k(puq_wam)),
-                     u3k(quq_wam));
+                     u3i_cell(u3a_gain(puq_vex),
+                          u3a_gain(puq_wam)),
+                     u3a_gain(quq_wam));
         }
-        u3z(wam);
+        u3a_lose(wam);
       }
-      u3z(yit);
+      u3a_lose(yit);
       return ret;
     }
   }
@@ -420,16 +420,16 @@
                 u3_noun sef,
                 u3_noun tub)
   {
-    u3_noun vex = u3x_good(u3n_slam_on(u3k(sef), u3k(tub)));
+    u3_noun vex = u3x_good(u3n_slam_on(u3a_gain(sef), u3a_gain(tub)));
     u3_noun p_vex, q_vex;
 
     u3x_cell(vex, &p_vex, &q_vex);
 
-    if ( c3n == u3du(q_vex) ) {
+    if ( c3n == u3a_is_cell(q_vex) ) {
       return vex;
     }
     else {
-      u3_noun uq_vex = u3t(q_vex);
+      u3_noun uq_vex = u3x_t(q_vex);
       u3_noun p_tub, q_tub;
       u3_noun puq_vex, quq_vex, pquq_vex;
       u3_noun gud, wag;
@@ -438,18 +438,18 @@
       u3x_cell(tub, &p_tub, &q_tub);
       u3x_cell(uq_vex, &puq_vex, &quq_vex);
       u3x_cell(quq_vex, &pquq_vex, 0);
-      gud = u3nc(
-                  u3nc(u3k(p_tub),
-                               u3k(pquq_vex)),
-                  u3k(puq_vex));
+      gud = u3i_cell(
+                  u3i_cell(u3a_gain(p_tub),
+                               u3a_gain(pquq_vex)),
+                  u3a_gain(puq_vex));
 
-      wag = u3x_good(u3n_slam_on(u3k(hez), gud));
-      ret = u3nq(u3k(p_vex),
+      wag = u3x_good(u3n_slam_on(u3a_gain(hez), gud));
+      ret = u3i_qual(u3a_gain(p_vex),
                  u3_nul,
                  wag,
-                 u3k(quq_vex));
+                 u3a_gain(quq_vex));
 
-      u3z(vex);
+      u3a_lose(vex);
       return ret;
     }
   }
@@ -479,11 +479,11 @@
 
     u3x_cell(tub, &p_tub, &q_tub);
 
-    if ( c3n == u3du(q_tub) ) {
+    if ( c3n == u3a_is_cell(q_tub) ) {
       return _fail(tub);
     }
     else {
-      u3_noun iq_tub = u3h(q_tub);
+      u3_noun iq_tub = u3x_h(q_tub);
 
       if ( c3y == u3r_sing(daf, iq_tub) ) {
         return _next(tub);
@@ -515,17 +515,17 @@
 
     u3x_cell(tub, &p_tub, &q_tub);
 
-    if ( c3n == u3du(q_tub) ) {
+    if ( c3n == u3a_is_cell(q_tub) ) {
       return _fail(tub);
     }
     else {
-      u3_noun iq_tub = u3h(q_tub);
+      u3_noun iq_tub = u3x_h(q_tub);
 
-      while ( c3y == u3du(bud) ) {
-        if ( c3y == u3r_sing(u3h(bud), iq_tub) ) {
+      while ( c3y == u3a_is_cell(bud) ) {
+        if ( c3y == u3r_sing(u3x_h(bud), iq_tub) ) {
           return _next(tub);
         }
-        bud = u3t(bud);
+        bud = u3x_t(bud);
       }
       return _fail(tub);
     }
@@ -552,23 +552,23 @@
     u3_noun p_vex, q_vex;
 
     u3x_cell(vex, &p_vex, &q_vex);
-    if ( c3n == u3du(q_vex) ) {
-      return u3k(vex);
+    if ( c3n == u3a_is_cell(q_vex) ) {
+      return u3a_gain(vex);
     }
     else {
-      u3_noun uq_vex = u3t(q_vex);
+      u3_noun uq_vex = u3x_t(q_vex);
       u3_noun puq_vex, quq_vex;
       u3_noun yit, p_yit, q_yit;
       u3_noun ret;
 
       u3x_cell(uq_vex, &puq_vex, &quq_vex);
-      yit = u3x_good(u3n_slam_on(u3k(sab), u3k(quq_vex)));
+      yit = u3x_good(u3n_slam_on(u3a_gain(sab), u3a_gain(quq_vex)));
 
       u3x_cell(yit, &p_yit, &q_yit);
-      ret = u3nc(_last(p_vex, p_yit),
-                 u3k(q_yit));
+      ret = u3i_cell(_last(p_vex, p_yit),
+                 u3a_gain(q_yit));
 
-      u3z(yit);
+      u3a_lose(yit);
       return ret;
     }
   }
@@ -593,37 +593,37 @@
     u3_noun p_vex, q_vex;
 
     u3x_cell(vex, &p_vex, &q_vex);
-    if ( c3n == u3du(q_vex) ) {
-      return u3k(vex);
+    if ( c3n == u3a_is_cell(q_vex) ) {
+      return u3a_gain(vex);
     }
     else {
-      u3_noun uq_vex = u3t(q_vex);
+      u3_noun uq_vex = u3x_t(q_vex);
       u3_noun puq_vex, quq_vex;
       u3_noun yit, yur;
       u3_noun p_yit, q_yit;
       u3_noun ret;
 
       u3x_cell(uq_vex, &puq_vex, &quq_vex);
-      yit = u3x_good(u3n_slam_on(u3k(sab), u3k(quq_vex)));
+      yit = u3x_good(u3n_slam_on(u3a_gain(sab), u3a_gain(quq_vex)));
 
       u3x_cell(yit, &p_yit, &q_yit);
       yur = _last(p_vex, p_yit);
 
-      if ( c3n == u3du(q_yit) ) {
-        ret = u3nc(yur, u3k(q_yit));
+      if ( c3n == u3a_is_cell(q_yit) ) {
+        ret = u3i_cell(yur, u3a_gain(q_yit));
       }
       else {
-        u3_noun uq_yit = u3t(q_yit);
+        u3_noun uq_yit = u3x_t(q_yit);
         u3_noun puq_yit, quq_yit;
 
         u3x_cell(uq_yit, &puq_yit, &quq_yit);
-        ret = u3nq(yur,
+        ret = u3i_qual(yur,
                    u3_nul,
-                   u3nc(u3k(puq_vex),
-                        u3k(puq_yit)),
-                   u3k(quq_yit));
+                   u3i_cell(u3a_gain(puq_vex),
+                        u3a_gain(puq_yit)),
+                   u3a_gain(quq_yit));
       }
-      u3z(yit);
+      u3a_lose(yit);
       return ret;
     }
   }
@@ -648,18 +648,18 @@
     u3_noun p_vex, q_vex;
 
     u3x_cell(vex, &p_vex, &q_vex);
-    if ( c3y == u3du(q_vex) ) {
-      return u3k(vex);
+    if ( c3y == u3a_is_cell(q_vex) ) {
+      return u3a_gain(vex);
     } else {
-      u3_noun roq = u3x_good(u3n_kick_on(u3k(sab)));
+      u3_noun roq = u3x_good(u3n_kick_on(u3a_gain(sab)));
       u3_noun p_roq, q_roq;
       u3_noun ret;
 
       u3x_cell(roq, &p_roq, &q_roq);
-      ret = u3nc(_last(p_vex, p_roq),
-                 u3k(q_roq));
+      ret = u3i_cell(_last(p_vex, p_roq),
+                 u3a_gain(q_roq));
 
-      u3z(roq);
+      u3a_lose(roq);
       return ret;
     }
   }
@@ -684,36 +684,36 @@
     u3_noun p_vex, q_vex;
 
     u3x_cell(vex, &p_vex, &q_vex);
-    if ( c3n == u3du(q_vex) ) {
-      return u3k(vex);
+    if ( c3n == u3a_is_cell(q_vex) ) {
+      return u3a_gain(vex);
     }
     else {
-      u3_noun uq_vex = u3t(q_vex);
+      u3_noun uq_vex = u3x_t(q_vex);
       u3_noun puq_vex, quq_vex;
       u3_noun yit, p_yit, q_yit, yur;
       u3_noun ret;
 
       u3x_cell(uq_vex, &puq_vex, &quq_vex);
-      yit = u3x_good(u3n_slam_on(u3k(sab), u3k(quq_vex)));
+      yit = u3x_good(u3n_slam_on(u3a_gain(sab), u3a_gain(quq_vex)));
 
       u3x_cell(yit, &p_yit, &q_yit);
       yur = _last(p_vex, p_yit);
 
-      if ( c3n == u3du(q_yit) ) {
-        ret = u3nc(yur, u3_nul);
+      if ( c3n == u3a_is_cell(q_yit) ) {
+        ret = u3i_cell(yur, u3_nul);
       }
       else {
-        u3_noun uq_yit = u3t(q_yit);
+        u3_noun uq_yit = u3x_t(q_yit);
         u3_noun puq_yit, quq_yit;
 
         u3x_cell(uq_yit, &puq_yit, &quq_yit);
 
-        ret = u3nq(yur,
+        ret = u3i_qual(yur,
                    u3_nul,
-                   u3k(puq_vex),
-                   u3k(quq_yit));
+                   u3a_gain(puq_vex),
+                   u3a_gain(quq_yit));
       }
-      u3z(yit);
+      u3a_lose(yit);
       return ret;
     }
   }
@@ -739,12 +739,12 @@
 
     u3x_cell(tub, &p_tub, &q_tub);
 
-    if ( c3n == u3du(q_tub) ) {
+    if ( c3n == u3a_is_cell(q_tub) ) {
       return _fail(tub);
     }
     else {
       u3_noun p_zep, q_zep;
-      u3_noun iq_tub = u3h(q_tub);
+      u3_noun iq_tub = u3x_h(q_tub);
 
       u3x_cell(zep, &p_zep, &q_zep);
       if ( _(u3a_is_cat(p_zep)) &&
@@ -782,28 +782,28 @@
                 u3_noun sef,
                 u3_noun tub)
   {
-    u3_noun vex = u3x_good(u3n_slam_on(u3k(sef), u3k(tub)));
+    u3_noun vex = u3x_good(u3n_slam_on(u3a_gain(sef), u3a_gain(tub)));
     u3_noun p_vex, q_vex;
 
     u3x_cell(vex, &p_vex, &q_vex);
 
-    if ( c3n == u3du(q_vex) ) {
+    if ( c3n == u3a_is_cell(q_vex) ) {
       return vex;
     }
     else {
-      u3_noun uq_vex = u3t(q_vex);
+      u3_noun uq_vex = u3x_t(q_vex);
       u3_noun puq_vex, quq_vex;
       u3_noun wag;
       u3_noun ret;
 
       u3x_cell(uq_vex, &puq_vex, &quq_vex);
-      wag = u3nc(u3k(gob), u3k(puq_vex));
-      ret = u3nq(u3k(p_vex),
+      wag = u3i_cell(u3a_gain(gob), u3a_gain(puq_vex));
+      ret = u3i_qual(u3a_gain(p_vex),
                  u3_nul,
                  wag,
-                 u3k(quq_vex));
+                 u3a_gain(quq_vex));
 
-      u3z(vex);
+      u3a_lose(vex);
       return ret;
     }
   }
@@ -832,14 +832,14 @@
       return u3m_bail(c3__fail);
     }
     else {
-      if ( c3n == u3du(wan) ) {
+      if ( c3n == u3a_is_cell(wan) ) {
         if ( !_(u3a_is_cat(wan)) ) {
           return u3m_bail(c3__fail);
         }
         else return (ort < wan) ? c3y : c3n;
       }
       else {
-        u3_noun h_wan = u3h(wan);
+        u3_noun h_wan = u3x_h(wan);
 
         if ( !_(u3a_is_cat(h_wan)) ) {
           return u3m_bail(c3__fail);
@@ -856,17 +856,17 @@
     u3_noun p_tub, q_tub;
 
     u3x_cell(tub, &p_tub, &q_tub);
-    if ( c3n == u3du(q_tub) ) {
+    if ( c3n == u3a_is_cell(q_tub) ) {
       return _fail(tub);
     }
     else {
-      u3_noun iq_tub = u3h(q_tub);
+      u3_noun iq_tub = u3x_h(q_tub);
 
       if ( !_(u3a_is_cat(iq_tub)) ) {
         return u3m_bail(c3__fail);
       }
       else while ( 1 ) {
-        if ( c3n == u3du(hel) ) {
+        if ( c3n == u3a_is_cell(hel) ) {
           return _fail(tub);
         }
         else {
@@ -877,12 +877,12 @@
           u3x_trel(hel, &n_hel, &l_hel, &r_hel);
           u3x_cell(n_hel, &pn_hel, &qn_hel);
 
-          if ( (c3n == u3du(pn_hel)) ) {
+          if ( (c3n == u3a_is_cell(pn_hel)) ) {
             bit_o = __((iq_tub == pn_hel));
           }
           else {
-            u3_noun hpn_hel = u3h(pn_hel);
-            u3_noun tpn_hel = u3t(pn_hel);
+            u3_noun hpn_hel = u3x_h(pn_hel);
+            u3_noun tpn_hel = u3x_t(pn_hel);
 
             if ( !_(u3a_is_cat(hpn_hel)) ||
                  !_(u3a_is_cat(tpn_hel)) ) {
@@ -893,7 +893,7 @@
 
           if ( c3y == bit_o ) {
             return u3x_good
-              (u3n_slam_on(u3k(qn_hel), u3k(tub)));
+              (u3n_slam_on(u3a_gain(qn_hel), u3a_gain(tub)));
           } else {
             if ( c3y == _stew_wor(iq_tub, pn_hel) ) {
               hel = l_hel;
@@ -948,33 +948,33 @@
     {
       u3_noun    vex, p_vex, q_vex, puq_vex, quq_vex;
       u3j_site fel_u;
-      u3j_gate_prep(&fel_u, u3k(fel));
+      u3j_gate_prep(&fel_u, u3a_gain(fel));
 
-      vex = u3j_gate_slam(&fel_u, u3k(tub));
+      vex = u3j_gate_slam(&fel_u, u3a_gain(tub));
       u3x_cell(vex, &p_vex, &q_vex);
 
-      u3k(tub);
+      u3a_gain(tub);
 
       while ( u3_nul != q_vex ) {
         u3x_trel(q_vex, 0, &puq_vex, &quq_vex);
 
         par_u = u3a_push(&pil_u);
-        par_u->har = u3k(p_vex);
-        par_u->res = u3k(puq_vex);
+        par_u->har = u3a_gain(p_vex);
+        par_u->res = u3a_gain(puq_vex);
 
-        u3z(tub);
-        tub = u3k(quq_vex);
+        u3a_lose(tub);
+        tub = u3a_gain(quq_vex);
 
-        u3z(vex);
-        vex = u3j_gate_slam(&fel_u, u3k(tub));
+        u3a_lose(vex);
+        vex = u3j_gate_slam(&fel_u, u3a_gain(tub));
         u3x_cell(vex, &p_vex, &q_vex);
       }
 
-      p_wag   = u3k(p_vex);
-      puq_wag = u3k(rud);
+      p_wag   = u3a_gain(p_vex);
+      puq_wag = u3a_gain(rud);
       quq_wag = tub;
 
-      u3z(vex);
+      u3a_lose(vex);
       u3j_gate_lose(&fel_u);
     }
 
@@ -982,7 +982,7 @@
     //
     if ( c3n == u3a_pile_done(&pil_u) ) {
       u3j_site raq_u;
-      u3j_gate_prep(&raq_u, u3k(raq));
+      u3j_gate_prep(&raq_u, u3a_gain(raq));
 
       //  check for stack overflow
       //
@@ -990,14 +990,14 @@
 
       while ( c3n == u3a_pile_done(&pil_u) ) {
         p_wag   = _last_k(par_u->har, p_wag);
-        puq_wag = u3j_gate_slam(&raq_u, u3nc(par_u->res, puq_wag));
+        puq_wag = u3j_gate_slam(&raq_u, u3i_cell(par_u->res, puq_wag));
         par_u   = u3a_pop(&pil_u);
       }
 
       u3j_gate_lose(&raq_u);
     }
 
-    return u3nq(p_wag, u3_nul, puq_wag, quq_wag);
+    return u3i_qual(p_wag, u3_nul, puq_wag, quq_wag);
   }
 
   u3_noun

@@ -51,8 +51,8 @@ _bit_rep(u3_atom bits, u3_noun blox)
 #   define SLICE(sz,off,val) TAKEBITS(sz, val) << off
 
     for (c3_w i=0; i<num_blox_w; i++) {
-      u3_noun blok_n = u3h(blox);
-      blox = u3t(blox);
+      u3_noun blok_n = u3x_h(blox);
+      blox = u3x_t(blox);
 
       if ( c3n == u3a_is_cat(blok_n) ) {
         return u3m_bail(c3__fail);
@@ -117,17 +117,17 @@ _block_rep(u3_atom a,
         if ( 0 == cab ) {
           break;
         }
-        else if ( c3n == u3du(cab) ) {
+        else if ( c3n == u3a_is_cell(cab) ) {
           return u3m_bail(c3__exit);
         }
-        else if ( c3n == u3ud(h_cab = u3h(cab)) ) {
+        else if ( c3n == u3a_is_atom(h_cab = u3x_h(cab)) ) {
           return u3m_bail(c3__exit);
         }
         else if ( (tot_w + (len_w = u3r_met(a_g, h_cab))) < tot_w ) {
           return u3m_bail(c3__fail);
         }
         tot_w++;
-        cab = u3t(cab);
+        cab = u3x_t(cab);
       }
 
       if ( 0 == tot_w ) {
@@ -144,11 +144,11 @@ _block_rep(u3_atom a,
       c3_w  pos_w = 0;
 
       while ( 0 != cab ) {
-        u3_noun h_cab = u3h(cab);
+        u3_noun h_cab = u3x_h(cab);
 
         u3r_chop(a_g, 0, 1, pos_w, sab_u.buf_w, h_cab);
         pos_w++;
-        cab = u3t(cab);
+        cab = u3x_t(cab);
       }
     }
 
@@ -191,6 +191,6 @@ u3kc_rep(u3_atom a,
          u3_noun c)
 {
   u3_noun res = u3qc_rep(a, b, c);
-  u3z(a); u3z(b); u3z(c);
+  u3a_lose(a); u3a_lose(b); u3a_lose(c);
   return res;
 }

@@ -8,27 +8,27 @@
 u3_noun
 u3z_key(c3_m fun, u3_noun one)
 {
-  return u3nc(fun, u3k(one));
+  return u3i_cell(fun, u3a_gain(one));
 }
 u3_noun
 u3z_key_2(c3_m fun, u3_noun one, u3_noun two)
 {
-  return u3nt(fun, u3k(one), u3k(two));
+  return u3i_trel(fun, u3a_gain(one), u3a_gain(two));
 }
 u3_noun
 u3z_key_3(c3_m fun, u3_noun one, u3_noun two, u3_noun tri)
 {
-  return u3nq(fun, u3k(one), u3k(two), u3k(tri));
+  return u3i_qual(fun, u3a_gain(one), u3a_gain(two), u3a_gain(tri));
 }
 u3_noun
 u3z_key_4(c3_m fun, u3_noun one, u3_noun two, u3_noun tri, u3_noun qua)
 {
-  return u3nc(fun, u3nq(u3k(one), u3k(two), u3k(tri), u3k(qua)));
+  return u3i_cell(fun, u3i_qual(u3a_gain(one), u3a_gain(two), u3a_gain(tri), u3a_gain(qua)));
 }
 u3_noun
 u3z_key_5(c3_m fun, u3_noun one, u3_noun two, u3_noun tri, u3_noun qua, u3_noun qin)
 {
-  return u3nc(fun, u3nq(u3k(one), u3k(two), u3k(tri), u3nc(u3k(qua), u3k(qin))));
+  return u3i_cell(fun, u3i_qual(u3a_gain(one), u3a_gain(two), u3a_gain(tri), u3i_cell(u3a_gain(qua), u3a_gain(qin))));
 }
 
 /* u3z_find(): find in memo cache.  Arguments retained.
@@ -41,11 +41,11 @@ u3z_find(u3_noun key)
 u3_weak
 u3z_find_m(c3_m fun, u3_noun one)
 {
-  u3_noun key = u3nc(fun, u3k(one));
+  u3_noun key = u3i_cell(fun, u3a_gain(one));
   u3_weak val;
 
   val = u3h_get(u3R->cax.har_p, key);
-  u3z(key);
+  u3a_lose(key);
   return val;
 }
 
@@ -54,8 +54,8 @@ u3z_find_m(c3_m fun, u3_noun one)
 u3_noun
 u3z_save(u3_noun key, u3_noun val)
 {
-  u3h_put(u3R->cax.har_p, key, u3k(val));
-  u3z(key);
+  u3h_put(u3R->cax.har_p, key, u3a_gain(val));
+  u3a_lose(key);
   return val;
 }
 
@@ -64,10 +64,10 @@ u3z_save(u3_noun key, u3_noun val)
 u3_noun
 u3z_save_m(c3_m fun, u3_noun one, u3_noun val)
 {
-  u3_noun key = u3nc(fun, u3k(one));
+  u3_noun key = u3i_cell(fun, u3a_gain(one));
 
-  u3h_put(u3R->cax.har_p, key, u3k(val));
-  u3z(key);
+  u3h_put(u3R->cax.har_p, key, u3a_gain(val));
+  u3a_lose(key);
   return val;
 }
 
@@ -76,14 +76,14 @@ u3z_save_m(c3_m fun, u3_noun one, u3_noun val)
 u3_noun
 u3z_uniq(u3_noun som)
 {
-  u3_noun key = u3nc(c3__uniq, u3k(som));
+  u3_noun key = u3i_cell(c3__uniq, u3a_gain(som));
   u3_noun val = u3h_get(u3R->cax.har_p, key);
 
   if ( u3_none != val ) {
-    u3z(key); u3z(som); return val;
+    u3a_lose(key); u3a_lose(som); return val;
   }
   else {
-    u3h_put(u3R->cax.har_p, key, u3k(som));
+    u3h_put(u3R->cax.har_p, key, u3a_gain(som));
     return som;
   }
 }

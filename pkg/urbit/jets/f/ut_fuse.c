@@ -21,11 +21,11 @@ u3wfu_fuse(u3_noun cor)
     u3_weak pro = u3z_find(key);
 
     if ( u3_none != pro ) {
-      u3z(key);
+      u3a_lose(key);
       return pro;
     }
     else {
-      pro = u3n_nock_on(u3k(cor), u3k(u3x_at(u3x_bat, cor)));
+      pro = u3n_nock_on(u3a_gain(cor), u3a_gain(u3x_at(u3x_bat, cor)));
       return u3z_save(key, pro);
     }
   }

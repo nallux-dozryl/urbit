@@ -11,7 +11,7 @@ u3qdb_put(u3_noun a,
           u3_noun c)
 {
   if ( u3_nul == a ) {
-    return u3nt(u3nc(u3k(b), u3k(c)),
+    return u3i_trel(u3i_cell(u3a_gain(b), u3a_gain(c)),
                 u3_nul,
                 u3_nul);
   }
@@ -23,12 +23,12 @@ u3qdb_put(u3_noun a,
 
     if ( c3y == u3r_sing(pn_a, b) ) {
       if ( c3y == u3r_sing(qn_a, c) ) {
-        return u3k(a);
+        return u3a_gain(a);
       }
       else {
-        return u3nt(u3nc(u3k(b), u3k(c)),
-                    u3k(l_a),
-                    u3k(r_a));
+        return u3i_trel(u3i_cell(u3a_gain(b), u3a_gain(c)),
+                    u3a_gain(l_a),
+                    u3a_gain(r_a));
       }
     }
     else {
@@ -37,42 +37,42 @@ u3qdb_put(u3_noun a,
       if ( c3y == u3qc_gor(b, pn_a) ) {
         d = u3qdb_put(l_a, b, c);
 
-        if ( c3y == u3qc_mor(pn_a, u3h(u3h(d))) ) {
-          return u3nt(u3k(n_a),
+        if ( c3y == u3qc_mor(pn_a, u3x_h(u3x_h(d))) ) {
+          return u3i_trel(u3a_gain(n_a),
                       d,
-                      u3k(r_a));
+                      u3a_gain(r_a));
         }
         else {
           u3r_trel(d, &n_d, &l_d, &r_d);
 
-          u3_noun e = u3nt(u3k(n_d),
-                           u3k(l_d),
-                           u3nt(u3k(n_a),
-                                u3k(r_d),
-                                u3k(r_a)));
+          u3_noun e = u3i_trel(u3a_gain(n_d),
+                           u3a_gain(l_d),
+                           u3i_trel(u3a_gain(n_a),
+                                u3a_gain(r_d),
+                                u3a_gain(r_a)));
 
-          u3z(d);
+          u3a_lose(d);
           return e;
         }
       }
       else {
         d = u3qdb_put(r_a, b, c);
 
-        if ( c3y == u3qc_mor(pn_a, u3h(u3h(d))) ) {
-          return u3nt(u3k(n_a),
-                      u3k(l_a),
+        if ( c3y == u3qc_mor(pn_a, u3x_h(u3x_h(d))) ) {
+          return u3i_trel(u3a_gain(n_a),
+                      u3a_gain(l_a),
                       d);
         }
         else {
           u3r_trel(d, &n_d, &l_d, &r_d);
 
-          u3_noun e = u3nt(u3k(n_d),
-                           u3nt(u3k(n_a),
-                                u3k(l_a),
-                                u3k(l_d)),
-                            u3k(r_d));
+          u3_noun e = u3i_trel(u3a_gain(n_d),
+                           u3i_trel(u3a_gain(n_a),
+                                u3a_gain(l_a),
+                                u3a_gain(l_d)),
+                            u3a_gain(r_d));
 
-          u3z(d);
+          u3a_lose(d);
           return e;
         }
       }
@@ -96,6 +96,6 @@ u3kdb_put(u3_noun a,
           u3_noun c)
 {
   u3_noun pro = u3qdb_put(a, b, c);
-  u3z(a); u3z(b); u3z(c);
+  u3a_lose(a); u3a_lose(b); u3a_lose(c);
   return pro;
 }

@@ -11,7 +11,7 @@
            u3_atom b)
   {
     if ( 1 == b ) {
-      return u3k(a);
+      return u3a_gain(a);
     }
 
     u3_atom c, d, e, f, g, h;
@@ -23,11 +23,11 @@
     g = u3qc_lsh(0, d, a);
     h = u3qa_add(f, g);
 
-    u3z(c);
-    u3z(d);
-    u3z(e);
-    u3z(f);
-    u3z(g);
+    u3a_lose(c);
+    u3a_lose(d);
+    u3a_lose(e);
+    u3a_lose(f);
+    u3a_lose(g);
 
     return h;
   }
@@ -39,8 +39,8 @@
     if ( (c3n == u3r_mean(cor, u3x_sam_2, &a, u3x_sam_3, &b, 0)) ||
          (0 == a) ||
          (0 == b) ||
-         (c3n == u3ud(b)) ||
-         (c3n == u3ud(a) && b != 1) )
+         (c3n == u3a_is_atom(b)) ||
+         (c3n == u3a_is_atom(a) && b != 1) )
     {
       return u3m_bail(c3__exit);
     } else {

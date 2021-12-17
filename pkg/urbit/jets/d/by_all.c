@@ -13,7 +13,7 @@ _by_all(u3_noun a, u3j_site* sit_u)
     u3_noun n_a, l_a, r_a;
     u3x_trel(a, &n_a, &l_a, &r_a);
 
-    switch ( u3j_gate_slam(sit_u, u3k(u3t(n_a))) ) {
+    switch ( u3j_gate_slam(sit_u, u3a_gain(u3x_t(n_a))) ) {
       case c3y: break;
       case c3n: return c3n;
       default:  return u3m_bail(c3__exit);
@@ -33,7 +33,7 @@ u3qdb_all(u3_noun a, u3_noun b)
   u3_noun    pro;
   u3j_site sit_u;
 
-  u3j_gate_prep(&sit_u, u3k(b));
+  u3j_gate_prep(&sit_u, u3a_gain(b));
   pro = _by_all(a, &sit_u);
   u3j_gate_lose(&sit_u);
 

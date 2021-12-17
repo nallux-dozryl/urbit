@@ -13,7 +13,7 @@
     if ( (c3__void == hed) || (c3__void == tal) ) {
       return c3__void;
     } else {
-      return u3nt(c3__cell, u3k(hed), u3k(tal));
+      return u3i_trel(c3__cell, u3a_gain(hed), u3a_gain(tal));
     }
   }
   u3_noun

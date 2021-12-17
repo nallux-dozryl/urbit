@@ -14,7 +14,7 @@ _parse_ud(u3_noun a)
     return u3_nul;
   }
 
-  return u3nc(u3_nul, pro);
+  return u3i_cell(u3_nul, pro);
 }
 
 static
@@ -42,9 +42,9 @@ u3_noun combine(u3_noun p, u3_noun q)
     return 0;
   }
 
-  u3_noun ret = u3nc(0, u3qa_add(u3t(p), u3qa_mul(256, u3t(q))));
-  u3z(p);
-  u3z(q);
+  u3_noun ret = u3i_cell(0, u3qa_add(u3x_t(p), u3qa_mul(256, u3x_t(q))));
+  u3a_lose(p);
+  u3a_lose(q);
 
   return ret;
 }
@@ -125,12 +125,12 @@ _parse_p(u3_noun cor, u3_noun txt) {
       return 0;
     }
 
-    u3_atom raw = u3k(u3t(m));
-    u3z(m);
+    u3_atom raw = u3a_gain(u3x_t(m));
+    u3a_lose(m);
 
-    u3_noun ob = u3j_cook("u3we_slaw_ob_p", u3k(cor), "ob");
+    u3_noun ob = u3j_cook("u3we_slaw_ob_p", u3a_gain(cor), "ob");
     u3_noun hok = u3j_cook("u3we_slaw_fynd_p", ob, "fynd");
-    return u3nc(0, u3n_slam_on(hok, raw));
+    return u3i_cell(0, u3n_slam_on(hok, raw));
   }
 
   // There must now be a - or it is invalid.
@@ -159,11 +159,11 @@ _parse_p(u3_noun cor, u3_noun txt) {
       return 0;
     }
 
-    u3_atom raw = u3k(u3t(m));
-    u3z(m);
-    u3_noun ob = u3j_cook("u3we_slaw_ob_p", u3k(cor), "ob");
+    u3_atom raw = u3a_gain(u3x_t(m));
+    u3a_lose(m);
+    u3_noun ob = u3j_cook("u3we_slaw_ob_p", u3a_gain(cor), "ob");
     u3_noun hok = u3j_cook("u3we_slaw_fynd_p", ob, "fynd");
-    return u3nc(0, u3n_slam_on(hok, raw));
+    return u3i_cell(0, u3n_slam_on(hok, raw));
   }
 
   // There must now be a - or it is invalid.
@@ -195,11 +195,11 @@ _parse_p(u3_noun cor, u3_noun txt) {
       return 0;
     }
 
-    u3_atom raw = u3k(u3t(m));
-    u3z(m);
-    u3_noun ob = u3j_cook("u3we_slaw_ob_p", u3k(cor), "ob");
+    u3_atom raw = u3a_gain(u3x_t(m));
+    u3a_lose(m);
+    u3_noun ob = u3j_cook("u3we_slaw_ob_p", u3a_gain(cor), "ob");
     u3_noun hok = u3j_cook("u3we_slaw_fynd_p", ob, "fynd");
-    return u3nc(0, u3n_slam_on(hok, raw));
+    return u3i_cell(0, u3n_slam_on(hok, raw));
   }
 
   // At this point, the only thing it could be is a long comet, of the form
@@ -352,11 +352,11 @@ _parse_da(u3_noun cor, u3_noun txt) {
 
   if (cur[0] == 0) {
     u3a_free(c);
-    u3_noun hok = u3j_cook("u3we_slaw_parse_da", u3k(cor), "year");
+    u3_noun hok = u3j_cook("u3we_slaw_parse_da", u3a_gain(cor), "year");
     u3_noun res = u3n_slam_on(hok,
-                              u3nt(u3nc(bc, year), month,
-                                   u3nc(day, u3nq(0, 0, 0, 0))));
-    return u3nc(0, res);
+                              u3i_trel(u3i_cell(bc, year), month,
+                                   u3i_cell(day, u3i_qual(0, 0, 0, 0))));
+    return u3i_cell(0, res);
   }
 
   CONSUME('.');
@@ -370,11 +370,11 @@ _parse_da(u3_noun cor, u3_noun txt) {
 
   if (cur[0] == 0) {
     u3a_free(c);
-    u3_noun hok = u3j_cook("u3we_slaw_parse_da", u3k(cor), "year");
+    u3_noun hok = u3j_cook("u3we_slaw_parse_da", u3a_gain(cor), "year");
     u3_noun res = u3n_slam_on(hok,
-                              u3nt(u3nc(bc, year), month,
-                                   u3nc(day, u3nq(hour, minute, second, 0))));
-    return u3nc(0, res);
+                              u3i_trel(u3i_cell(bc, year), month,
+                                   u3i_cell(day, u3i_qual(hour, minute, second, 0))));
+    return u3i_cell(0, res);
   }
 
   CONSUME('.');
@@ -392,20 +392,20 @@ _parse_da(u3_noun cor, u3_noun txt) {
     PARSE_HEX_DIGIT(four);
 
     c3_w current = (one << 12) + (two << 8) + (three << 4) + four;
-    list = u3nc(u3i_words(1, &current), list);
+    list = u3i_cell(u3i_words(1, &current), list);
 
     if (cur[0] == 0) {
       u3a_free(c);
 
       u3_noun flopped = u3qb_flop(list);
-      u3z(list);
+      u3a_lose(list);
 
-      u3_noun hok = u3j_cook("u3we_slaw_parse_da", u3k(cor), "year");
+      u3_noun hok = u3j_cook("u3we_slaw_parse_da", u3a_gain(cor), "year");
       u3_noun res = u3n_slam_on(hok,
-                                u3nt(u3nc(bc, year), month,
-                                     u3nc(day,
-                                          u3nq(hour, minute, second, flopped))));
-      return u3nc(0, res);
+                                u3i_trel(u3i_cell(bc, year), month,
+                                     u3i_cell(day,
+                                          u3i_qual(hour, minute, second, flopped))));
+      return u3i_cell(0, res);
     }
 
     CONSUME('.');
@@ -442,7 +442,7 @@ _parse_tas(u3_noun txt) {
   }
 
   u3a_free(c);
-  return u3nc(0, u3k(txt));
+  return u3i_cell(0, u3a_gain(txt));
 }
 
 u3_noun

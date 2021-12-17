@@ -12,17 +12,17 @@
 static uv_buf_t
 _dawn_oct_to_buf(u3_noun oct)
 {
-  if ( c3n == u3a_is_cat(u3h(oct)) ) {
+  if ( c3n == u3a_is_cat(u3x_h(oct)) ) {
     exit(1);
   }
 
-  c3_w len_w  = u3h(oct);
+  c3_w len_w  = u3x_h(oct);
   c3_y* buf_y = c3_malloc(1 + len_w);
   buf_y[len_w] = 0;
 
-  u3r_bytes(0, len_w, buf_y, u3t(oct));
+  u3r_bytes(0, len_w, buf_y, u3x_t(oct));
 
-  u3z(oct);
+  u3a_lose(oct);
   return uv_buf_init((void*)buf_y, len_w);
 }
 
@@ -37,7 +37,7 @@ _dawn_buf_to_oct(uv_buf_t buf_u)
     exit(1);
   }
 
-  return u3nc(len, u3i_bytes(buf_u.len, (const c3_y*)buf_u.base));
+  return u3i_cell(len, u3i_bytes(buf_u.len, (const c3_y*)buf_u.base));
 }
 
 
@@ -152,8 +152,8 @@ _dawn_get_jam(c3_c* url_c)
   //  throw away the length from the octs
   //
   u3_noun octs = _dawn_buf_to_oct(buf_u);
-  u3_noun jammed = u3k(u3t(octs));
-  u3z(octs);
+  u3_noun jammed = u3a_gain(u3x_t(octs));
+  u3a_lose(octs);
 
   c3_free(buf_u.base);
 
@@ -178,8 +178,8 @@ _dawn_eth_rpc(c3_c* url_c, u3_noun oct)
 static void
 _dawn_fail(u3_noun who, u3_noun rac, u3_noun sas)
 {
-  u3_noun how = u3dc("scot", 'p', u3k(who));
-  c3_c* how_c = u3r_string(u3k(how));
+  u3_noun how = u3v_dc("scot", 'p', u3a_gain(who));
+  c3_c* how_c = u3r_string(u3a_gain(how));
 
   c3_c* rac_c;
 
@@ -211,11 +211,11 @@ _dawn_fail(u3_noun who, u3_noun rac, u3_noun sas)
 
   // XX deconstruct sas, print helpful error messages
   while ( u3_nul != sas ) {
-    u3m_p("pre-boot error", u3h(sas));
-    sas = u3t(sas);
+    u3m_p("pre-boot error", u3x_h(sas));
+    sas = u3x_t(sas);
   }
 
-  u3z(how);
+  u3a_lose(how);
   c3_free(how_c);
   exit(1);
 }
@@ -230,8 +230,8 @@ _dawn_need_unit(u3_noun nit, c3_c* msg_c)
     exit(1);
   }
   else {
-    u3_noun pro = u3k(u3t(nit));
-    u3z(nit);
+    u3_noun pro = u3a_gain(u3x_t(nit));
+    u3a_lose(nit);
     return pro;
   }
 }
@@ -245,19 +245,19 @@ _dawn_turf(c3_c* dns_c)
 
   u3_noun par = u3v_wish("thos:de-purl:html");
   u3_noun dns = u3i_string(dns_c);
-  u3_noun rul = u3dc("rush", u3k(dns), u3k(par));
+  u3_noun rul = u3v_dc("rush", u3a_gain(dns), u3a_gain(par));
 
-  if ( (u3_nul == rul) || (c3n == u3h(u3t(rul))) ) {
+  if ( (u3_nul == rul) || (c3n == u3x_h(u3x_t(rul))) ) {
     u3l_log("boot: invalid domain specified with -H %s\r\n", dns_c);
     exit(1);
   }
   else {
     u3l_log("boot: overriding network domains with %s\r\n", dns_c);
-    u3_noun dom = u3t(u3t(rul));
-    tuf = u3nc(u3k(dom), u3_nul);
+    u3_noun dom = u3x_t(u3x_t(rul));
+    tuf = u3i_cell(u3a_gain(dom), u3_nul);
   }
 
-  u3z(par); u3z(dns); u3z(rul);
+  u3a_lose(par); u3a_lose(dns); u3a_lose(rul);
 
   return tuf;
 }
@@ -267,16 +267,16 @@ _dawn_turf(c3_c* dns_c)
 static u3_noun
 _dawn_sponsor(u3_noun who, u3_noun rac, u3_noun pot)
 {
-  u3_noun uni = u3dc("sponsor:dawn", u3k(who), u3k(pot));
+  u3_noun uni = u3v_dc("sponsor:dawn", u3a_gain(who), u3a_gain(pot));
 
-  if ( c3n == u3h(uni) ) {
-    _dawn_fail(who, rac, u3nc(u3t(uni), u3_nul));
+  if ( c3n == u3x_h(uni) ) {
+    _dawn_fail(who, rac, u3i_cell(u3x_t(uni), u3_nul));
     return u3_none;
   }
 
-  u3_noun pos = u3k(u3t(uni));
+  u3_noun pos = u3a_gain(u3x_t(uni));
 
-  u3z(who); u3z(rac); u3z(pot); u3z(uni);
+  u3a_lose(who); u3a_lose(rac); u3a_lose(pot); u3a_lose(uni);
 
   return pos;
 }
@@ -288,7 +288,7 @@ u3_dawn_vent(u3_noun ship, u3_noun feed)
 {
   u3_noun sed, pos, pon, zar, tuf;
 
-  u3_noun rank = u3do("clan:title", u3k(ship));
+  u3_noun rank = u3v_do("clan:title", u3a_gain(ship));
 
   c3_c* url_c = ( 0 != u3_Host.ops_u.eth_c ) ?
     u3_Host.ops_u.eth_c :
@@ -312,12 +312,12 @@ u3_dawn_vent(u3_noun ship, u3_noun feed)
               u3_Host.ops_u.who_c);
 
       {
-        u3_noun oct = u3do("point:give:dawn", u3k(ship));
-        u3_noun luh = _dawn_eth_rpc(url_c, u3k(oct));
+        u3_noun oct = u3v_do("point:give:dawn", u3a_gain(ship));
+        u3_noun luh = _dawn_eth_rpc(url_c, u3a_gain(oct));
 
-        pot = _dawn_need_unit(u3dc("point:take:dawn", u3k(ship), u3k(luh)),
+        pot = _dawn_need_unit(u3v_dc("point:take:dawn", u3a_gain(ship), u3a_gain(luh)),
                               "boot: failed to retrieve public keys");
-        u3z(oct); u3z(luh);
+        u3a_lose(oct); u3a_lose(luh);
       }
     }
 
@@ -331,17 +331,17 @@ u3_dawn_vent(u3_noun ship, u3_noun feed)
 
     //  (each seed (lest error=@tas))
     //
-    sed = u3dq("veri:dawn", u3k(ship), u3k(feed), u3k(pot), u3k(liv));
+    sed = u3v_dq("veri:dawn", u3a_gain(ship), u3a_gain(feed), u3a_gain(pot), u3a_gain(liv));
 
-    if ( c3n == u3h(sed) ) {
+    if ( c3n == u3x_h(sed) ) {
       // bails, won't return
-      _dawn_fail(ship, rank, u3t(sed));
+      _dawn_fail(ship, rank, u3x_t(sed));
       return u3_none;
     }
 
     u3l_log("boot: getting sponsor\r\n");
-    pos = _dawn_sponsor(u3k(ship), u3k(rank), u3k(pot));
-    u3z(pot); u3z(liv);
+    pos = _dawn_sponsor(u3a_gain(ship), u3a_gain(rank), u3a_gain(pot));
+    u3a_lose(pot); u3a_lose(liv);
   }
 
 
@@ -351,11 +351,11 @@ u3_dawn_vent(u3_noun ship, u3_noun feed)
     u3l_log("boot: retrieving galaxy table\r\n");
 
     u3_noun oct = u3v_wish("czar:give:dawn");
-    u3_noun raz = _dawn_eth_rpc(url_c, u3k(oct));
+    u3_noun raz = _dawn_eth_rpc(url_c, u3a_gain(oct));
 
-    zar = _dawn_need_unit(u3do("czar:take:dawn", u3k(raz)),
+    zar = _dawn_need_unit(u3v_do("czar:take:dawn", u3a_gain(raz)),
                           "boot: failed to retrieve galaxy table");
-    u3z(oct); u3z(raz);
+    u3a_lose(oct); u3a_lose(raz);
   }
 
   //  (list turf): ames domains
@@ -367,11 +367,11 @@ u3_dawn_vent(u3_noun ship, u3_noun feed)
     u3l_log("boot: retrieving network domains\r\n");
 
     u3_noun oct = u3v_wish("turf:give:dawn");
-    u3_noun fut = _dawn_eth_rpc(url_c, u3k(oct));
+    u3_noun fut = _dawn_eth_rpc(url_c, u3a_gain(oct));
 
-    tuf = _dawn_need_unit(u3do("turf:take:dawn", u3k(fut)),
+    tuf = _dawn_need_unit(u3v_do("turf:take:dawn", u3a_gain(fut)),
                           "boot: failed to retrieve network domains");
-    u3z(oct); u3z(fut);
+    u3a_lose(oct); u3a_lose(fut);
   }
 
   pon = u3_nul;
@@ -380,45 +380,45 @@ u3_dawn_vent(u3_noun ship, u3_noun feed)
     //  print message
     //
     {
-      u3_noun who = u3dc("scot", 'p', u3k(pos));
+      u3_noun who = u3v_dc("scot", 'p', u3a_gain(pos));
       c3_c* who_c = u3r_string(who);
       u3l_log("boot: retrieving keys for sponsor %s\r\n", who_c);
-      u3z(who);
+      u3a_lose(who);
       c3_free(who_c);
     }
 
     //  retrieve +point:azimuth of pos (sponsor of ship)
     //
     {
-      u3_noun oct = u3do("point:give:dawn", u3k(pos));
-      u3_noun luh = _dawn_eth_rpc(url_c, u3k(oct));
+      u3_noun oct = u3v_do("point:give:dawn", u3a_gain(pos));
+      u3_noun luh = _dawn_eth_rpc(url_c, u3a_gain(oct));
 
-      son = _dawn_need_unit(u3dc("point:take:dawn", u3k(pos), u3k(luh)),
+      son = _dawn_need_unit(u3v_dc("point:take:dawn", u3a_gain(pos), u3a_gain(luh)),
                             "boot: failed to retrieve sponsor keys");
       // append to sponsor chain list
       //
-      pon = u3nc(u3nc(u3k(pos), u3k(son)), pon);
-      u3z(oct); u3z(luh);
+      pon = u3i_cell(u3i_cell(u3a_gain(pos), u3a_gain(son)), pon);
+      u3a_lose(oct); u3a_lose(luh);
     }
 
     // find next sponsor
     //
-    u3z(ship); u3z(rank);
+    u3a_lose(ship); u3a_lose(rank);
     ship = pos;
-    rank = u3do("clan:title", u3k(ship));
-    pos = _dawn_sponsor(u3k(ship), u3k(rank), u3k(son));
+    rank = u3v_do("clan:title", u3a_gain(ship));
+    pos = _dawn_sponsor(u3a_gain(ship), u3a_gain(rank), u3a_gain(son));
 
-    u3z(son);
+    u3a_lose(son);
   }
 
   //  [%dawn seed sponsors galaxies domains block eth-url snap]
   //
   //NOTE  blocknum of 0 is fine because jael ignores it.
   //      should probably be removed from dawn event.
-  u3_noun ven = u3nc(c3__dawn,
-                     u3nq(u3k(u3t(sed)), pon, zar, u3nt(tuf, 0, u3_nul)));
+  u3_noun ven = u3i_cell(c3__dawn,
+                     u3i_qual(u3a_gain(u3x_t(sed)), pon, zar, u3i_trel(tuf, 0, u3_nul)));
 
-  u3z(sed); u3z(rank); u3z(pos); u3z(ship); u3z(feed);
+  u3a_lose(sed); u3a_lose(rank); u3a_lose(pos); u3a_lose(ship); u3a_lose(feed);
 
   return ven;
 }
@@ -439,12 +439,12 @@ _dawn_come(u3_noun stars)
     u3l_log("boot: mining a comet. May take up to an hour.\r\n");
     u3l_log("If you want to boot faster, get an Urbit identity.\r\n");
 
-    seed = u3dc("come:dawn", u3k(stars), u3k(eny));
-    u3z(eny);
+    seed = u3v_dc("come:dawn", u3a_gain(stars), u3a_gain(eny));
+    u3a_lose(eny);
   }
 
   {
-    u3_noun who = u3dc("scot", 'p', u3k(u3h(seed)));
+    u3_noun who = u3v_dc("scot", 'p', u3a_gain(u3x_h(seed)));
     c3_c* who_c = u3r_string(who);
 
     u3l_log("boot: found comet %s\r\n", who_c);
@@ -453,7 +453,7 @@ _dawn_come(u3_noun stars)
   //
 #if 0
     {
-      u3_noun key = u3dc("scot", c3__uw, u3qe_jam(seed));
+      u3_noun key = u3v_dc("scot", c3__uw, u3qe_jam(seed));
       c3_c* key_c = u3r_string(key);
 
       u3l_log("boot: comet private key\n  %s\n", key_c);
@@ -468,15 +468,15 @@ _dawn_come(u3_noun stars)
       }
 
       c3_free(key_c);
-      u3z(key);
+      u3a_lose(key);
     }
 #endif
 
     c3_free(who_c);
-    u3z(who);
+    u3a_lose(who);
   }
 
-  u3z(stars);
+  u3a_lose(stars);
 
   return seed;
 }

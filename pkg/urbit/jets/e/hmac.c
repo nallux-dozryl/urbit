@@ -19,7 +19,7 @@
 
     // prep the hashing gate
     u3j_site sit_u;
-    u3j_gate_prep(&sit_u, u3k(haj));
+    u3j_gate_prep(&sit_u, u3a_gain(haj));
 
     // ensure key and message fit signaled lengths
     key = u3qc_end(3, wik, key);
@@ -27,7 +27,7 @@
 
     // keys longer than block size are shortened by hashing
     if (wik > boq) {
-      key = u3j_gate_slam(&sit_u, u3nc(wik, key));
+      key = u3j_gate_slam(&sit_u, u3i_cell(wik, key));
       wik = out;
     }
 
@@ -46,16 +46,16 @@
       innpad[padwords-1] = 0x36363636 >> (8 * (4 - trail));
       outpad[padwords-1] = 0x5c5c5c5c >> (8 * (4 - trail));
     }
-    u3_atom innkey = u3kc_mix(u3k(key), u3i_words(padwords, innpad));
+    u3_atom innkey = u3kc_mix(u3a_gain(key), u3i_words(padwords, innpad));
     u3_atom outkey = u3kc_mix(    key , u3i_words(padwords, outpad));
 
     // append inner padding to message, then hash
     u3_atom innmsg = u3ka_add(u3kc_lsh(3, wid, innkey), dat);
-    u3_atom innhaj = u3j_gate_slam(&sit_u, u3nc((wid + boq), innmsg));
+    u3_atom innhaj = u3j_gate_slam(&sit_u, u3i_cell((wid + boq), innmsg));
 
     // prepend outer padding to result, hash again
     u3_atom outmsg = u3ka_add(u3kc_lsh(3, out, outkey), innhaj);
-    u3_atom outhaj = u3j_gate_slam(&sit_u, u3nc((out + boq), outmsg));
+    u3_atom outhaj = u3j_gate_slam(&sit_u, u3i_cell((out + boq), outmsg));
 
     u3j_gate_lose(&sit_u);
     return outhaj;
@@ -74,16 +74,16 @@
                                u3x_sam_13, &key,
                                u3x_sam_14, &wid,
                                u3x_sam_15, &dat, 0)) ||
-         (c3n == u3ud(boq)) ||
+         (c3n == u3a_is_atom(boq)) ||
          (c3n == u3a_is_cat(boq)) ||
-         (c3n == u3ud(out)) ||
+         (c3n == u3a_is_atom(out)) ||
          (c3n == u3a_is_cat(out)) ||
-         (c3n == u3ud(wik)) ||
+         (c3n == u3a_is_atom(wik)) ||
          (c3n == u3a_is_cat(wik)) ||
-         (c3n == u3ud(key)) ||
-         (c3n == u3ud(wid)) ||
+         (c3n == u3a_is_atom(key)) ||
+         (c3n == u3a_is_atom(wid)) ||
          (c3n == u3a_is_cat(wid)) ||
-         (c3n == u3ud(dat)) )
+         (c3n == u3a_is_atom(dat)) )
     {
       return u3m_bail(c3__exit);
     }

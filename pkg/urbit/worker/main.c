@@ -51,7 +51,7 @@ _cw_serf_send(u3_noun pel)
 #endif
 
   u3_newt_send(&out_u, len_d, byt_y);
-  u3z(pel);
+  u3a_lose(pel);
 }
 
 /* _cw_serf_send_slog(): send hint output (hod is [priority tank]).
@@ -59,7 +59,7 @@ _cw_serf_send(u3_noun pel)
 static void
 _cw_serf_send_slog(u3_noun hod)
 {
-  _cw_serf_send(u3nc(c3__slog, hod));
+  _cw_serf_send(u3i_cell(c3__slog, hod));
 }
 
 /* _cw_serf_send_stdr(): send stderr output (%flog)
@@ -67,7 +67,7 @@ _cw_serf_send_slog(u3_noun hod)
 static void
 _cw_serf_send_stdr(c3_c* str_c)
 {
-  _cw_serf_send(u3nc(c3__flog, u3i_string(str_c)));
+  _cw_serf_send(u3i_cell(c3__flog, u3i_string(str_c)));
 }
 
 

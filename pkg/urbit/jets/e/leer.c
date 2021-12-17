@@ -57,7 +57,7 @@ u3qe_lore(u3_atom lub)
       return u3kb_flop(tez);
     }
     else {
-      tez = u3nc(_leer_cut(pos_w, meg_w, lub), tez);
+      tez = u3i_cell(_leer_cut(pos_w, meg_w, lub), tez);
       if ( _(end_y) ) {
         return u3kb_flop(tez);
       }
@@ -72,7 +72,7 @@ u3we_lore(u3_noun cor)
   u3_noun lub;
 
   if ( (u3_none == (lub = u3r_at(u3x_sam, cor))) ||
-       (c3n == u3ud(lub)) )
+       (c3n == u3a_is_atom(lub)) )
   {
     return u3m_bail(c3__fail);
   } else {
@@ -120,7 +120,7 @@ u3we_leer(u3_noun cor)
 {
   u3_noun txt = u3x_at(u3x_sam, cor);
 
-  if ( c3n == u3ud(txt) ) {
+  if ( c3n == u3a_is_atom(txt) ) {
     return u3m_bail(c3__fail);
   }
 

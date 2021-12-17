@@ -28,12 +28,12 @@
          (c3n == u3qa_lth(sal_w, chk)) ) {
       return u3m_bail(c3__exit);
     }
-    u3z(chk);
+    u3a_lose(chk);
     chk = u3kc_bex(u3ka_dec(u3qc_xeb(n)));
     if ( c3n == u3r_sing(n, chk) ) {
       return u3m_bail(c3__exit);
     }
-    u3z(chk);
+    u3a_lose(chk);
     if ( c3n == u3ka_lte(
           u3ka_mul(u3qa_mul(128, r), u3ka_dec(u3qa_add(n, z))),
           u3qc_bex(30)) ) {
