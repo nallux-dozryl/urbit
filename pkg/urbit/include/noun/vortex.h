@@ -112,4 +112,12 @@
       void
       u3v_rewrite_compact();
 
+  /**  Macros.
+  **/
+    /* u3v_dc(), u3v_dt(), u3v_dq(): arvo calls.
+    */
+#     define u3v_dc(txt_c, a, b)       u3v_do(txt_c, u3i_cell(a, b))
+#     define u3v_dt(txt_c, a, b, c)    u3v_do(txt_c, u3i_trel(a, b, c))
+#     define u3v_dq(txt_c, a, b, c, d) u3v_do(txt_c, u3i_qual(a, b, c, d))
+
 #endif /* ifndef U3_VORTEX_H */
