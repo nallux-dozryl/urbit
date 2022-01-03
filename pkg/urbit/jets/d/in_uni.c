@@ -9,10 +9,10 @@ static u3_noun
 _in_uni(u3_noun a, u3_noun b)
 {
   if ( u3_nul == a ) {
-    return u3a_gain(b);
+    return u3k(b);
   }
   else if ( u3_nul == b ) {
-    return u3a_gain(a);
+    return u3k(a);
   }
   else {
     u3_noun n_a, l_a, r_a,
@@ -23,42 +23,42 @@ _in_uni(u3_noun a, u3_noun b)
 
     if ( c3n == u3qc_mor(n_a, n_b) ) {
       if ( c3y == u3r_sing(n_a, n_b) ) {
-        return u3i_trel(u3a_gain(n_b), _in_uni(l_a, l_b), _in_uni(r_a, r_b));
+        return u3nt(u3k(n_b), _in_uni(l_a, l_b), _in_uni(r_a, r_b));
       }
       else if ( c3y == u3qc_gor(n_a, n_b) ) {
-        naw = u3i_trel(u3a_gain(n_a), u3a_gain(l_a), u3_nul);
+        naw = u3nt(u3k(n_a), u3k(l_a), u3_nul);
         sub = _in_uni(naw, l_b);
-        neb = u3i_trel(u3a_gain(n_b), sub, u3a_gain(r_b));
+        neb = u3nt(u3k(n_b), sub, u3k(r_b));
         pro = _in_uni(r_a, neb);
-        u3a_lose(naw); u3a_lose(neb);
+        u3z(naw); u3z(neb);
         return pro;
       }
       else {
-        naw = u3i_trel(u3a_gain(n_a), u3_nul, u3a_gain(r_a));
+        naw = u3nt(u3k(n_a), u3_nul, u3k(r_a));
         sub = _in_uni(naw, r_b);
-        neb = u3i_trel(u3a_gain(n_b), u3a_gain(l_b),  sub);
+        neb = u3nt(u3k(n_b), u3k(l_b),  sub);
         pro = _in_uni(l_a, neb);
-        u3a_lose(naw); u3a_lose(neb);
+        u3z(naw); u3z(neb);
         return pro;
       }
     }
     else if ( c3y == u3r_sing(n_b, n_a) ) {
-      return u3i_trel(u3a_gain(n_b), _in_uni(l_a, l_b), _in_uni(r_a, r_b));
+      return u3nt(u3k(n_b), _in_uni(l_a, l_b), _in_uni(r_a, r_b));
     }
     else if ( c3y == u3qc_gor(n_b, n_a) ) {
-      neb = u3i_trel(u3a_gain(n_b), u3a_gain(l_b), u3_nul);
+      neb = u3nt(u3k(n_b), u3k(l_b), u3_nul);
       sub = _in_uni(l_a, neb);
-      naw = u3i_trel(u3a_gain(n_a), sub, u3a_gain(r_a));
+      naw = u3nt(u3k(n_a), sub, u3k(r_a));
       pro = _in_uni(naw, r_b);
-      u3a_lose(neb); u3a_lose(naw);
+      u3z(neb); u3z(naw);
       return pro;
     }
     else {
-      neb = u3i_trel(u3a_gain(n_b), u3_nul, u3a_gain(r_b));
+      neb = u3nt(u3k(n_b), u3_nul, u3k(r_b));
       sub = _in_uni(r_a, neb);
-      naw = u3i_trel(u3a_gain(n_a), u3a_gain(l_a), sub);
+      naw = u3nt(u3k(n_a), u3k(l_a), sub);
       pro = _in_uni(naw, l_b);
-      u3a_lose(neb); u3a_lose(naw);
+      u3z(neb); u3z(naw);
       return pro;
     }
   }
@@ -71,7 +71,7 @@ u3kdi_uni(u3_noun a,
           u3_noun b)
 {
   u3_noun c = u3qdi_uni(a, b);
-  u3a_lose(a); u3a_lose(b);
+  u3z(a); u3z(b);
   return c;
 }
 
@@ -80,7 +80,7 @@ u3qdi_uni(u3_noun a,
           u3_noun b)
 {
   if ( c3y == u3r_sing(a, b) ) {
-    return u3a_gain(a);
+    return u3k(a);
   }
   else {
     return _in_uni(a, b);

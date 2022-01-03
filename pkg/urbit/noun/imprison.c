@@ -463,7 +463,7 @@ u3i_vint(u3_noun a)
     mpz_t a_mp;
 
     u3r_mp(a_mp, a);
-    u3a_lose(a);
+    u3z(a);
 
     mpz_add_ui(a_mp, a_mp, 1);
     return u3i_mp(a_mp);
@@ -569,7 +569,7 @@ u3i_list(u3_weak som, ...)
     return lit;
   }
   else {
-    lit = u3i_cell(som, lit);
+    lit = u3nc(som, lit);
   }
 
   {
@@ -581,7 +581,7 @@ u3i_list(u3_weak som, ...)
         break;
       }
       else {
-        lit = u3i_cell(tem, lit);
+        lit = u3nc(tem, lit);
       }
     }
     va_end(ap);
@@ -593,27 +593,27 @@ u3i_list(u3_weak som, ...)
 static u3_noun
 _edit_cat(u3_noun big, c3_l axe_l, u3_noun som)
 {
-  if ( c3n == u3a_is_cell(big) ) {
+  if ( c3n == u3du(big) ) {
     return u3m_bail(c3__exit);
   }
   else {
     u3_noun pro;
     switch ( axe_l ) {
       case 2:
-        pro = u3i_cell(som, u3a_gain(u3x_t(big)));
+        pro = u3nc(som, u3k(u3t(big)));
         break;
       case 3:
-        pro = u3i_cell(u3a_gain(u3x_h(big)), som);
+        pro = u3nc(u3k(u3h(big)), som);
         break;
       default: {
         c3_l mor_l = u3x_mas(axe_l);
         pro = ( 2 == u3x_cap(axe_l) )
-            ? u3i_cell(_edit_cat(u3a_gain(u3x_h(big)), mor_l, som), u3a_gain(u3x_t(big)))
-            : u3i_cell(u3a_gain(u3x_h(big)), _edit_cat(u3a_gain(u3x_t(big)), mor_l, som));
+            ? u3nc(_edit_cat(u3k(u3h(big)), mor_l, som), u3k(u3t(big)))
+            : u3nc(u3k(u3h(big)), _edit_cat(u3k(u3t(big)), mor_l, som));
         break;
       }
     }
-    u3a_lose(big);
+    u3z(big);
     return pro;
   }
 }
@@ -624,16 +624,16 @@ _edit(u3_noun big, u3_noun axe, u3_noun som)
   if ( c3y == u3a_is_cat(axe) ) {
     return _edit_cat(big, (c3_l) axe, som);
   }
-  else if ( c3n == u3a_is_cell(big) ) {
+  else if ( c3n == u3du(big) ) {
     return u3m_bail(c3__exit);
   }
   else {
     u3_noun mor = u3qc_mas(axe),
             pro = ( 2 == u3qc_cap(axe) )
-                ? u3i_cell(_edit(u3a_gain(u3x_h(big)), mor, som), u3a_gain(u3x_t(big)))
-                : u3i_cell(u3a_gain(u3x_h(big)), _edit(u3a_gain(u3x_t(big)), mor, som));
-    u3a_lose(mor);
-    u3a_lose(big);
+                ? u3nc(_edit(u3k(u3h(big)), mor, som), u3k(u3t(big)))
+                : u3nc(u3k(u3h(big)), _edit(u3k(u3t(big)), mor, som));
+    u3z(mor);
+    u3z(big);
     return pro;
   }
 }
@@ -644,18 +644,18 @@ static u3_noun _edit_or_mutate(u3_noun, u3_noun, u3_noun);
 static void
 _mutate_cat(u3_noun big, c3_l axe_l, u3_noun som)
 {
-  if ( c3n == u3a_is_cell(big) ) {
+  if ( c3n == u3du(big) ) {
     u3m_bail(c3__exit);
   }
   else {
     u3a_cell* cel_u = (void*) u3a_to_ptr(big);
     switch ( axe_l ) {
       case 2:
-        u3a_lose(cel_u->hed);
+        u3z(cel_u->hed);
         cel_u->hed = som;
         break;
       case 3:
-        u3a_lose(cel_u->tel);
+        u3z(cel_u->tel);
         cel_u->tel = som;
         break;
       default: {
@@ -675,7 +675,7 @@ _mutate(u3_noun big, u3_noun axe, u3_noun som)
   if ( c3y == u3a_is_cat(axe) ) {
     _mutate_cat(big, (c3_l) axe, som);
   }
-  else if ( c3n == u3a_is_cell(big) ) {
+  else if ( c3n == u3du(big) ) {
     u3m_bail(c3__exit);
   }
   else {
@@ -686,7 +686,7 @@ _mutate(u3_noun big, u3_noun axe, u3_noun som)
                  : &(cel_u->tel);
     *tar = _edit_or_mutate(*tar, mor, som);
     cel_u->mug_w = 0;
-    u3a_lose(mor);
+    u3z(mor);
   }
 }
 
@@ -729,7 +729,7 @@ u3i_edit(u3_noun big, u3_noun axe, u3_noun som)
     case 0:
       return u3m_bail(c3__exit);
     case 1:
-      u3a_lose(big);
+      u3z(big);
       return som;
     default:
       return _edit_or_mutate(big, axe, som);
@@ -772,7 +772,7 @@ u3i_edit(u3_noun big, u3_noun axe, u3_noun som)
               struct _molt_pair* pms_m)     //  transfer
   {
     if ( len_w == 0 ) {
-      return u3a_gain(som);
+      return u3k(som);
     }
     else if ( (len_w == 1) && (1 == pms_m[0].axe_w) ) {
       return pms_m[0].som;
@@ -833,6 +833,6 @@ u3i_molt(u3_noun som, ...)
   //  Apply.
   //
   pro = _molt_apply(som, len_w, pms_m);
-  u3a_lose(som);
+  u3z(som);
   return pro;
 }

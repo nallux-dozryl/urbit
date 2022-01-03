@@ -172,7 +172,7 @@ _disk_serialize_v1(u3_fact* tac_u, c3_y** out_y)
     u3t_event_trace("king disk jam", 'E');
 #endif
 
-    u3a_lose(mat);
+    u3z(mat);
 
     *out_y = dat_y;
     return len_w + 4;
@@ -564,7 +564,7 @@ u3_disk_read_meta(u3_disk* log_u,
     }
 
     if ( c3n == val_o ) {
-      u3a_lose(ver); u3a_lose(who); u3a_lose(fak); u3a_lose(lif);
+      u3z(ver); u3z(who); u3z(fak); u3z(lif);
       return c3n;
     }
   }
@@ -581,7 +581,7 @@ u3_disk_read_meta(u3_disk* log_u,
     *lif_w = lif;
   }
 
-  u3a_lose(who);
+  u3z(who);
   return c3y;
 }
 

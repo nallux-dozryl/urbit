@@ -98,9 +98,9 @@ _king_doom(u3_noun doom)
   void (*next)(u3_noun);
 
   c3_assert(_(u3a_is_cell(doom)));
-  c3_assert(_(u3a_is_cat(u3x_h(doom))));
+  c3_assert(_(u3a_is_cat(u3h(doom))));
 
-  switch ( u3x_h(doom) ) {
+  switch ( u3h(doom) ) {
     case c3__boot:
       next = _king_boot;
       break;
@@ -111,8 +111,8 @@ _king_doom(u3_noun doom)
       _king_defy_fate();
   }
 
-  load = u3a_gain(u3x_t(doom));
-  u3a_lose(doom);
+  load = u3k(u3t(doom));
+  u3z(doom);
   next(load);
 }
 
@@ -126,9 +126,9 @@ _king_boot(u3_noun bul)
 
   c3_assert(_(u3a_is_cell(bul)));
   u3x_trel(bul, &boot, &pill, &path);
-  c3_assert(_(u3a_is_cat(u3x_h(boot))));
+  c3_assert(_(u3a_is_cat(u3h(boot))));
 
-  switch ( u3x_h(boot) ) {
+  switch ( u3h(boot) ) {
     case c3__fake: {
       next = _king_fake;
       break;
@@ -145,8 +145,8 @@ _king_boot(u3_noun bul)
       return _king_defy_fate();
   }
 
-  next(u3a_gain(u3x_t(boot)), u3a_gain(pill), u3a_gain(path));
-  u3a_lose(bul);
+  next(u3k(u3t(boot)), u3k(pill), u3k(path));
+  u3z(bul);
 }
 
 /* _king_fake(): boot with fake keys
@@ -156,7 +156,7 @@ _king_fake(u3_noun ship, u3_noun pill, u3_noun path)
 {
   //  XX link properly
   //
-  u3_noun vent = u3i_cell(c3__fake, u3a_gain(ship));
+  u3_noun vent = u3nc(c3__fake, u3k(ship));
   u3K.pir_u    = u3_pier_boot(sag_w, ship, vent, pill, path, u3_none);
 }
 
@@ -173,8 +173,8 @@ _king_come(u3_noun star, u3_noun pill, u3_noun path)
 static void
 _king_slog(u3_noun hod)
 {
-  u3_pier_tank(0, 0, u3a_gain(u3x_t(hod)));
-  u3a_lose(hod);
+  u3_pier_tank(0, 0, u3k(u3t(hod)));
+  u3z(hod);
 }
 
 /* _king_dawn(): boot from keys, validating
@@ -186,13 +186,13 @@ _king_dawn(u3_noun feed, u3_noun pill, u3_noun path)
   //
   u3C.slog_f = _king_slog;
 
-  u3_noun ship = ( c3y == u3a_is_cell(u3x_h(feed)) )
-                 ? u3x_h(u3x_t(feed))
-                 : u3x_h(feed);
-  u3_noun vent = u3_dawn_vent(u3a_gain(ship), u3a_gain(feed));
+  u3_noun ship = ( c3y == u3a_is_cell(u3h(feed)) )
+                 ? u3h(u3t(feed))
+                 : u3h(feed);
+  u3_noun vent = u3_dawn_vent(u3k(ship), u3k(feed));
   //  XX link properly
   //
-  u3K.pir_u    = u3_pier_boot(sag_w, u3a_gain(ship), vent, pill, path, feed);
+  u3K.pir_u    = u3_pier_boot(sag_w, u3k(ship), vent, pill, path, feed);
 
   // disable ivory slog printfs
   //
@@ -204,14 +204,14 @@ _king_dawn(u3_noun feed, u3_noun pill, u3_noun path)
 void
 _king_pier(u3_noun pier)
 {
-  if ( (c3n == u3a_is_cell(pier)) ||
-       (c3n == u3a_is_atom(u3x_t(pier))) ) {
+  if ( (c3n == u3du(pier)) ||
+       (c3n == u3ud(u3t(pier))) ) {
     u3m_p("daemon: invalid pier", pier);
     exit(1);
   }
 
-  u3K.pir_u = u3_pier_stay(sag_w, u3a_gain(u3x_t(pier)));
-  u3a_lose(pier);
+  u3K.pir_u = u3_pier_stay(sag_w, u3k(u3t(pier)));
+  u3z(pier);
 }
 
 /* _king_curl_alloc(): allocate a response buffer for curl
@@ -370,10 +370,10 @@ _boothack_pill(void)
   if ( 0 != u3_Host.ops_u.arv_c ) {
     u3l_log("boot: preparing filesystem from %s\r\n",
             u3_Host.ops_u.arv_c);
-    arv = u3i_cell(u3_nul, u3_unix_initial_into_card(u3_Host.ops_u.arv_c));
+    arv = u3nc(u3_nul, u3_unix_initial_into_card(u3_Host.ops_u.arv_c));
   }
 
-  return u3i_cell(pil, arv);
+  return u3nc(pil, arv);
 }
 
 /* _boothack_key(): parse a private key file or value
@@ -385,7 +385,7 @@ _boothack_key(u3_noun kef)
   u3_weak ship = u3_none;
 
   {
-    u3_noun des = u3v_dc("slaw", c3__uw, u3a_gain(kef));
+    u3_noun des = u3dc("slaw", c3__uw, u3k(kef));
 
     if ( u3_nul == des ) {
       c3_c* kef_c = u3r_string(kef);
@@ -396,29 +396,29 @@ _boothack_key(u3_noun kef)
 
     //  +feed:able:jael: keyfile
     //
-    u3_noun pro = u3m_soft(0, u3ke_cue, u3a_gain(u3x_t(des)));
-    if ( u3_blip != u3x_h(pro) ) {
+    u3_noun pro = u3m_soft(0, u3ke_cue, u3k(u3t(des)));
+    if ( u3_blip != u3h(pro) ) {
       u3l_log("dawn: unable to cue keyfile\r\n");
       exit(1);
     }
-    seed = u3a_gain(u3x_t(pro));
-    u3a_lose(pro);
+    seed = u3k(u3t(pro));
+    u3z(pro);
 
     //  if it's a single seed, we can trivially sanity-check early
     //
-    if ( c3y == u3a_is_atom(u3x_h(seed)) ) {
+    if ( c3y == u3ud(u3h(seed)) ) {
       //  local reference, not counted
       //
-      ship = u3x_h(seed);
+      ship = u3h(seed);
     }
 
-    u3a_lose(des);
-    u3a_lose(kef);
+    u3z(des);
+    u3z(kef);
   }
 
   if ( 0 != u3_Host.ops_u.who_c ) {
     u3_noun woh = u3i_string(u3_Host.ops_u.who_c);
-    u3_noun whu = u3v_dc("slaw", 'p', u3a_gain(woh));
+    u3_noun whu = u3dc("slaw", 'p', u3k(woh));
 
     if ( u3_nul == whu ) {
       u3l_log("dawn: invalid ship specified with -w %s\r\n",
@@ -427,20 +427,20 @@ _boothack_key(u3_noun kef)
     }
 
     if ( (u3_none != ship) &&
-         (c3n == u3r_sing(ship, u3x_t(whu))) )
+         (c3n == u3r_sing(ship, u3t(whu))) )
     {
-      u3_noun how = u3v_dc("scot", 'p', u3a_gain(ship));
-      c3_c* how_c = u3r_string(u3a_gain(how));
+      u3_noun how = u3dc("scot", 'p', u3k(ship));
+      c3_c* how_c = u3r_string(u3k(how));
       u3l_log("dawn: mismatch between -w %s and -K %s\r\n",
               u3_Host.ops_u.who_c, how_c);
 
-      u3a_lose(how);
+      u3z(how);
       c3_free(how_c);
       exit(1);
     }
 
-    u3a_lose(woh);
-    u3a_lose(whu);
+    u3z(woh);
+    u3z(whu);
   }
 
   return seed;
@@ -455,21 +455,21 @@ _boothack_doom(void)
   u3_noun bot;
 
   if ( c3n == u3_Host.ops_u.nuu ) {
-    return u3i_trel(c3__pier, u3_nul, pax);
+    return u3nt(c3__pier, u3_nul, pax);
   }
   else if ( 0 != u3_Host.ops_u.fak_c ) {
     u3_noun fak = u3i_string(u3_Host.ops_u.fak_c);
-    u3_noun whu = u3v_dc("slaw", 'p', u3a_gain(fak));
+    u3_noun whu = u3dc("slaw", 'p', u3k(fak));
 
     if ( u3_nul == whu ) {
       u3l_log("boot: malformed -F ship %s\r\n", u3_Host.ops_u.fak_c);
       exit(1);
     }
 
-    bot = u3i_cell(c3__fake, u3a_gain(u3x_t(whu)));
+    bot = u3nc(c3__fake, u3k(u3t(whu)));
 
-    u3a_lose(whu);
-    u3a_lose(fak);
+    u3z(whu);
+    u3z(fak);
   }
   else if ( 0 != u3_Host.ops_u.who_c ) {
     u3_noun kef;
@@ -485,7 +485,7 @@ _boothack_doom(void)
 
         if (len_w && (key_c[len_w - 1] == '\n')) {
           key_c[len_w - 1] = '\0';
-          u3a_lose(kef);
+          u3z(kef);
           kef = u3i_string(key_c);
         }
 
@@ -500,15 +500,15 @@ _boothack_doom(void)
       exit(1);
     }
 
-    bot = u3i_cell(c3__dawn, _boothack_key(kef));
+    bot = u3nc(c3__dawn, _boothack_key(kef));
   }
   else {
     //  XX allow parent star to be specified?
     //
-    bot = u3i_cell(c3__come, u3_nul);
+    bot = u3nc(c3__come, u3_nul);
   }
 
-  return u3i_qual(c3__boot, bot, _boothack_pill(), pax);
+  return u3nq(c3__boot, bot, _boothack_pill(), pax);
 }
 
 /* _king_sign_init(): initialize daemon signal handlers
@@ -916,7 +916,7 @@ u3_king_grab(void* vod_p)
   {
     //  XX date will not match up with that of the worker
     //
-    u3_noun wen = u3v_dc("scot", c3__da, u3a_gain(u3A->now));
+    u3_noun wen = u3dc("scot", c3__da, u3k(u3A->now));
     c3_c* wen_c = u3r_string(wen);
 
     c3_c nam_c[2048];
@@ -934,7 +934,7 @@ u3_king_grab(void* vod_p)
     fprintf(fil_u, "%s\r\n", wen_c);
 
     c3_free(wen_c);
-    u3a_lose(wen);
+    u3z(wen);
   }
 #else
   {

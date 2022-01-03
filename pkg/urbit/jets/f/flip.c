@@ -9,21 +9,21 @@
   u3_noun
   u3qf_flip(u3_noun hel)
   {
-    if ( c3y == u3r_sing(1, u3x_h(hel)) ) {
-      if ( (c3y == u3x_t(hel)) ) {
-        return u3i_cell(1, c3n);
+    if ( c3y == u3r_sing(1, u3h(hel)) ) {
+      if ( (c3y == u3t(hel)) ) {
+        return u3nc(1, c3n);
       }
       else {
-        c3_assert((c3n == u3x_t(hel)));
+        c3_assert((c3n == u3t(hel)));
 
-        return u3i_cell(1, c3y);
+        return u3nc(1, c3y);
       }
     }
     else {
-      return u3i_qual(6,
-                  u3a_gain(hel),
-                  u3i_cell(1, c3n),
-                  u3i_cell(1, c3y));
+      return u3nq(6,
+                  u3k(hel),
+                  u3nc(1, c3n),
+                  u3nc(1, c3y));
     }
   }
   u3_noun

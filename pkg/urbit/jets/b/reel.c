@@ -9,7 +9,7 @@
   u3qb_reel(u3_noun a,
             u3_noun b)
   {
-    u3_noun pro = u3a_gain(u3x_at(u3x_sam_3, b));
+    u3_noun pro = u3k(u3x_at(u3x_sam_3, b));
 
     if ( u3_nul != a ) {
       u3a_pile pil_u;
@@ -28,10 +28,10 @@
       } while ( u3_nul != t );
 
       u3a_pile_sane(&pil_u);
-      u3j_gate_prep(&sit_u, u3a_gain(b));
+      u3j_gate_prep(&sit_u, u3k(b));
 
       while ( c3n == u3a_pile_done(&pil_u) ) {
-        pro = u3j_gate_slam(&sit_u, u3i_cell(u3a_gain(*top), pro));
+        pro = u3j_gate_slam(&sit_u, u3nc(u3k(*top), pro));
         top = u3a_pop(&pil_u);
       }
 

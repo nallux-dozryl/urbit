@@ -7,11 +7,11 @@ u3_noun
 u3qe_jam(u3_atom a)
 {
 #if 0
-  if (c3y == u3a_is_cell(a) && 1337 == u3x_h(a)) {
+  if (c3y == u3du(a) && 1337 == u3h(a)) {
     c3_w siz_w, tot_w = 0;
     u3_noun som;
-    for ( som = u3x_t(a); c3y == u3a_is_cell(som); som = u3x_t(som) ) {
-      siz_w = u3a_count_noun(u3x_h(som));
+    for ( som = u3t(a); c3y == u3du(som); som = u3t(som) ) {
+      siz_w = u3a_count_noun(u3h(som));
       tot_w += siz_w;
       if ( 0 == siz_w ) {
         u3l_log("item: B/0\r\n");
@@ -25,7 +25,7 @@ u3qe_jam(u3_atom a)
     }
     c3_w mem_w = u3h_count(u3R->cax.har_p);
 
-    for ( som = u3x_t(a); c3y == u3a_is_cell(som); som = u3x_t(som) ) u3a_discount_noun(u3x_h(som));
+    for ( som = u3t(a); c3y == u3du(som); som = u3t(som) ) u3a_discount_noun(u3h(som));
     u3h_discount(u3R->cax.har_p);
 
     u3a_print_memory(stderr, "total", tot_w);
@@ -52,6 +52,6 @@ u3_atom
 u3ke_jam(u3_noun a)
 {
   u3_atom b = u3qe_jam(a);
-  u3a_lose(a);
+  u3z(a);
   return b;
 }

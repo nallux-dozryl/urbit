@@ -120,16 +120,16 @@ _unix_string_to_path_helper(c3_c* pax_c)
   if ( !end_w ) {
     end_w = strrchr(pax_c, '.');
     if ( !end_w ) {
-      return u3i_cell(u3i_string(pax_c), u3_nul);
+      return u3nc(u3i_string(pax_c), u3_nul);
     }
     else {
-      return u3i_trel(u3i_bytes(end_w - pax_c, (c3_y*) pax_c),
+      return u3nt(u3i_bytes(end_w - pax_c, (c3_y*) pax_c),
                   u3i_string(end_w + 1),
                   u3_nul);
     }
   }
   else {
-    return u3i_cell(u3i_bytes(end_w - pax_c, (c3_y*) pax_c),
+    return u3nc(u3i_bytes(end_w - pax_c, (c3_y*) pax_c),
                 _unix_string_to_path_helper(end_w + 1));
   }
 }
@@ -144,7 +144,7 @@ _unix_string_to_path(u3_unix* unx_u, c3_c* pax_c)
       return u3_nul;
     }
     else {
-      return u3i_cell(u3i_string(pox_c + 1), u3_nul);
+      return u3nc(u3i_string(pox_c + 1), u3_nul);
     }
   }
   else {
@@ -228,21 +228,21 @@ _unix_write_file_hard(c3_c* pax_c, u3_noun mim)
   c3_w  len_w, rit_w, siz_w, mug_w = 0;
   c3_y* dat_y;
 
-  u3_noun dat = u3x_t(u3x_t(mim));
+  u3_noun dat = u3t(u3t(mim));
 
   if ( fid_i < 0 ) {
     u3l_log("error opening %s for writing: %s\r\n",
             pax_c, strerror(errno));
-    u3a_lose(mim);
+    u3z(mim);
     return 0;
   }
 
-  siz_w = u3x_h(u3x_t(mim));
+  siz_w = u3h(u3t(mim));
   len_w = u3r_met(3, dat);
   dat_y = c3_calloc(siz_w);
 
   u3r_bytes(0, len_w, dat_y, dat);
-  u3a_lose(mim);
+  u3z(mim);
 
   rit_w = write(fid_i, dat_y, siz_w);
 
@@ -279,7 +279,7 @@ _unix_write_file_soft(u3_ufil* fil_u, u3_noun mim)
     else {
       u3l_log("error opening file (soft) %s: %s\r\n",
               fil_u->pax_c, strerror(errno));
-      u3a_lose(mim);
+      u3z(mim);
       return;
     }
   }
@@ -304,16 +304,16 @@ _unix_write_file_soft(u3_ufil* fil_u, u3_noun mim)
               fil_u->pax_c, len_ws, red_ws);
     }
     c3_free(old_y);
-    u3a_lose(mim);
+    u3z(mim);
     return;
   }
 
   old_w = u3r_mug_bytes(old_y, len_ws);
 
   if ( old_w != fil_u->gum_w ) {
-    fil_u->gum_w = u3r_mug(u3x_t(u3x_t(mim))); // XXX this might fail with
+    fil_u->gum_w = u3r_mug(u3t(u3t(mim))); // XXX this might fail with
     c3_free(old_y);                           //     trailing zeros
-    u3a_lose(mim);
+    u3z(mim);
     return;
   }
 
@@ -333,9 +333,9 @@ _unix_watch_file(u3_unix* unx_u, u3_ufil* fil_u, u3_udir* par_u, c3_c* pax_c);
 static u3_umon*
 _unix_get_mount_point(u3_unix* unx_u, u3_noun mon)
 {
-  if ( c3n == u3a_is_atom(mon) ) {
+  if ( c3n == u3ud(mon) ) {
     c3_assert(!"mount point must be an atom");
-    u3a_lose(mon);
+    u3z(mon);
     return NULL;
   }
 
@@ -364,7 +364,7 @@ _unix_get_mount_point(u3_unix* unx_u, u3_noun mon)
     c3_free(nam_c);
   }
 
-  u3a_lose(mon);
+  u3z(mon);
 
   return mon_u;
 }
@@ -517,7 +517,7 @@ _unix_free_node(u3_unix* unx_u, u3_unod* nod_u)
     _unix_free_dir((u3_udir *)nod_u);
   }
   else {
-    can = u3i_cell(u3i_cell(_unix_string_to_path(unx_u, nod_u->pax_c), u3_nul),
+    can = u3nc(u3nc(_unix_string_to_path(unx_u, nod_u->pax_c), u3_nul),
                u3_nul);
     _unix_free_file((u3_ufil *)nod_u);
   }
@@ -539,7 +539,7 @@ _unix_free_mount_point(u3_unix* unx_u, u3_umon* mon_u)
   u3_unod* nod_u;
   for ( nod_u = mon_u->dir_u.kid_u; nod_u; ) {
     u3_unod* nex_u = nod_u->nex_u;
-    u3a_lose(_unix_free_node(unx_u, nod_u));
+    u3z(_unix_free_node(unx_u, nod_u));
     nod_u = nex_u;
   }
 
@@ -553,9 +553,9 @@ _unix_free_mount_point(u3_unix* unx_u, u3_umon* mon_u)
 static void
 _unix_delete_mount_point(u3_unix* unx_u, u3_noun mon)
 {
-  if ( c3n == u3a_is_atom(mon) ) {
+  if ( c3n == u3ud(mon) ) {
     c3_assert(!"mount point must be an atom");
-    u3a_lose(mon);
+    u3z(mon);
     return;
   }
 
@@ -591,7 +591,7 @@ _unix_delete_mount_point(u3_unix* unx_u, u3_noun mon)
 
 _delete_mount_point_out:
   c3_free(nam_c);
-  u3a_lose(mon);
+  u3z(mon);
 }
 
 /* _unix_commit_mount_point: commit from mount point
@@ -662,7 +662,7 @@ _unix_create_dir(u3_udir* dir_u, u3_udir* par_u, u3_noun nam)
   pax_c[pax_w + 1 + nam_w] = '\0';
 
   c3_free(nam_c);
-  u3a_lose(nam);
+  u3z(nam);
 
   _unix_mkdir(pax_c);
   _unix_watch_dir(dir_u, par_u, pax_c);
@@ -696,7 +696,7 @@ _unix_update_file(u3_unix* unx_u, u3_ufil* fil_u)
 
   if ( fid_i < 0 || fstat(fid_i, &buf_u) < 0 ) {
     if ( ENOENT == errno ) {
-      return u3i_cell(u3i_cell(_unix_string_to_path(unx_u, fil_u->pax_c), u3_nul), u3_nul);
+      return u3nc(u3nc(_unix_string_to_path(unx_u, fil_u->pax_c), u3_nul), u3_nul);
     }
     else {
       u3l_log("error opening file %s: %s\r\n",
@@ -735,11 +735,11 @@ _unix_update_file(u3_unix* unx_u, u3_ufil* fil_u)
     }
     else {
       u3_noun pax = _unix_string_to_path(unx_u, fil_u->pax_c);
-      u3_noun mim = u3i_trel(c3__text, u3i_string("plain"), u3_nul);
-      u3_noun dat = u3i_trel(mim, len_ws, u3i_bytes(len_ws, dat_y));
+      u3_noun mim = u3nt(c3__text, u3i_string("plain"), u3_nul);
+      u3_noun dat = u3nt(mim, len_ws, u3i_bytes(len_ws, dat_y));
 
       c3_free(dat_y);
-      return u3i_cell(u3i_trel(pax, u3_nul, dat), u3_nul);
+      return u3nc(u3nt(pax, u3_nul, dat), u3_nul);
     }
   }
 }
@@ -939,10 +939,10 @@ _unix_update_mount(u3_unix* unx_u, u3_umon* mon_u, u3_noun all)
     {
       //  XX remove u3A->sen
       //
-      u3_noun wir = u3i_trel(c3__sync,
-                        u3v_dc("scot", c3__uv, unx_u->sev_l),
+      u3_noun wir = u3nt(c3__sync,
+                        u3dc("scot", c3__uv, unx_u->sev_l),
                         u3_nul);
-      u3_noun cad = u3i_qual(c3__into, u3i_string(mon_u->nam_c), all, can);
+      u3_noun cad = u3nq(c3__into, u3i_string(mon_u->nam_c), all, can);
 
       u3_auto_plan(&unx_u->car_u, u3_ovum_init(0, c3__c, wir, cad));
     }
@@ -997,11 +997,11 @@ _unix_initial_update_file(c3_c* pax_c, c3_c* bas_c)
     u3_noun pax = _unix_string_to_path_helper(pax_c
                    + strlen(bas_c)
                    + 1); /* XX slightly less VERY BAD than before*/
-    u3_noun mim = u3i_trel(c3__text, u3i_string("plain"), u3_nul);
-    u3_noun dat = u3i_trel(mim, len_ws, u3i_bytes(len_ws, dat_y));
+    u3_noun mim = u3nt(c3__text, u3i_string("plain"), u3_nul);
+    u3_noun dat = u3nt(mim, len_ws, u3i_bytes(len_ws, dat_y));
 
     c3_free(dat_y);
-    return u3i_cell(u3i_trel(pax, u3_nul, dat), u3_nul);
+    return u3nc(u3nt(pax, u3_nul, dat), u3_nul);
   }
 }
 
@@ -1075,8 +1075,8 @@ u3_unix_initial_into_card(c3_c* arv_c)
 {
   u3_noun can = _unix_initial_update_dir(arv_c, arv_c);
 
-  return u3i_cell(u3i_trel(c3__c, c3__sync, u3_nul),
-              u3i_qual(c3__into, u3_nul, c3y, can));
+  return u3nc(u3nt(c3__c, c3__sync, u3_nul),
+              u3nq(c3__into, u3_nul, c3y, can));
 }
 
 /* _unix_sync_file(): sync file to unix
@@ -1104,7 +1104,7 @@ _unix_sync_file(u3_unix* unx_u, u3_udir* par_u, u3_noun nam, u3_noun ext, u3_nou
   pax_c[par_w + 1 + nam_w + 1 + ext_w] = '\0';
 
   c3_free(nam_c); c3_free(ext_c);
-  u3a_lose(nam); u3a_lose(ext);
+  u3z(nam); u3z(ext);
 
   // check whether we already know about this file
 
@@ -1120,27 +1120,27 @@ _unix_sync_file(u3_unix* unx_u, u3_udir* par_u, u3_noun nam, u3_noun ext, u3_nou
 
   if ( u3_nul == mim ) {
     if ( nod_u ) {
-      u3a_lose(_unix_free_node(unx_u, nod_u));
+      u3z(_unix_free_node(unx_u, nod_u));
     }
   }
   else {
 
     if ( !nod_u ) {
-      c3_w gum_w = _unix_write_file_hard(pax_c, u3a_gain(u3x_t(mim)));
+      c3_w gum_w = _unix_write_file_hard(pax_c, u3k(u3t(mim)));
       u3_ufil* fil_u = c3_malloc(sizeof(u3_ufil));
       _unix_watch_file(unx_u, fil_u, par_u, pax_c);
       fil_u->gum_w = gum_w;
       goto _unix_sync_file_out;
     }
     else {
-      _unix_write_file_soft((u3_ufil*) nod_u, u3a_gain(u3x_t(mim)));
+      _unix_write_file_soft((u3_ufil*) nod_u, u3k(u3t(mim)));
     }
   }
 
   c3_free(pax_c);
 
 _unix_sync_file_out:
-  u3a_lose(mim);
+  u3z(mim);
 }
 
 /* _unix_sync_change(): sync single change to unix
@@ -1150,28 +1150,28 @@ _unix_sync_change(u3_unix* unx_u, u3_udir* dir_u, u3_noun pax, u3_noun mim)
 {
   c3_assert( c3y == dir_u->dir );
 
-  if ( c3n == u3a_is_cell(pax) ) {
+  if ( c3n == u3du(pax) ) {
     if ( u3_nul == pax ) {
       u3l_log("can't sync out file as top-level, strange\r\n");
     }
     else {
       u3l_log("sync out: bad path\r\n");
     }
-    u3a_lose(pax); u3a_lose(mim);
+    u3z(pax); u3z(mim);
     return;
   }
-  else if ( c3n == u3a_is_cell(u3x_t(pax)) ) {
+  else if ( c3n == u3du(u3t(pax)) ) {
     u3l_log("can't sync out file as top-level, strangely\r\n");
-    u3a_lose(pax); u3a_lose(mim);
+    u3z(pax); u3z(mim);
   }
   else {
-    u3_noun i_pax = u3x_h(pax);
-    u3_noun t_pax = u3x_t(pax);
-    u3_noun it_pax = u3x_h(t_pax);
-    u3_noun tt_pax = u3x_t(t_pax);
+    u3_noun i_pax = u3h(pax);
+    u3_noun t_pax = u3t(pax);
+    u3_noun it_pax = u3h(t_pax);
+    u3_noun tt_pax = u3t(t_pax);
 
     if ( u3_nul == tt_pax ) {
-      _unix_sync_file(unx_u, dir_u, u3a_gain(i_pax), u3a_gain(it_pax), mim);
+      _unix_sync_file(unx_u, dir_u, u3k(i_pax), u3k(it_pax), mim);
     }
     else {
       c3_c* nam_c = u3r_string(i_pax);
@@ -1187,7 +1187,7 @@ _unix_sync_change(u3_unix* unx_u, u3_udir* dir_u, u3_noun pax, u3_noun mim)
 
       if ( !nod_u ) {
         nod_u = c3_malloc(sizeof(u3_udir));
-        _unix_create_dir((u3_udir*) nod_u, dir_u, u3a_gain(i_pax));
+        _unix_create_dir((u3_udir*) nod_u, dir_u, u3k(i_pax));
       }
 
       if ( c3n == nod_u->dir ) {
@@ -1195,10 +1195,10 @@ _unix_sync_change(u3_unix* unx_u, u3_udir* dir_u, u3_noun pax, u3_noun mim)
         c3_assert(0);
       }
 
-      _unix_sync_change(unx_u, (u3_udir*) nod_u, u3a_gain(t_pax), mim);
+      _unix_sync_change(unx_u, (u3_udir*) nod_u, u3k(t_pax), mim);
     }
   }
-  u3a_lose(pax);
+  u3z(pax);
 }
 
 /* _unix_sync_ergo(): sync list of changes to unix
@@ -1211,13 +1211,13 @@ _unix_sync_ergo(u3_unix* unx_u, u3_umon* mon_u, u3_noun can)
 
   while ( u3_nul != nac) {
     _unix_sync_change(unx_u, &mon_u->dir_u,
-                      u3i_cell(u3a_gain(nam), u3a_gain(u3x_h(u3x_h(nac)))),
-                      u3a_gain(u3x_t(u3x_h(nac))));
-    nac = u3x_t(nac);
+                      u3nc(u3k(nam), u3k(u3h(u3h(nac)))),
+                      u3k(u3t(u3h(nac))));
+    nac = u3t(nac);
   }
 
-  u3a_lose(nam);
-  u3a_lose(can);
+  u3z(nam);
+  u3z(can);
 }
 
 /* u3_unix_ef_dirk(): commit mount point
@@ -1253,14 +1253,14 @@ u3_unix_ef_hill(u3_unix* unx_u, u3_noun hil)
 {
   u3_noun mon;
 
-  for ( mon = hil; c3y == u3a_is_cell(mon); mon = u3x_t(mon) ) {
-    u3_umon* mon_u = _unix_get_mount_point(unx_u, u3a_gain(u3x_h(mon)));
+  for ( mon = hil; c3y == u3du(mon); mon = u3t(mon) ) {
+    u3_umon* mon_u = _unix_get_mount_point(unx_u, u3k(u3h(mon)));
     _unix_scan_mount_point(unx_u, mon_u);
   }
 
   unx_u->car_u.liv_o = c3y;
 
-  u3a_lose(hil);
+  u3z(hil);
 }
 
 /* u3_unix_acquire(): acquire a lockfile, killing anything that holds it.
@@ -1355,7 +1355,7 @@ u3_unix_ef_look(u3_unix* unx_u, u3_noun mon, u3_noun all)
     }
   }
 
-  u3a_lose(mon);
+  u3z(mon);
 }
 
 /* _unix_io_talk(): start listening for fs events.
@@ -1365,8 +1365,8 @@ _unix_io_talk(u3_auto* car_u)
 {
   //  XX review wire
   //
-  u3_noun wir = u3i_cell(c3__boat, u3_nul);
-  u3_noun cad = u3i_cell(c3__boat, u3_nul);
+  u3_noun wir = u3nc(c3__boat, u3_nul);
+  u3_noun cad = u3nc(c3__boat, u3_nul);
 
   u3_auto_plan(car_u, u3_ovum_init(0, c3__c, wir, cad));
 }
@@ -1396,31 +1396,31 @@ _unix_io_kick(u3_auto* car_u, u3_noun wir, u3_noun cad)
       } break;
 
       case c3__dirk: {
-        u3_unix_ef_dirk(unx_u, u3a_gain(dat));
+        u3_unix_ef_dirk(unx_u, u3k(dat));
         ret_o = c3y;
       } break;
 
       case c3__ergo: {
-        u3_noun mon = u3a_gain(u3x_h(dat));
-        u3_noun can = u3a_gain(u3x_t(dat));
+        u3_noun mon = u3k(u3h(dat));
+        u3_noun can = u3k(u3t(dat));
         u3_unix_ef_ergo(unx_u, mon, can);
 
         ret_o = c3y;
       } break;
 
       case c3__ogre: {
-        u3_unix_ef_ogre(unx_u, u3a_gain(dat));
+        u3_unix_ef_ogre(unx_u, u3k(dat));
         ret_o = c3y;
       } break;
 
       case c3__hill: {
-        u3_unix_ef_hill(unx_u, u3a_gain(dat));
+        u3_unix_ef_hill(unx_u, u3k(dat));
         ret_o = c3y;
       } break;
     }
   }
 
-  u3a_lose(wir); u3a_lose(cad);
+  u3z(wir); u3z(cad);
   return ret_o;
 }
 
@@ -1471,7 +1471,7 @@ u3_unix_io_init(u3_pier* pir_u)
 
     now = u3_time_in_tv(&tim_u);
     unx_u->sev_l = u3r_mug(now);
-    u3a_lose(now);
+    u3z(now);
   }
 
   return car_u;

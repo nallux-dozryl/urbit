@@ -1146,7 +1146,7 @@ _ca_take_next_north(u3a_pile* pil_u, u3_noun veb)
     //  not junior; normal (heap) refs on our road are counted.
     //
     else if ( c3n == u3a_north_is_junior(u3R, veb) ) {
-      _me_gain_use(veb); // bypass branches in u3a_gain()
+      _me_gain_use(veb); // bypass branches in u3k()
       return veb;
     }
     //  junior (stack) refs are copied.
@@ -1165,7 +1165,7 @@ _ca_take_next_north(u3a_pile* pil_u, u3_noun veb)
         u3l_log("north: %p is already %p\r\n", veb_u, u3a_to_ptr(nov));
 #endif
 
-        _me_gain_use(nov); // bypass branches in u3a_gain()
+        _me_gain_use(nov); // bypass branches in u3k()
         return nov;
       }
       else if ( c3y == u3a_is_atom(veb) ) {
@@ -1202,7 +1202,7 @@ _ca_take_next_south(u3a_pile* pil_u, u3_noun veb)
     //  not junior; a normal pointer in our road -- refcounted
     //
     else if ( c3n == u3a_south_is_junior(u3R, veb) ) {
-      _me_gain_use(veb); // bypass branches in u3a_gain()
+      _me_gain_use(veb); // bypass branches in u3k()
       return veb;
     }
     //  junior (stack) refs are copied.
@@ -1221,7 +1221,7 @@ _ca_take_next_south(u3a_pile* pil_u, u3_noun veb)
         u3l_log("south: %p is already %p\r\n", veb_u, u3a_to_ptr(nov));
 #endif
 
-        _me_gain_use(nov); // bypass branches in u3a_gain()
+        _me_gain_use(nov); // bypass branches in u3k()
         return nov;
       }
       else if ( c3y == u3a_is_atom(veb) ) {
@@ -1553,14 +1553,14 @@ _ca_wed_who(u3a_road* rod_u, u3_noun* a, u3_noun* b)
     //
     if ( (*a > *b) == nor_t ) {
       _me_gain_use(*a);
-      if ( own_t ) { u3a_lose(*b); }
+      if ( own_t ) { u3z(*b); }
       *b = *a;
     }
     //  keep [b]; it's deeper in the heap
     //
     else {
       _me_gain_use(*b);
-      if ( own_t ) { u3a_lose(*a); }
+      if ( own_t ) { u3z(*a); }
       *a = *b;
     }
 
@@ -1569,14 +1569,14 @@ _ca_wed_who(u3a_road* rod_u, u3_noun* a, u3_noun* b)
   //  keep [a]; it's senior
   //
   else if ( asr_t && !bsr_t ) {
-    if ( own_t ) { u3a_lose(*b); }
+    if ( own_t ) { u3z(*b); }
     *b = *a;
     return c3y;
   }
   //  keep [b]; it's senior
   //
   else if ( !asr_t && bsr_t ) {
-    if ( own_t ) { u3a_lose(*a); }
+    if ( own_t ) { u3z(*a); }
     *a = *b;
     return c3y;
   }
@@ -1638,9 +1638,9 @@ u3a_luse(u3_noun som)
     fprintf(stderr, "loom: insane %d 0x%x\r\n", som, som);
     abort();
   }
-  if ( _(u3a_is_cell(som)) ) {
-    u3a_luse(u3x_h(som));
-    u3a_luse(u3x_t(som));
+  if ( _(u3du(som)) ) {
+    u3a_luse(u3h(som));
+    u3a_luse(u3t(som));
   }
 }
 
@@ -1763,9 +1763,9 @@ u3a_mark_noun(u3_noun som)
       }
       else {
         siz_w += new_w;
-        if ( _(u3a_is_cell(som)) ) {
-          siz_w += u3a_mark_noun(u3x_h(som));
-          som = u3x_t(som);
+        if ( _(u3du(som)) ) {
+          siz_w += u3a_mark_noun(u3h(som));
+          som = u3t(som);
         }
         else return siz_w;
       }
@@ -1838,9 +1838,9 @@ u3a_count_noun(u3_noun som)
       }
       else {
         siz_w += new_w;
-        if ( _(u3a_is_cell(som)) ) {
-          siz_w += u3a_count_noun(u3x_h(som));
-          som = u3x_t(som);
+        if ( _(u3du(som)) ) {
+          siz_w += u3a_count_noun(u3h(som));
+          som = u3t(som);
         }
         else return siz_w;
       }
@@ -1912,9 +1912,9 @@ u3a_discount_noun(u3_noun som)
       }
       else {
         siz_w += new_w;
-        if ( _(u3a_is_cell(som)) ) {
-          siz_w += u3a_discount_noun(u3x_h(som));
-          som = u3x_t(som);
+        if ( _(u3du(som)) ) {
+          siz_w += u3a_discount_noun(u3h(som));
+          som = u3t(som);
         }
         else return siz_w;
       }
@@ -2524,7 +2524,7 @@ _ca_detect(u3p(u3h_root) har_p, u3_noun fum, u3_noun som, c3_d axe_d)
     if ( som == fum ) {
       return axe_d;
     }
-    else if ( !_(u3a_is_cell(fum)) || (u3_none != u3h_get(har_p, fum)) ) {
+    else if ( !_(u3du(fum)) || (u3_none != u3h_get(har_p, fum)) ) {
       return 0;
     }
     else {
@@ -2532,11 +2532,11 @@ _ca_detect(u3p(u3h_root) har_p, u3_noun fum, u3_noun som, c3_d axe_d)
 
       u3h_put(har_p, fum, 0);
 
-      if ( 0 != (eax_d = _ca_detect(har_p, u3x_h(fum), som, 2ULL * axe_d)) ) {
+      if ( 0 != (eax_d = _ca_detect(har_p, u3h(fum), som, 2ULL * axe_d)) ) {
         return c3y;
       }
       else {
-        fum = u3x_t(fum);
+        fum = u3t(fum);
         axe_d = (2ULL * axe_d) + 1;
       }
     }
@@ -2631,10 +2631,10 @@ u3a_walk_fore(u3_noun    a,
     //  otherwise, push the tail and continue into the head
     //
     else {
-      *top = u3x_t(a);
+      *top = u3t(a);
       top  = u3a_push(&pil_u);
       u3a_pile_sane(&pil_u);
-      *top = u3x_h(a);
+      *top = u3h(a);
     }
 
     a = *top;
@@ -2673,11 +2673,11 @@ u3a_walk_fore_unsafe(u3_noun    a,
     //  otherwise, push the tail and continue into the head
     //
     else {
-      *top = u3x_t(a);
+      *top = u3t(a);
       //  NB: overflow check elided here
       //
       top  = u3a_push(&pil_u);
-      *top = u3x_h(a);
+      *top = u3h(a);
     }
 
     a = *top;

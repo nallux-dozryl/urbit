@@ -35,7 +35,7 @@
         c_w = (len_w - b_w);
       }
       if ( (b_w == 0) && (c_w == len_w) ) {
-        return u3a_gain(d);
+        return u3k(d);
       }
       else {
         u3i_slab sab_u;
@@ -56,10 +56,10 @@
                                 u3x_sam_12, &b,
                                 u3x_sam_13, &c,
                                 u3x_sam_7,  &d, 0)) ||
-         (c3n == u3a_is_atom(a)) ||
-         (c3n == u3a_is_atom(b)) ||
-         (c3n == u3a_is_atom(c)) ||
-         (c3n == u3a_is_atom(d)) )
+         (c3n == u3ud(a)) ||
+         (c3n == u3ud(b)) ||
+         (c3n == u3ud(c)) ||
+         (c3n == u3ud(d)) )
     {
       return u3m_bail(c3__exit);
     } else {

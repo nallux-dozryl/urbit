@@ -18,22 +18,22 @@
       u3_noun n_dom, l_dom, r_dom;
 
       u3r_trel(dom, &n_dom, &l_dom, &r_dom);
-      if ( c3n == u3a_is_cell(n_dom) ) {
+      if ( c3n == u3du(n_dom) ) {
         return u3m_bail(c3__fail);
       }
       else {
-        u3_noun qqn_dom = u3x_t(u3x_t(n_dom));
+        u3_noun qqn_dom = u3t(u3t(n_dom));
         u3_noun yep = u3qf_look(cog, qqn_dom);
 
         if ( (u3_nul == l_dom) && (u3_nul == r_dom) ) {
           if ( u3_nul == yep ) {
             return u3_nul;
           } else {
-            u3_noun u_yep = u3x_t(yep);
+            u3_noun u_yep = u3t(yep);
             u3_noun pro;
 
-            pro = u3i_trel(u3_nul, u3qc_peg(axe, u3x_h(u_yep)), u3a_gain(u3x_t(u_yep)));
-            u3a_lose(yep);
+            pro = u3nt(u3_nul, u3qc_peg(axe, u3h(u_yep)), u3k(u3t(u_yep)));
+            u3z(yep);
             return pro;
           }
         }
@@ -43,17 +43,17 @@
             u3_noun pro;
 
             pro = _loot_in(cog, r_dom, nax);
-            u3a_lose(nax);
+            u3z(nax);
             return pro;
           }
           else {
-            u3_noun u_yep = u3x_t(yep);
+            u3_noun u_yep = u3t(yep);
             u3_noun nax   = u3qc_peg(axe, 2);
             u3_noun pro;
 
-            pro = u3i_trel(u3_nul, u3qc_peg(nax, u3x_h(u_yep)), u3a_gain(u3x_t(u_yep)));
-            u3a_lose(nax);
-            u3a_lose(yep);
+            pro = u3nt(u3_nul, u3qc_peg(nax, u3h(u_yep)), u3k(u3t(u_yep)));
+            u3z(nax);
+            u3z(yep);
             return pro;
           }
         }
@@ -63,17 +63,17 @@
             u3_noun pro;
 
             pro = _loot_in(cog, l_dom, nax);
-            u3a_lose(nax);
+            u3z(nax);
             return pro;
           }
           else {
-            u3_noun u_yep = u3x_t(yep);
+            u3_noun u_yep = u3t(yep);
             u3_noun nax   = u3qc_peg(axe, 2);
             u3_noun pro;
 
-            pro = u3i_trel(u3_nul, u3qc_peg(nax, u3x_h(u_yep)), u3a_gain(u3x_t(u_yep)));
-            u3a_lose(nax);
-            u3a_lose(yep);
+            pro = u3nt(u3_nul, u3qc_peg(nax, u3h(u_yep)), u3k(u3t(u_yep)));
+            u3z(nax);
+            u3z(yep);
             return pro;
           }
         }
@@ -83,7 +83,7 @@
             u3_noun pey;
 
             pey = _loot_in(cog, l_dom, nax);
-            u3a_lose(nax);
+            u3z(nax);
 
             if ( u3_nul != pey ) {
               return pey;
@@ -93,18 +93,18 @@
               u3_noun pro;
 
               pro = _loot_in(cog, r_dom, nax);
-              u3a_lose(nax);
+              u3z(nax);
               return pro;
             }
           }
           else {
-            u3_noun u_yep = u3x_t(yep);
+            u3_noun u_yep = u3t(yep);
             u3_noun nax   = u3qc_peg(axe, 2);
             u3_noun pro;
 
-            pro = u3i_trel(u3_nul, u3qc_peg(nax, u3x_h(u_yep)), u3a_gain(u3x_t(u_yep)));
-            u3a_lose(nax);
-            u3a_lose(yep);
+            pro = u3nt(u3_nul, u3qc_peg(nax, u3h(u_yep)), u3k(u3t(u_yep)));
+            u3z(nax);
+            u3z(yep);
             return pro;
           }
         }

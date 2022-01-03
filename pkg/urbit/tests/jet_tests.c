@@ -85,7 +85,7 @@ _test_sift_ud(void)
       ret_i = 0;
     }
 
-    u3a_lose(out); u3a_lose(pro);
+    u3z(out); u3z(pro);
   }
 
 
@@ -105,7 +105,7 @@ _test_sift_ud(void)
       ret_i = 0;
     }
 
-    u3a_lose(out); u3a_lose(pro);
+    u3z(out); u3z(pro);
   }
 
   return ret_i;
@@ -125,7 +125,7 @@ _test_en_base16(void)
       ret_i = 0;
     }
 
-    u3a_lose(pro);
+    u3z(pro);
   }
 
   {
@@ -137,7 +137,7 @@ _test_en_base16(void)
       ret_i = 0;
     }
 
-    u3a_lose(pro);
+    u3z(pro);
   }
 
   {
@@ -149,7 +149,7 @@ _test_en_base16(void)
       ret_i = 0;
     }
 
-    u3a_lose(pro);
+    u3z(pro);
   }
 
   {
@@ -161,7 +161,7 @@ _test_en_base16(void)
       ret_i = 0;
     }
 
-    u3a_lose(pro);
+    u3z(pro);
   }
 
   {
@@ -172,7 +172,7 @@ _test_en_base16(void)
       ret_i = 0;
     }
 
-    u3a_lose(pro);
+    u3z(pro);
   }
 
   {
@@ -183,7 +183,7 @@ _test_en_base16(void)
       ret_i = 0;
     }
 
-    u3a_lose(pro);
+    u3z(pro);
   }
 
   return ret_i;
@@ -215,7 +215,7 @@ _test_de_base16(void)
       ret_i = 0;
     }
 
-    u3a_lose(inp); u3a_lose(pro);
+    u3z(inp); u3z(pro);
   }
 
   {
@@ -238,7 +238,7 @@ _test_de_base16(void)
       ret_i = 0;
     }
 
-    u3a_lose(inp); u3a_lose(pro);
+    u3z(inp); u3z(pro);
   }
 
   {
@@ -261,7 +261,7 @@ _test_de_base16(void)
       ret_i = 0;
     }
 
-    u3a_lose(inp); u3a_lose(pro);
+    u3z(inp); u3z(pro);
   }
 
   {
@@ -284,7 +284,7 @@ _test_de_base16(void)
       ret_i = 0;
     }
 
-    u3a_lose(inp); u3a_lose(pro);
+    u3z(inp); u3z(pro);
   }
 
   {
@@ -307,7 +307,7 @@ _test_de_base16(void)
       ret_i = 0;
     }
 
-    u3a_lose(inp); u3a_lose(pro);
+    u3z(inp); u3z(pro);
   }
 
   {
@@ -330,7 +330,7 @@ _test_de_base16(void)
       ret_i = 0;
     }
 
-    u3a_lose(inp); u3a_lose(pro);
+    u3z(inp); u3z(pro);
   }
 
   return ret_i;
@@ -353,7 +353,7 @@ _fein_ob_w(c3_w inp_w)
   u3_atom inp = u3i_word(inp_w);
   u3_atom act = u3qe_fein_ob(inp);
   c3_w  act_w = u3r_word(0, act);
-  u3a_lose(inp); u3a_lose(act);
+  u3z(inp); u3z(act);
   return act_w;
 }
 
@@ -398,7 +398,7 @@ _fynd_ob_w(c3_w inp_w)
   u3_atom inp = u3i_word(inp_w);
   u3_atom act = u3qe_fynd_ob(inp);
   c3_w  act_w = u3r_word(0, act);
-  u3a_lose(inp); u3a_lose(act);
+  u3z(inp); u3z(act);
   return act_w;
 }
 
@@ -455,7 +455,7 @@ _exhaust_roundtrip_fein_fynd_ob(void)
                         i_w, u3r_word(0, fen), fyn_w);
         ret_i = 0;
       }
-      u3a_lose(fen); u3a_lose(fyn);
+      u3z(fen); u3z(fyn);
 
       if ( !(i_w % 0x1000000) ) {
         fprintf(stderr, "fein/fynd: 0x%x done\n", i_w);

@@ -9,11 +9,11 @@
   static u3_noun
   _norm(u3_noun a)
   {
-    if ( c3n == u3a_is_cell(a) ) {
+    if ( c3n == u3du(a) ) {
       return u3_nul;
     } else {
-      return u3i_cell(((c3y == u3a_is_cell(u3x_h(a))) ? u3_nul : u3a_gain(u3x_h(a))),
-                  _norm(u3x_t(a)));
+      return u3nc(((c3y == u3du(u3h(a))) ? u3_nul : u3k(u3h(a))),
+                  _norm(u3t(a)));
     }
   }
 
@@ -24,10 +24,10 @@
       if ( u3_nul == a ) {
         return c3y;
       }
-      if ( c3n == u3a_is_atom(u3x_h(a)) ) {
+      if ( c3n == u3ud(u3h(a)) ) {
         return c3n;
       }
-      a = u3x_t(a);
+      a = u3t(a);
     }
   }
 
@@ -35,7 +35,7 @@
   u3qe_tape(u3_noun a)
   {
     if ( c3y == _good(a) ) {
-      return u3a_gain(a);
+      return u3k(a);
     } else {
       return _norm(a);
     }

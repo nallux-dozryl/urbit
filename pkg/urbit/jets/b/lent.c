@@ -12,7 +12,7 @@ u3qb_lent(u3_noun a)
   c3_w len_w = 0;
 
   while ( u3_nul != a ) {
-    a = u3x_t(a);
+    a = u3t(a);
     len_w++;
   }
 
@@ -29,6 +29,6 @@ u3_noun
 u3kb_lent(u3_noun a)
 {
   u3_noun b = u3qb_lent(a);
-  u3a_lose(a);
+  u3z(a);
   return b;
 }

@@ -9,7 +9,7 @@
   u3_noun
   u3qa_inc(u3_atom a)
   {
-    return u3i_vint(u3a_gain(a));
+    return u3i_vint(u3k(a));
   }
 
   u3_noun
@@ -39,7 +39,7 @@
     u3_noun a;
 
     if ( (u3_none == (a = u3r_at(u3x_sam, cor))) ||
-         (c3n == u3a_is_atom(a)) )
+         (c3n == u3ud(a)) )
     {
       return u3m_bail(c3__exit);
     } else {
@@ -51,6 +51,6 @@
   u3ka_dec(u3_atom a)
   {
     u3_noun b = u3qa_dec(a);
-    u3a_lose(a);
+    u3z(a);
     return b;
   }

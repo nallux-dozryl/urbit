@@ -125,18 +125,18 @@
     if ( c3n == u3r_mean(cor, u3x_sam_2, &wmsg,
                               u3x_sam_3, &wsat,
                               510, &arg, 0) ||
-                u3r_cell(wmsg, &wid, &dat) || u3a_is_atom(wid) || u3a_is_atom(dat) ||
-                u3r_cell(wsat, &wis, &sat) || u3a_is_atom(wis) || u3a_is_atom(sat) ||
+                u3r_cell(wmsg, &wid, &dat) || u3ud(wid) || u3ud(dat) ||
+                u3r_cell(wsat, &wis, &sat) || u3ud(wis) || u3ud(sat) ||
                 //
                 u3r_qual(arg, &out, &type, &version, &brg) ||
-                u3a_is_atom(out) || u3a_is_atom(type) || u3a_is_atom(version) ||
+                u3ud(out) || u3ud(type) || u3ud(version) ||
                 //
                 u3r_qual(brg, &threads, &mem_cost, &time_cost, &arg) ||
-                u3a_is_atom(threads) || u3a_is_atom(mem_cost) || u3a_is_atom(time_cost) ||
+                u3ud(threads) || u3ud(mem_cost) || u3ud(time_cost) ||
                 //
                 u3r_cell(arg, &wkey, &wext) ||
-                u3r_cell(wkey, &wik, &key) || u3a_is_atom(wik) || u3a_is_atom(key) ||
-                u3r_cell(wext, &wix, &extra) || u3a_is_atom(wix) || u3a_is_atom(extra)
+                u3r_cell(wkey, &wik, &key) || u3ud(wik) || u3ud(key) ||
+                u3r_cell(wext, &wix, &extra) || u3ud(wix) || u3ud(extra)
        )
     {
       return u3m_bail(c3__exit);

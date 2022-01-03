@@ -25,14 +25,14 @@ u3qb_zing(u3_noun a)
         u3x_cell(t_i, &i_i, &t_i);
 
         *lit = u3i_defcons(&hed, &tel);
-        *hed = u3a_gain(i_i);
+        *hed = u3k(i_i);
         lit  = tel;
       }
 
       u3x_cell(t, &i, &t);
     }
 
-    *lit = u3a_gain(i);
+    *lit = u3k(i);
   }
 
   return pro;

@@ -17,7 +17,7 @@ _tap_in(u3_noun a,
     u3x_trel(a, &n_a, &l_a, &r_a);
 
     return _tap_in(r_a,
-                   u3i_cell(u3a_gain(n_a),
+                   u3nc(u3k(n_a),
                    _tap_in(l_a, b)));
   }
 }
@@ -40,6 +40,6 @@ u3_noun
 u3kdi_tap(u3_noun a)
 {
   u3_noun b = u3qdi_tap(a);
-  u3a_lose(a);
+  u3z(a);
   return b;
 }

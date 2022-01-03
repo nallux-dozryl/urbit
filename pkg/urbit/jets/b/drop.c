@@ -13,7 +13,7 @@
       return u3_nul;
     }
     else {
-      return u3i_cell(0, u3a_gain(u3x_t(a)));
+      return u3nc(0, u3k(u3t(a)));
     }
   }
   u3_noun

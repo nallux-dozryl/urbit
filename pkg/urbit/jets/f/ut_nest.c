@@ -28,11 +28,11 @@ u3wfu_nest_dext(u3_noun dext_core)
     u3_weak pro = u3z_find(key);
 
     if ( u3_none != pro ) {
-      u3a_lose(key);
+      u3z(key);
       return pro;
     }
     else {
-      pro = u3n_nock_on(u3a_gain(dext_core), u3a_gain(u3x_at(u3x_bat, dext_core)));
+      pro = u3n_nock_on(u3k(dext_core), u3k(u3x_at(u3x_bat, dext_core)));
 
       if ( ((c3y == pro) && (u3_nul == reg)) ||
            ((c3n == pro) && (u3_nul == seg)) )
@@ -40,7 +40,7 @@ u3wfu_nest_dext(u3_noun dext_core)
         return u3z_save(key, pro);
       }
       else {
-        u3a_lose(key);
+        u3z(key);
         return pro;
       }
     }

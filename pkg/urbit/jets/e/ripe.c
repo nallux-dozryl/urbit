@@ -34,7 +34,7 @@
 
     if ( (c3n == u3r_mean(cor, u3x_sam_2, &wid,
                                u3x_sam_3, &dat, 0) ||
-                 u3a_is_atom(wid) || u3a_is_atom(dat))
+                 u3ud(wid) || u3ud(dat))
        )
     {
       return u3m_bail(c3__exit);

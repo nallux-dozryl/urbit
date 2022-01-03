@@ -17,16 +17,16 @@
       c3_w len_w = a;
 
       while ( len_w ) {
-        if ( c3n == u3a_is_cell(b) ) {
+        if ( c3n == u3du(b) ) {
           return u3m_bail(c3__exit);
         }
-        b = u3x_t(b);
+        b = u3t(b);
         len_w--;
       }
-      if ( c3n == u3a_is_cell(b) ) {
+      if ( c3n == u3du(b) ) {
         return u3m_bail(c3__exit);
       }
-      return u3a_gain(u3x_h(b));
+      return u3k(u3h(b));
     }
   }
   u3_noun
@@ -35,7 +35,7 @@
     u3_noun a, b;
 
     if ( (c3n == u3r_mean(cor, u3x_sam_2, &a, u3x_sam_3, &b, 0)) ||
-         (c3n == u3a_is_atom(a)) )
+         (c3n == u3ud(a)) )
     {
       return u3m_bail(c3__exit);
     } else {

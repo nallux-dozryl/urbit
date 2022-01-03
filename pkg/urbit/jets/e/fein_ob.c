@@ -61,7 +61,7 @@ u3qe_fein_ob(u3_atom pyn)
   c3_w sor_w = u3r_met(4, pyn);
 
   if ( (sor_w < 2) || (sor_w > 4) ) {
-    return u3a_gain(pyn);
+    return u3k(pyn);
   }
 
   if ( 2 == sor_w ) {
@@ -72,7 +72,7 @@ u3qe_fein_ob(u3_atom pyn)
     u3r_words(0, 2, pyn_w, pyn);
 
     if ( pyn_w[0] < b_w ) {
-      return u3a_gain(pyn);
+      return u3k(pyn);
     }
     else {
       pyn_w[0] = _feis_ob(pyn_w[0]);

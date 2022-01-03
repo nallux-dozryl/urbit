@@ -29,7 +29,7 @@ _test_mug(void)
       ret_i = 0;
     }
 
-    u3a_lose(a);
+    u3z(a);
   }
 
   {
@@ -86,7 +86,7 @@ _test_mug(void)
       ret_i = 0;
     }
 
-    u3a_lose(a);
+    u3z(a);
   }
 
   {
@@ -97,7 +97,7 @@ _test_mug(void)
       ret_i = 0;
     }
 
-    u3a_lose(a);
+    u3z(a);
   }
 
   {
@@ -108,7 +108,7 @@ _test_mug(void)
       ret_i = 0;
     }
 
-    u3a_lose(a);
+    u3z(a);
   }
 
   {
@@ -149,7 +149,7 @@ _test_mug(void)
 
     c3_free(str_y);
     c3_free(str_w);
-    u3a_lose(str);
+    u3z(str);
   }
 
   {
@@ -166,7 +166,7 @@ _test_mug(void)
       ret_i = 0;
     }
 
-    u3a_lose(som);
+    u3z(som);
   }
 
   {
@@ -183,7 +183,7 @@ _test_mug(void)
       ret_i = 0;
     }
 
-    u3a_lose(som);
+    u3z(som);
   }
 
   {
@@ -200,7 +200,7 @@ _test_mug(void)
       ret_i = 0;
     }
 
-    u3a_lose(som);
+    u3z(som);
   }
 
   {
@@ -217,7 +217,7 @@ _test_mug(void)
       ret_i = 0;
     }
 
-    u3a_lose(som);
+    u3z(som);
   }
 
   return ret_i;

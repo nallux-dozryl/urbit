@@ -12,7 +12,7 @@ u3qc_end(u3_atom a,
     return u3m_bail(c3__fail);
   }
   else if ( !_(u3a_is_cat(b)) ) {
-    return u3a_gain(c);
+    return u3k(c);
   }
   else {
     c3_g a_g   = a;
@@ -23,7 +23,7 @@ u3qc_end(u3_atom a,
       return 0;
     }
     else if ( b_w >= len_w ) {
-      return u3a_gain(c);
+      return u3k(c);
     }
     else {
       u3i_slab sab_u;

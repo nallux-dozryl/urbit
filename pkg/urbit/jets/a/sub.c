@@ -17,7 +17,7 @@
       else return (a - b);
     }
     else if ( 0 == b ) {
-      return u3a_gain(a);
+      return u3k(a);
     }
     else {
       mpz_t a_mp, b_mp;
@@ -44,8 +44,8 @@
     u3_noun a, b;
 
     if ( (c3n == u3r_mean(cor, u3x_sam_2, &a, u3x_sam_3, &b, 0)) ||
-         (c3n == u3a_is_atom(b)) ||
-         (c3n == u3a_is_atom(a) && b != 0) )
+         (c3n == u3ud(b)) ||
+         (c3n == u3ud(a) && b != 0) )
     {
       return u3m_bail(c3__exit);
     } else {
@@ -59,6 +59,6 @@
   {
     u3_noun c = u3qa_sub(a, b);
 
-    u3a_lose(a); u3a_lose(b);
+    u3z(a); u3z(b);
     return c;
   }

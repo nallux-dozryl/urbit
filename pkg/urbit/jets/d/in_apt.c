@@ -22,7 +22,7 @@ _in_apt(u3_noun a, u3_weak l, u3_weak r)
     }
 
     if ( u3_nul != l_a ) {
-      if ( c3n == u3qc_mor(n_a, u3x_h(l_a)) ) {
+      if ( c3n == u3qc_mor(n_a, u3h(l_a)) ) {
         return c3n;
       }
 
@@ -32,7 +32,7 @@ _in_apt(u3_noun a, u3_weak l, u3_weak r)
     }
 
     if ( u3_nul != r_a ) {
-      if ( c3n == u3qc_mor(n_a, u3x_h(r_a)) ) {
+      if ( c3n == u3qc_mor(n_a, u3h(r_a)) ) {
         return c3n;
       }
 

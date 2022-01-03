@@ -18,12 +18,12 @@ u3qb_weld(u3_noun a, u3_noun b)
       u3x_cell(t, &i, &t);
 
       *lit = u3i_defcons(&hed, &tel);
-      *hed = u3a_gain(i);
+      *hed = u3k(i);
       lit  = tel;
     }
   }
 
-  *lit = u3a_gain(b);
+  *lit = u3k(b);
 
   return pro;
 }
@@ -40,6 +40,6 @@ u3_noun
 u3kb_weld(u3_noun a, u3_noun b)
 {
   u3_noun c = u3qb_weld(a, b);
-  u3a_lose(a); u3a_lose(b);
+  u3z(a); u3z(b);
   return c;
 }

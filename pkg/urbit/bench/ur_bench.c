@@ -24,10 +24,10 @@ _ames_writ_ex(void)
     0x62, 0xac, 0x97, 0xff, 0x24, 0xeb, 0x69, 0x1b, 0xb2, 0x60, 0x72,
      0xa, 0x53, 0xdf, 0xe8, 0x8a, 0x9c, 0x6f, 0xb3
   };
-  u3_noun lan = u3i_cell(0, 1);
-  u3_noun cad = u3i_trel(c3__send, lan, u3i_bytes(sizeof(bod_y), bod_y));
-  u3_noun wir = u3i_trel(c3__newt, 0x1234, u3_nul);
-  u3_noun ovo = u3i_cell(u3i_cell(u3_blip, wir), cad);
+  u3_noun lan = u3nc(0, 1);
+  u3_noun cad = u3nt(c3__send, lan, u3i_bytes(sizeof(bod_y), bod_y));
+  u3_noun wir = u3nt(c3__newt, 0x1234, u3_nul);
+  u3_noun ovo = u3nc(u3nc(u3_blip, wir), cad);
   u3_noun wen;
 
   {
@@ -36,7 +36,7 @@ _ames_writ_ex(void)
     wen = u3_time_in_tv(&tim_u);
   }
 
-  return u3i_trel(c3__work, 0, u3i_cell(wen, ovo));
+  return u3nt(c3__work, 0, u3nc(wen, ovo));
 }
 
 static void
@@ -139,7 +139,7 @@ _jam_bench(void)
     break;
   }
 
-  u3a_lose(wit);
+  u3z(wit);
 }
 
 static void
@@ -155,7 +155,7 @@ _cue_bench(void)
     gettimeofday(&b4, 0);
 
     for ( i_w = 0; i_w < max_w; i_w++ ) {
-      u3a_lose(u3s_cue(vat));
+      u3z(u3s_cue(vat));
     }
 
     gettimeofday(&f2, 0);
@@ -168,7 +168,7 @@ _cue_bench(void)
     gettimeofday(&b4, 0);
 
     for ( i_w = 0; i_w < max_w; i_w++ ) {
-      u3a_lose(u3s_cue_atom(vat));
+      u3z(u3s_cue_atom(vat));
     }
 
     gettimeofday(&f2, 0);
@@ -189,7 +189,7 @@ _cue_bench(void)
                   : (c3_y*)((u3a_atom*)u3a_to_ptr(vat))->buf_w;
 
       for ( i_w = 0; i_w < max_w; i_w++ ) {
-        u3a_lose(u3s_cue_xeno(len_w, byt_y));
+        u3z(u3s_cue_xeno(len_w, byt_y));
       }
     }
 
@@ -213,7 +213,7 @@ _cue_bench(void)
                   : (c3_y*)((u3a_atom*)u3a_to_ptr(vat))->buf_w;
 
       for ( i_w = 0; i_w < max_w; i_w++ ) {
-        u3a_lose(u3s_cue_xeno_with(sil_u, len_w, byt_y));
+        u3z(u3s_cue_xeno_with(sil_u, len_w, byt_y));
       }
 
       u3s_cue_xeno_done(sil_u);
@@ -325,7 +325,7 @@ _cue_bench(void)
     fprintf(stderr, "  cue re-cons: %u ms\r\n", mil_w);
   }
 
-  u3a_lose(vat);
+  u3z(vat);
 }
 
 static u3_noun
@@ -334,7 +334,7 @@ _cue_loop(u3_atom a)
   c3_w i_w, max_w = 20000;
 
   for ( i_w = 0; i_w < max_w; i_w++ ) {
-    u3a_lose(u3s_cue(a));
+    u3z(u3s_cue(a));
   }
 
   return u3_blip;
@@ -346,7 +346,7 @@ _cue_atom_loop(u3_atom a)
   c3_w i_w, max_w = 20000;
 
   for ( i_w = 0; i_w < max_w; i_w++ ) {
-    u3a_lose(u3s_cue_atom(a));
+    u3z(u3s_cue_atom(a));
   }
 
   return u3_blip;
@@ -364,7 +364,7 @@ _cue_soft_bench(void)
   {
     gettimeofday(&b4, 0);
 
-    u3a_lose(u3m_soft(0, _cue_loop, u3a_gain(vat)));
+    u3z(u3m_soft(0, _cue_loop, u3k(vat)));
 
     gettimeofday(&f2, 0);
     timersub(&f2, &b4, &d0);
@@ -375,7 +375,7 @@ _cue_soft_bench(void)
   {
     gettimeofday(&b4, 0);
 
-    u3a_lose(u3m_soft(0, _cue_atom_loop, u3a_gain(vat)));
+    u3z(u3m_soft(0, _cue_atom_loop, u3k(vat)));
 
     gettimeofday(&f2, 0);
     timersub(&f2, &b4, &d0);
@@ -383,7 +383,7 @@ _cue_soft_bench(void)
     fprintf(stderr, "  cue virtual atom: %u ms\r\n", mil_w);
   }
 
-  u3a_lose(vat);
+  u3z(vat);
 }
 
 /* main(): run all benchmarks

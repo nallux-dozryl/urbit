@@ -14,8 +14,8 @@
       return c3y;
     }
     else {
-      if ( c3y == u3a_is_atom(a) ) {
-        if ( c3y == u3a_is_atom(b) ) {
+      if ( c3y == u3ud(a) ) {
+        if ( c3y == u3ud(b) ) {
           return u3qa_lth(a, b);
         }
         else {
@@ -23,14 +23,14 @@
         }
       }
       else {
-        if ( c3y == u3a_is_atom(b) ) {
+        if ( c3y == u3ud(b) ) {
           return c3n;
         }
         else {
-          if ( c3y == u3r_sing(u3x_h(a), u3x_h(b)) ) {
-            return u3qc_dor(u3x_t(a), u3x_t(b));
+          if ( c3y == u3r_sing(u3h(a), u3h(b)) ) {
+            return u3qc_dor(u3t(a), u3t(b));
           }
-          else return u3qc_dor(u3x_h(a), u3x_h(b));
+          else return u3qc_dor(u3h(a), u3h(b));
         }
       }
     }

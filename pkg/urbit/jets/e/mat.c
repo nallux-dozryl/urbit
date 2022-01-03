@@ -10,7 +10,7 @@
   u3qe_mat(u3_atom a)
   {
     if ( 0 == a ) {
-      return u3i_cell(1, 1);
+      return u3nc(1, 1);
     } else {
       u3_atom b = u3qc_met(0, a);
       u3_atom c = u3qc_met(0, b);
@@ -27,14 +27,14 @@
       p = u3qa_add(v, b);
       q = u3qc_cat(0, w, z);
 
-      u3a_lose(u);
-      u3a_lose(v);
-      u3a_lose(w);
-      u3a_lose(x);
-      u3a_lose(y);
-      u3a_lose(z);
+      u3z(u);
+      u3z(v);
+      u3z(w);
+      u3z(x);
+      u3z(y);
+      u3z(z);
 
-      return u3i_cell(p, q);
+      return u3nc(p, q);
     }
   }
   u3_noun

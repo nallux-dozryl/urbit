@@ -18,7 +18,7 @@
       c3_w i_w = a;
 
       while ( i_w ) {
-        acc = u3i_cell(u3a_gain(b), acc);
+        acc = u3nc(u3k(b), acc);
         i_w--;
       }
 
@@ -32,7 +32,7 @@
     u3_noun a, b;
 
     if ( (c3n == u3r_mean(cor, u3x_sam_2, &a, u3x_sam_3, &b, 0)) ||
-         (c3n == u3a_is_atom(a)) )
+         (c3n == u3ud(a)) )
     {
       return u3m_bail(c3__exit);
     } else {

@@ -98,7 +98,7 @@ _test_cue_spec(const c3_c* cap_c,
       ret_i = 0;
     }
 
-    u3a_lose(pro);
+    u3z(pro);
   }
 
   {
@@ -115,7 +115,7 @@ _test_cue_spec(const c3_c* cap_c,
       ret_i = 0;
     }
 
-    u3a_lose(out);
+    u3z(out);
   }
 
   return ret_i;
@@ -131,7 +131,7 @@ _test_jam_roundtrip(void)
         u3_noun       ref = b;                                      \
         ret_i &= _test_jam_spec(cap_c, ref, sizeof(res_y), res_y);  \
         ret_i &= _test_cue_spec(cap_c, ref, sizeof(res_y), res_y);  \
-        u3a_lose(ref);
+        u3z(ref);
 
   {
     c3_y res_y[1] = { 0x2 };
@@ -160,62 +160,62 @@ _test_jam_roundtrip(void)
 
   {
     c3_y res_y[1] = { 0x29 };
-    TEST_CASE("[0 0]", u3i_cell(0, 0));
+    TEST_CASE("[0 0]", u3nc(0, 0));
   }
 
   {
     c3_y res_y[2] = { 0x31, 0x3 };
-    TEST_CASE("[1 1]", u3i_cell(1, 1));
+    TEST_CASE("[1 1]", u3nc(1, 1));
   }
 
   {
     c3_y res_y[2] = { 0x31, 0x12 };
-    TEST_CASE("[1 2]", u3i_cell(1, 2));
+    TEST_CASE("[1 2]", u3nc(1, 2));
   }
 
   {
     c3_y res_y[2] = { 0x21, 0xd1 };
-    TEST_CASE("[2 3]", u3i_cell(2, 3));
+    TEST_CASE("[2 3]", u3nc(2, 3));
   }
 
   {
     c3_y res_y[11] = { 0x1, 0xdf, 0x2c, 0x6c, 0x8e, 0xe, 0x7c, 0xb3, 0x3a, 0x36, 0x36 };
-    TEST_CASE("[%fast %full]", u3i_cell(c3__fast, c3__full));
+    TEST_CASE("[%fast %full]", u3nc(c3__fast, c3__full));
   }
 
   {
     c3_y res_y[2] = { 0x71, 0xcc };
-    TEST_CASE("[1 1 1]", u3i_cell(1, u3i_cell(1, 1)));
+    TEST_CASE("[1 1 1]", u3nc(1, u3nc(1, 1)));
   }
 
   {
     c3_y res_y[3] = { 0x71, 0x48, 0x34 };
-    TEST_CASE("[1 2 3]", u3i_trel(1, 2, 3));
+    TEST_CASE("[1 2 3]", u3nt(1, 2, 3));
   }
 
   {
     c3_y res_y[12] = { 0x1, 0xdf, 0x2c, 0x6c, 0x8e, 0x1e, 0xf0, 0xcd, 0xea, 0xd8, 0xd8, 0x93 };
-    TEST_CASE("[%fast %full %fast]", u3i_cell(c3__fast, u3i_cell(c3__full, c3__fast)));
+    TEST_CASE("[%fast %full %fast]", u3nc(c3__fast, u3nc(c3__full, c3__fast)));
   }
 
   {
     c3_y res_y[3] = { 0xc5, 0x48, 0x34 };
-    TEST_CASE("[[1 2] 3]", u3i_cell(u3i_cell(1, 2), 3));
+    TEST_CASE("[[1 2] 3]", u3nc(u3nc(1, 2), 3));
   }
 
   {
     c3_y res_y[5] = { 0xc5, 0xc8, 0x26, 0x27, 0x1 };
-    TEST_CASE("[[1 2] [1 2] 1 2]", u3i_trel(u3i_cell(1, 2), u3i_cell(1, 2), u3i_cell(1, 2)));
+    TEST_CASE("[[1 2] [1 2] 1 2]", u3nt(u3nc(1, 2), u3nc(1, 2), u3nc(1, 2)));
   }
 
   {
     c3_y res_y[6] = { 0xa5, 0x35, 0x19, 0xf3, 0x18, 0x5 };
-    TEST_CASE("[[0 0] [[0 0] 1 1] 1 1]", u3i_cell(u3i_cell(0, 0), u3i_cell(u3i_cell(u3i_cell(0, 0), u3i_cell(1, 1)), u3i_cell(1, 1))));
+    TEST_CASE("[[0 0] [[0 0] 1 1] 1 1]", u3nc(u3nc(0, 0), u3nc(u3nc(u3nc(0, 0), u3nc(1, 1)), u3nc(1, 1))));
   }
 
   {
     c3_y res_y[14] = { 0x15, 0x17, 0xb2, 0xd0, 0x85, 0x59, 0xb8, 0x61, 0x87, 0x5f, 0x10, 0x54, 0x55, 0x5 };
-    TEST_CASE("deep", u3i_cell(u3i_cell(u3i_cell(1, u3i_cell(u3i_cell(2, u3i_cell(u3i_cell(3, u3i_cell(u3i_cell(4, u3i_cell(u3i_trel(5, 6, u3i_cell(7, u3i_cell(u3i_cell(8, 0), 0))), 0)), 0)), 0)), 0)), 0), 0));
+    TEST_CASE("deep", u3nc(u3nc(u3nc(1, u3nc(u3nc(2, u3nc(u3nc(3, u3nc(u3nc(4, u3nc(u3nt(5, 6, u3nc(7, u3nc(u3nc(8, 0), 0))), 0)), 0)), 0)), 0)), 0), 0));
   }
 
   {
@@ -237,7 +237,7 @@ _test_jam_roundtrip(void)
       0x53, 0x5b, 0x63, 0x6b, 0x73, 0x7b, 0x83, 0x8b, 0x93, 0x9b, 0xa3,
       0xab, 0xb3, 0xbb, 0xc3, 0xcb, 0xd3, 0x87,  0xc, 0x3d,  0x9
     };
-    TEST_CASE("alpha", u3i_qual(u3a_gain(a), 2, 3, a));
+    TEST_CASE("alpha", u3nq(u3k(a), 2, 3, a));
   }
 
   return ret_i;

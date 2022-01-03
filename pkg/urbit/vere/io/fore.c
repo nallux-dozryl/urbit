@@ -40,7 +40,7 @@ _fore_inject(u3_auto* car_u, c3_c* pax_c)
     u3l_log("pier: invalid ovum in -I\n");
   }
   else if (  (c3n == u3a_is_cell(cad))
-          || (c3n == u3a_is_atom(u3x_h(cad))) )
+          || (c3n == u3a_is_atom(u3h(cad))) )
   {
     u3l_log("pier: invalid card in -I ovum\n");
   }
@@ -54,23 +54,23 @@ _fore_inject(u3_auto* car_u, c3_c* pax_c)
   }
   else {
     {
-      c3_c* tag_c = u3r_string(u3x_h(cad));
-      u3_noun ser = u3v_do("spat", u3a_gain(riw));
+      c3_c* tag_c = u3r_string(u3h(cad));
+      u3_noun ser = u3do("spat", u3k(riw));
       c3_c* wir_c = u3r_string(ser);
 
       u3l_log("pier: injecting %%%s event on %s\n", tag_c, wir_c);
 
       c3_free(tag_c);
       c3_free(wir_c);
-      u3a_lose(ser);
+      u3z(ser);
     }
 
     u3_auto_peer(
-      u3_auto_plan(car_u, u3_ovum_init(0, u3a_gain(tar), u3a_gain(wir), u3a_gain(cad))),
+      u3_auto_plan(car_u, u3_ovum_init(0, u3k(tar), u3k(wir), u3k(cad))),
       0, 0, _fore_inject_bail);
   }
 
-  u3a_lose(ovo);
+  u3z(ovo);
 }
 
 /* _fore_import(): form an ovum from jammed archive at [pax_c] and inject it.
@@ -79,15 +79,15 @@ static void
 _fore_import(u3_auto* car_u, c3_c* pax_c)
 {
   u3_noun arc = u3ke_cue(u3m_file(pax_c));
-  u3_noun imp = u3v_dt("cat", 3, u3i_string("#import_"), arc);
+  u3_noun imp = u3dt("cat", 3, u3i_string("#import_"), arc);
   u3_noun siz = u3r_met(3, imp);
-  u3_noun dat = u3i_trel(u3_nul, siz, imp);
+  u3_noun dat = u3nt(u3_nul, siz, imp);
 
-  u3_noun req = u3i_trel(c3n,
-    u3i_cell(u3i_string("ipv4"), u3i_word(0x7f000001)),
-    u3i_qual(u3i_string("POST"), u3i_string("/"), u3_nul, dat));
-  u3_noun wir = u3i_cell(u3i_string("http-server"), u3_nul);
-  u3_noun cad = u3i_cell(u3i_string("request-local"), req);
+  u3_noun req = u3nt(c3n,
+    u3nc(u3i_string("ipv4"), u3i_word(0x7f000001)),
+    u3nq(u3i_string("POST"), u3i_string("/"), u3_nul, dat));
+  u3_noun wir = u3nc(u3i_string("http-server"), u3_nul);
+  u3_noun cad = u3nc(u3i_string("request-local"), req);
   u3_auto_peer(
     u3_auto_plan(car_u, u3_ovum_init(0, c3__e, wir, cad)),
     0, 0, _fore_import_bail);
@@ -106,8 +106,8 @@ _fore_io_talk(u3_auto* car_u)
     c3_w    eny_w[16];
     c3_rand(eny_w);
 
-    wir = u3i_cell(c3__arvo, u3_nul);
-    cad = u3i_cell(c3__wack, u3i_words(16, eny_w));
+    wir = u3nc(c3__arvo, u3_nul);
+    cad = u3nc(c3__wack, u3i_words(16, eny_w));
 
     u3_auto_plan(car_u, u3_ovum_init(0, u3_blip, wir, cad));
   }
@@ -116,8 +116,8 @@ _fore_io_talk(u3_auto* car_u)
   //
   {
     c3_o lac_o = ( c3y == u3_Host.ops_u.veb ) ? c3n : c3y;
-    wir = u3i_cell(c3__arvo, u3_nul);
-    cad = u3i_trel(c3__verb, u3_nul, lac_o);
+    wir = u3nc(c3__arvo, u3_nul);
+    cad = u3nt(c3__verb, u3_nul, lac_o);
     u3_auto_plan(car_u, u3_ovum_init(0, u3_blip, wir, cad));
   }
 
@@ -137,7 +137,7 @@ _fore_io_talk(u3_auto* car_u)
 static c3_o
 _fore_io_kick(u3_auto* car_u, u3_noun wir, u3_noun cad)
 {
-  u3a_lose(wir); u3a_lose(cad);
+  u3z(wir); u3z(cad);
   return c3n;
 }
 

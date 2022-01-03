@@ -22,7 +22,7 @@ _cqea_measure_ads(u3_noun ads, c3_w* soc_w, c3_w *mat_w, c3_w *dat_w)
 
   for ( a_w = b_w = 0, t = ads; u3_nul != t; ++a_w ) {
     u3x_cell(t, &i, &t);
-    if ( c3n == u3a_is_atom(i) ) {
+    if ( c3n == u3ud(i) ) {
       u3m_bail(c3__exit);
       return;
     }
@@ -61,8 +61,8 @@ _cqea_encode_ads(u3_noun ads,
   urcrypt_aes_siv_data *cur_u;
   c3_y *dat_y = ((c3_y*) dat_u) + mat_w;
 
-  for ( cur_u = dat_u, t = ads; u3_nul != t; t = u3x_t(t), ++cur_u ) {
-    i = u3x_h(t);
+  for ( cur_u = dat_u, t = ads; u3_nul != t; t = u3t(t), ++cur_u ) {
+    i = u3h(t);
     met_w = u3r_met(3, i);
     u3r_bytes(0, met_w, dat_y, i);
     cur_u->length = met_w;
@@ -115,7 +115,7 @@ _cqea_siv_en(c3_y*   key_y,
 
   ret = ( 0 != (*low_f)(txt_y, txt_w, dat_u, soc_w, key_y, iv_y, out_y) )
       ? u3_none
-      : u3i_trel(u3i_bytes(16, iv_y),
+      : u3nt(u3i_bytes(16, iv_y),
              u3i_words(1, &txt_w),
              u3i_bytes(txt_w, out_y));
 
@@ -151,7 +151,7 @@ _cqea_siv_de(c3_y*   key_y,
 
     ret = ( 0 != (*low_f)(txt_y, txt_w, dat_u, soc_w, key_y, iv_y, out_y) )
       ? u3_none
-      : u3i_cell(0, u3i_bytes(txt_w, out_y));
+      : u3nc(0, u3i_bytes(txt_w, out_y));
 
     u3a_free(txt_y);
     u3a_free(out_y);
@@ -188,8 +188,8 @@ u3wea_siva_en(u3_noun cor)
   if ( c3n == u3r_mean(cor, u3x_sam, &txt,
                        u3x_con_sam_2, &key,
                        u3x_con_sam_3, &ads, 0) ||
-       c3n == u3a_is_atom(key) ||
-       c3n == u3a_is_atom(txt) ) {
+       c3n == u3ud(key) ||
+       c3n == u3ud(txt) ) {
     return u3m_bail(c3__exit);
   } else {
     return u3l_punt("siva-en", _cqea_siva_en(key, ads, txt));
@@ -224,8 +224,8 @@ u3wea_siva_de(u3_noun cor)
                        u3x_sam_7, &txt,
                        u3x_con_sam_2, &key,
                        u3x_con_sam_3, &ads, 0) ||
-       c3n == u3a_is_atom(key) ||
-       c3n == u3a_is_atom(txt) ) {
+       c3n == u3ud(key) ||
+       c3n == u3ud(txt) ) {
     return u3m_bail(c3__exit);
   } else {
     return u3l_punt("siva-de", _cqea_siva_de(key, ads, iv, len, txt));
@@ -256,8 +256,8 @@ u3wea_sivb_en(u3_noun cor)
   if ( c3n == u3r_mean(cor, u3x_sam, &txt,
                        u3x_con_sam_2, &key,
                        u3x_con_sam_3, &ads, 0) ||
-       c3n == u3a_is_atom(key) ||
-       c3n == u3a_is_atom(txt) ) {
+       c3n == u3ud(key) ||
+       c3n == u3ud(txt) ) {
     return u3m_bail(c3__exit);
   } else {
     return u3l_punt("sivb-en", _cqea_sivb_en(key, ads, txt));
@@ -292,8 +292,8 @@ u3wea_sivb_de(u3_noun cor)
                        u3x_sam_7, &txt,
                        u3x_con_sam_2, &key,
                        u3x_con_sam_3, &ads, 0) ||
-       c3n == u3a_is_atom(key) ||
-       c3n == u3a_is_atom(txt) ) {
+       c3n == u3ud(key) ||
+       c3n == u3ud(txt) ) {
     return u3m_bail(c3__exit);
   } else {
     return u3l_punt("sivb-de", _cqea_sivb_de(key, ads, iv, len, txt));
@@ -323,8 +323,8 @@ u3wea_sivc_en(u3_noun cor)
   if ( c3n == u3r_mean(cor, u3x_sam, &txt,
                        u3x_con_sam_2, &key,
                        u3x_con_sam_3, &ads, 0) ||
-       c3n == u3a_is_atom(key) ||
-       c3n == u3a_is_atom(txt) ) {
+       c3n == u3ud(key) ||
+       c3n == u3ud(txt) ) {
     return u3m_bail(c3__exit);
   } else {
     return u3l_punt("sivc-en", _cqea_sivc_en(key, ads, txt));
@@ -359,8 +359,8 @@ u3wea_sivc_de(u3_noun cor)
                        u3x_sam_7, &txt,
                        u3x_con_sam_2, &key,
                        u3x_con_sam_3, &ads, 0) ||
-       c3n == u3a_is_atom(key) ||
-       c3n == u3a_is_atom(txt) ) {
+       c3n == u3ud(key) ||
+       c3n == u3ud(txt) ) {
     return u3m_bail(c3__exit);
   } else {
     return u3l_punt("sivc-de", _cqea_sivc_de(key, ads, iv, len, txt));

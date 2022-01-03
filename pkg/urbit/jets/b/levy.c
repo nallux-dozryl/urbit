@@ -11,13 +11,13 @@
     } else {
       u3_noun loz;
 
-      if ( c3n == u3a_is_cell(a) ) {
+      if ( c3n == u3du(a) ) {
         return u3m_bail(c3__exit);
       }
-      else switch ( (loz = u3j_gate_slam(sit_u, u3a_gain(u3x_h(a)))) ) {
-        case c3y:  return _levy_in(sit_u, u3x_t(a));
+      else switch ( (loz = u3j_gate_slam(sit_u, u3k(u3h(a)))) ) {
+        case c3y:  return _levy_in(sit_u, u3t(a));
         case c3n:   return c3n;
-        default:      u3a_lose(loz);
+        default:      u3z(loz);
                       return u3m_bail(c3__exit);
       }
     }
@@ -31,7 +31,7 @@
   {
     u3_noun  pro;
     u3j_site sit_u;
-    u3j_gate_prep(&sit_u, u3a_gain(b));
+    u3j_gate_prep(&sit_u, u3k(b));
     pro = _levy_in(&sit_u, a);
     u3j_gate_lose(&sit_u);
     return pro;

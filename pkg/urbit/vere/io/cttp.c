@@ -151,7 +151,7 @@ _cttp_bods_to_octs(u3_hbod* bod_u)
   }
   cos = u3i_bytes(len_w, buf_y);
   c3_free(buf_y);
-  return u3i_cell(len_w, cos);
+  return u3nc(len_w, cos);
 }
 
 /* _cttp_bod_from_octs(): translate octet-stream noun into body.
@@ -161,20 +161,20 @@ _cttp_bod_from_octs(u3_noun oct)
 {
   c3_w len_w;
 
-  if ( !_(u3a_is_cat(u3x_h(oct))) ) {     //  2GB max
+  if ( !_(u3a_is_cat(u3h(oct))) ) {     //  2GB max
     u3m_bail(c3__fail); return 0;
   }
-  len_w = u3x_h(oct);
+  len_w = u3h(oct);
 
   {
     u3_hbod* bod_u = c3_malloc(1 + len_w + sizeof(*bod_u));
     bod_u->hun_y[len_w] = 0;
     bod_u->len_w = len_w;
-    u3r_bytes(0, len_w, bod_u->hun_y, u3x_t(oct));
+    u3r_bytes(0, len_w, bod_u->hun_y, u3t(oct));
 
     bod_u->nex_u = 0;
 
-    u3a_lose(oct);
+    u3z(oct);
     return bod_u;
   }
 }
@@ -268,15 +268,15 @@ _cttp_heds_from_noun(u3_noun hed)
   u3_hhed* hed_u = 0;
 
   while ( u3_nul != hed ) {
-    i_hed = u3x_h(hed);
-    u3_hhed* nex_u = _cttp_hed_new(u3x_h(i_hed), u3x_t(i_hed));
+    i_hed = u3h(hed);
+    u3_hhed* nex_u = _cttp_hed_new(u3h(i_hed), u3t(i_hed));
     nex_u->nex_u = hed_u;
 
     hed_u = nex_u;
-    hed = u3x_t(hed);
+    hed = u3t(hed);
   }
 
-  u3a_lose(deh);
+  u3z(deh);
   return hed_u;
 }
 
@@ -293,7 +293,7 @@ _cttp_heds_to_noun(h2o_header_t* hed_u, c3_d hed_d)
 
   while ( 0 < dex_d ) {
     deh_u = hed_u[--dex_d];
-    hed = u3i_cell(u3i_cell(_cttp_vec_to_atom(*deh_u.name),
+    hed = u3nc(u3nc(_cttp_vec_to_atom(*deh_u.name),
                     _cttp_vec_to_atom(deh_u.value)), hed);
   }
 
@@ -339,15 +339,15 @@ _cttp_cres_fire_body(u3_cres* res_u, u3_hbod* bod_u)
 static c3_w
 _cttp_mcut_pork(c3_c* buf_c, c3_w len_w, u3_noun pok)
 {
-  u3_noun h_pok = u3x_h(pok);
-  u3_noun t_pok = u3x_t(pok);
+  u3_noun h_pok = u3h(pok);
+  u3_noun t_pok = u3t(pok);
 
-  len_w = u3_mcut_path(buf_c, len_w, '/', u3a_gain(t_pok));
+  len_w = u3_mcut_path(buf_c, len_w, '/', u3k(t_pok));
   if ( u3_nul != h_pok ) {
     len_w = u3_mcut_char(buf_c, len_w, '.');
-    len_w = u3_mcut_cord(buf_c, len_w, u3a_gain(u3x_t(h_pok)));
+    len_w = u3_mcut_cord(buf_c, len_w, u3k(u3t(h_pok)));
   }
-  u3a_lose(pok);
+  u3z(pok);
   return len_w;
 }
 
@@ -374,15 +374,15 @@ _cttp_mcut_quay(c3_c* buf_c, c3_w len_w, u3_noun quy)
       u3x_cell(quy, &i_quy, &t_quy);
       u3x_cell(i_quy, &pi_quy, &qi_quy);
 
-      len_w = u3_mcut_cord(buf_c, len_w, u3a_gain(pi_quy));
+      len_w = u3_mcut_cord(buf_c, len_w, u3k(pi_quy));
       len_w = u3_mcut_char(buf_c, len_w, '=');
-      len_w = u3_mcut_cord(buf_c, len_w, u3a_gain(qi_quy));
+      len_w = u3_mcut_cord(buf_c, len_w, u3k(qi_quy));
 
       quy = t_quy;
     }
   }
 
-  u3a_lose(yuq);
+  u3z(yuq);
   return len_w;
 }
 
@@ -391,16 +391,16 @@ _cttp_mcut_quay(c3_c* buf_c, c3_w len_w, u3_noun quy)
 static c3_w
 _cttp_mcut_url(c3_c* buf_c, c3_w len_w, u3_noun pul)
 {
-  u3_noun q_pul = u3x_h(u3x_t(pul));
-  u3_noun r_pul = u3x_t(u3x_t(pul));
+  u3_noun q_pul = u3h(u3t(pul));
+  u3_noun r_pul = u3t(u3t(pul));
 
   len_w = u3_mcut_char(buf_c, len_w, '/');
-  len_w = _cttp_mcut_pork(buf_c, len_w, u3a_gain(q_pul));
+  len_w = _cttp_mcut_pork(buf_c, len_w, u3k(q_pul));
 
   if ( u3_nul != r_pul ) {
-    len_w = _cttp_mcut_quay(buf_c, len_w, u3a_gain(r_pul));
+    len_w = _cttp_mcut_quay(buf_c, len_w, u3k(r_pul));
   }
-  u3a_lose(pul);
+  u3z(pul);
   return len_w;
 }
 
@@ -419,7 +419,7 @@ _cttp_creq_port(c3_s por_s)
 static c3_c*
 _cttp_creq_url(u3_noun pul)
 {
-  c3_w  len_w = _cttp_mcut_url(0, 0, u3a_gain(pul));
+  c3_w  len_w = _cttp_mcut_url(0, 0, u3k(pul));
   c3_c* url_c = c3_malloc(1 + len_w);
 
   _cttp_mcut_url(url_c, 0, pul);
@@ -433,7 +433,7 @@ _cttp_creq_url(u3_noun pul)
 static c3_c*
 _cttp_creq_host(u3_noun hot)
 {
-  c3_w  len_w = u3_mcut_host(0, 0, u3a_gain(hot));
+  c3_w  len_w = u3_mcut_host(0, 0, u3k(hot));
   c3_c* hot_c = c3_malloc(1 + len_w);
 
   u3_mcut_host(hot_c, 0, hot);
@@ -548,61 +548,61 @@ _cttp_creq_new(u3_cttp* ctp_u, c3_l num_l, u3_noun hes)
 
   u3_noun method, url, headers, body;
   if (c3n == u3r_qual(hes, &method, &url, &headers, &body)) {
-    u3a_lose(hes);
+    u3z(hes);
     return 0;
   }
 
   //  parse the url out of the new style url passed to us.
   //
-  u3_noun unit_pul = u3v_do("de-purl:html", u3a_gain(url));
+  u3_noun unit_pul = u3do("de-purl:html", u3k(url));
 
-  if ( c3n == u3a_is_cell(unit_pul) ) {
+  if ( c3n == u3r_du(unit_pul) ) {
     c3_c* url_c = u3r_string(url);
     u3l_log("cttp: unable to parse url:\n    %s\n", url_c);
     c3_free(url_c);
-    u3a_lose(hes);
+    u3z(hes);
     return 0;
   }
 
-  u3_noun pul = u3x_t(unit_pul);
+  u3_noun pul = u3t(unit_pul);
 
-  u3_noun hat = u3x_h(pul);      // +hart
-  u3_noun sec = u3x_h(hat);
-  u3_noun por = u3x_h(u3x_t(hat));
-  u3_noun hot = u3x_t(u3x_t(hat)); // +host
+  u3_noun hat = u3h(pul);      // +hart
+  u3_noun sec = u3h(hat);
+  u3_noun por = u3h(u3t(hat));
+  u3_noun hot = u3t(u3t(hat)); // +host
 
   ceq_u->sat_e = u3_csat_init;
   ceq_u->num_l = num_l;
   ceq_u->sec   = sec;
 
-  if ( c3y == u3x_h(hot) ) {
-    ceq_u->hot_c = _cttp_creq_host(u3a_gain(u3x_t(hot)));
+  if ( c3y == u3h(hot) ) {
+    ceq_u->hot_c = _cttp_creq_host(u3k(u3t(hot)));
   } else {
-    ceq_u->ipf_w = u3r_word(0, u3x_t(hot));
+    ceq_u->ipf_w = u3r_word(0, u3t(hot));
     ceq_u->ipf_c = _cttp_creq_ip(ceq_u->ipf_w);
   }
 
   if ( u3_nul != por ) {
-    ceq_u->por_s = u3x_t(por);
+    ceq_u->por_s = u3t(por);
     ceq_u->por_c = _cttp_creq_port(ceq_u->por_s);
   }
 
   //  XX this should be checked against a whitelist
   //
-  c3_assert( c3y == u3a_is_atom(method) );
+  c3_assert( c3y == u3ud(method) );
   ceq_u->met_c = u3r_string(method);
-  ceq_u->url_c = _cttp_creq_url(u3a_gain(pul));
+  ceq_u->url_c = _cttp_creq_url(u3k(pul));
 
-  ceq_u->hed_u = _cttp_heds_from_noun(u3a_gain(headers));
+  ceq_u->hed_u = _cttp_heds_from_noun(u3k(headers));
 
   if ( u3_nul != body ) {
-    ceq_u->bod_u = _cttp_bod_from_octs(u3a_gain(u3x_t(body)));
+    ceq_u->bod_u = _cttp_bod_from_octs(u3k(u3t(body)));
   }
 
   _cttp_creq_link(ctp_u, ceq_u);
 
-  u3a_lose(unit_pul);
-  u3a_lose(hes);
+  u3z(unit_pul);
+  u3z(hes);
 
   return ceq_u;
 }
@@ -717,12 +717,12 @@ _cttp_http_client_receive(u3_creq* ceq_u, c3_w sas_w, u3_noun mes, u3_noun uct)
 
   //  XX inject partial responses as separate events
   //
-  u3_noun wir = u3i_trel(u3i_string("http-client"),
-                     u3v_dc("scot", c3__uv, ctp_u->sev_l),
+  u3_noun wir = u3nt(u3i_string("http-client"),
+                     u3dc("scot", c3__uv, ctp_u->sev_l),
                      u3_nul);
-  u3_noun cad = u3i_trel(u3i_string("receive"),
+  u3_noun cad = u3nt(u3i_string("receive"),
                     ceq_u->num_l,
-                    u3i_qual(u3i_string("start"), u3i_cell(sas_w, mes), uct, c3y));
+                    u3nq(u3i_string("start"), u3nc(sas_w, mes), uct, c3y));
 
   u3_auto_plan(&ctp_u->car_u, u3_ovum_init(0, c3__i, wir, cad));
 }
@@ -751,7 +751,7 @@ _cttp_creq_respond(u3_creq* ceq_u)
 
   _cttp_http_client_receive(ceq_u, res_u->sas_w, res_u->hed,
              ( !res_u->bod_u ) ? u3_nul :
-             u3i_cell(u3_nul, _cttp_bods_to_octs(res_u->bod_u)));
+             u3nc(u3_nul, _cttp_bods_to_octs(res_u->bod_u)));
 
   _cttp_creq_free(ceq_u);
 }
@@ -1006,7 +1006,7 @@ _cttp_ef_http_client(u3_cttp* ctp_u, u3_noun tag, u3_noun dat)
       u3l_log("cttp: strange request\n");
       ret_o = c3n;
     }
-    else if ( (ceq_u = _cttp_creq_new(ctp_u, num_l, u3a_gain(req))) ) {
+    else if ( (ceq_u = _cttp_creq_new(ctp_u, num_l, u3k(req))) ) {
       _cttp_creq_start(ceq_u);
       ret_o = c3y;
     }
@@ -1036,7 +1036,7 @@ _cttp_ef_http_client(u3_cttp* ctp_u, u3_noun tag, u3_noun dat)
     ret_o = c3n;
   }
 
-  u3a_lose(tag); u3a_lose(dat);
+  u3z(tag); u3z(dat);
   return ret_o;
 }
 
@@ -1049,10 +1049,10 @@ _cttp_io_talk(u3_auto* car_u)
 
   //  XX remove u3A->sen
   //
-  u3_noun wir = u3i_trel(u3i_string("http-client"),
-                     u3v_dc("scot", c3__uv, ctp_u->sev_l),
+  u3_noun wir = u3nt(u3i_string("http-client"),
+                     u3dc("scot", c3__uv, ctp_u->sev_l),
                      u3_nul);
-  u3_noun cad = u3i_cell(c3__born, u3_nul);
+  u3_noun cad = u3nc(c3__born, u3_nul);
 
   u3_auto_plan(car_u, u3_ovum_init(0, c3__i, wir, cad));
 }
@@ -1074,10 +1074,10 @@ _cttp_io_kick(u3_auto* car_u, u3_noun wir, u3_noun cad)
     ret_o = c3n;
   }
   else {
-    ret_o = _cttp_ef_http_client(ctp_u, u3a_gain(tag), u3a_gain(dat));
+    ret_o = _cttp_ef_http_client(ctp_u, u3k(tag), u3k(dat));
   }
 
-  u3a_lose(wir); u3a_lose(cad);
+  u3z(wir); u3z(cad);
   return ret_o;
 }
 
@@ -1163,7 +1163,7 @@ u3_cttp_io_init(u3_pier* pir_u)
 
     now = u3_time_in_tv(&tim_u);
     ctp_u->sev_l = u3r_mug(now);
-    u3a_lose(now);
+    u3z(now);
   }
 
   return car_u;

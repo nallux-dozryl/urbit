@@ -10,7 +10,7 @@ u3qdi_gas(u3_noun a,
           u3_noun b)
 {
   if ( u3_nul == b ) {
-    return u3a_gain(a);
+    return u3k(a);
   }
   else {
     u3_noun i_b, t_b;
@@ -18,7 +18,7 @@ u3qdi_gas(u3_noun a,
 
     u3_noun c = u3qdi_put(a, i_b);
     u3_noun d = u3qdi_gas(c, t_b);
-    u3a_lose(c);
+    u3z(c);
     return d;
   }
 }
@@ -36,6 +36,6 @@ u3kdi_gas(u3_noun a,
           u3_noun b)
 {
   u3_noun c = u3qdi_gas(a, b);
-  u3a_lose(a); u3a_lose(b);
+  u3z(a); u3z(b);
   return c;
 }

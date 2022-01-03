@@ -4,16 +4,18 @@
     /** u3r_*: read without ever crashing.
     **/
 #if 1
+#       define u3r_du(a)  u3a_is_cell(a)
+#       define u3r_ud(a)  u3a_is_atom(a)
 #else
-      /* u3a_is_cell(): c3y iff `a` is cell.
+      /* u3r_du(): c3y iff `a` is cell.
       */
         c3_o
-        u3a_is_cell(u3_noun a);
+        u3r_du(u3_noun a);
 
-      /* u3a_is_atom(): c3n iff `a` is cell.
+      /* u3r_ud(): c3n iff `a` is cell.
       */
         c3_o
-        u3a_is_atom(u3_noun a);
+        u3r_ud(u3_noun a);
 #endif
 
       /* u3r_at(): fragment `a` of `b`, or u3_none.

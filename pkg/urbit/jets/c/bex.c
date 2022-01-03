@@ -23,7 +23,7 @@ u3_noun
 u3kc_bex(u3_atom a)
 {
   u3_noun b = u3qc_bex(a);
-  u3a_lose(a);
+  u3z(a);
   return b;
 }
 

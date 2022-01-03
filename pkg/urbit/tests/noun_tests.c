@@ -211,7 +211,7 @@ _test_imprison()
   c3_free(output_y);
 }
 
-/* _test_cells(): build and inspect cells: u3i_cell(), u3x_h(), u3x_t()
+/* _test_cells(): build and inspect cells: u3i_cell(), u3h(), u3t()
 */
 static void
 _test_cells()
@@ -222,12 +222,12 @@ _test_cells()
     u3_noun b = (u3_noun) 0x2;
     u3_noun c = u3i_cell(a, b);
 
-    u3_noun a2 = u3x_h(c);
+    u3_noun a2 = u3h(c);
     if (a2 != a){
       printf("*** _test_cells: fail-1\n");
     }
 
-    u3_noun b2 = u3x_t(c);
+    u3_noun b2 = u3t(c);
     if (b2 != b){
       printf("*** _test_cells: fail-2\n");
     }
@@ -251,7 +251,7 @@ _test_cells()
     printf("b_rand = %s\n", rand_b);
 #endif
 
-    u3_noun a2 = u3x_h(c);
+    u3_noun a2 = u3h(c);
     c3_y * output_y = c3_malloc(out_len_w + 1);
     memset(output_y, 0, out_len_w + 1);
     u3r_bytes(0, out_len_w, output_y, a);
@@ -260,7 +260,7 @@ _test_cells()
       printf("*** _test_imprison: fail-3\n");
     }
 
-    u3_noun b2 = u3x_h(c);
+    u3_noun b2 = u3h(c);
     memset(output_y, 0, out_len_w + 1);
     u3r_bytes(0, out_len_w, output_y, b);
 
@@ -291,21 +291,21 @@ _test_cells()
     u3_noun r = u3i_cell(b, s);
     u3_noun q = u3i_cell(a, r);
 
-    u3_noun a2 = u3x_h(q);
-    u3_noun r2 = u3x_t(q);
+    u3_noun a2 = u3h(q);
+    u3_noun r2 = u3t(q);
     if (a2 != a){
       printf("*** _test_cells: complicated a\n");
     }
 
-    u3_noun b2 = u3x_h(r2);
-    u3_noun s2 = u3x_t(r2);
+    u3_noun b2 = u3h(r2);
+    u3_noun s2 = u3t(r2);
     if (b2 != b){
       printf("*** _test_cells: complicated b\n");
     }
 
 
-    u3_noun c2 = u3x_h(s2);
-    u3_noun d2 = u3x_t(s2);
+    u3_noun c2 = u3h(s2);
+    u3_noun d2 = u3t(s2);
     if (c2 != c){
       printf("*** _test_cells: complicated c\n");
     }
@@ -336,9 +336,9 @@ _test_cells()
 
     u3_noun trel = u3i_trel(a, b, c);
 
-    u3_noun a2 = u3x_h(trel);
-    u3_noun b2 = u3x_h(u3x_t(trel));
-    u3_noun c2 = u3x_t(u3x_t(trel));
+    u3_noun a2 = u3h(trel);
+    u3_noun b2 = u3h(u3t(trel));
+    u3_noun c2 = u3t(u3t(trel));
 
     if (a2 != a){
       printf("*** trel: 1 a\n");
@@ -370,10 +370,10 @@ _test_cells()
 
     u3_noun qual = u3i_qual(a, b, c, d);
 
-    u3_noun a2 = u3x_h(qual);
-    u3_noun b2 = u3x_h(u3x_t(qual));
-    u3_noun c2 = u3x_h(u3x_t(u3x_t(qual)));
-    u3_noun d2 = u3x_t(u3x_t(u3x_t(qual)));
+    u3_noun a2 = u3h(qual);
+    u3_noun b2 = u3h(u3t(qual));
+    u3_noun c2 = u3h(u3t(u3t(qual)));
+    u3_noun d2 = u3t(u3t(u3t(qual)));
 
     if (a2 != a){
       printf("*** qual: 1 \n");

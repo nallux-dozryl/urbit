@@ -15,13 +15,13 @@ u3qb_turn(u3_noun a, u3_noun b)
     u3_noun   i, t = a;
     u3j_site sit_u;
 
-    u3j_gate_prep(&sit_u, u3a_gain(b));
+    u3j_gate_prep(&sit_u, u3k(b));
 
     do {
       u3x_cell(t, &i, &t);
 
       *lit = u3i_defcons(&hed, &tel);
-      *hed = u3j_gate_slam(&sit_u, u3a_gain(i));
+      *hed = u3j_gate_slam(&sit_u, u3k(i));
       lit  = tel;
     }
     while ( u3_nul != t );

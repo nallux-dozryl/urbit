@@ -21,12 +21,12 @@
   static void
   _flem(u3_loss* loc_u)
   {
-    u3a_lose(loc_u->sev);
+    u3z(loc_u->sev);
     {
       c3_w i_w;
 
       for ( i_w = 0; i_w < loc_u->kct_w; i_w++ ) {
-        u3a_lose(loc_u->kad[i_w]);
+        u3z(loc_u->kad[i_w]);
       }
     }
     u3a_free(loc_u->hev);
@@ -42,8 +42,8 @@
     if ( u3_nul == kad ) {
       return u3_nul;
     } else {
-      return u3i_cell(u3a_gain(loc_u->hev[u3r_word(0, u3x_h(kad))]),
-                  _lext(loc_u, u3x_t(kad)));
+      return u3nc(u3k(loc_u->hev[u3r_word(0, u3h(kad))]),
+                  _lext(loc_u, u3t(kad)));
     }
   }
 
@@ -65,17 +65,17 @@
         u3_noun  hev)
   {
     loc_u->hel = hel;
-    loc_u->lel_w = u3kb_lent(u3a_gain(hel));
+    loc_u->lel_w = u3kb_lent(u3k(hel));
 
     //  Read hev into array.
     {
       c3_w i_w;
 
-      loc_u->hev = u3a_malloc(u3kb_lent(u3a_gain(hev)) * sizeof(u3_noun));
+      loc_u->hev = u3a_malloc(u3kb_lent(u3k(hev)) * sizeof(u3_noun));
 
       for ( i_w = 0; u3_nul != hev; i_w++ ) {
-        loc_u->hev[i_w] = u3x_h(hev);
-        hev = u3x_t(hev);
+        loc_u->hev[i_w] = u3h(hev);
+        hev = u3t(hev);
       }
       loc_u->lev_w = i_w;
     }
@@ -94,10 +94,10 @@
         u3_noun hav;
         u3_noun teg;
 
-        hav = u3kdb_get(u3a_gain(loc_u->sev), u3a_gain(how));
-        teg = u3i_cell(u3i_words(1, &i_w),
+        hav = u3kdb_get(u3k(loc_u->sev), u3k(how));
+        teg = u3nc(u3i_words(1, &i_w),
                    (hav == u3_none) ? u3_nul : hav);
-        loc_u->sev = u3kdb_put(loc_u->sev, u3a_gain(how), teg);
+        loc_u->sev = u3kdb_put(loc_u->sev, u3k(how), teg);
       }
     }
   }
@@ -111,14 +111,14 @@
   {
     u3_noun kad;
 
-    kad = u3i_cell(u3i_words(1, &goy_w),
+    kad = u3nc(u3i_words(1, &goy_w),
                (inx_w == 0) ? u3_nul
-                            : u3a_gain(loc_u->kad[inx_w - 1]));
+                            : u3k(loc_u->kad[inx_w - 1]));
     if ( loc_u->kct_w == inx_w ) {
       c3_assert(loc_u->kct_w < (1 << 31));
       loc_u->kct_w++;
     } else {
-      u3a_lose(loc_u->kad[inx_w]);
+      u3z(loc_u->kad[inx_w]);
     }
     loc_u->kad[inx_w] = kad;
   }
@@ -132,7 +132,7 @@
   {
     return __
          ( (loc_u->kct_w == inx_w) ||
-           (u3r_word(0, u3x_h(loc_u->kad[inx_w])) > goy_w) );
+           (u3r_word(0, u3h(loc_u->kad[inx_w])) > goy_w) );
   }
 
   //  extend fits bottom
@@ -144,7 +144,7 @@
   {
     return __
       ( (0 == inx_w) ||
-        (u3r_word(0, u3x_h(loc_u->kad[inx_w - 1])) < goy_w) );
+        (u3r_word(0, u3h(loc_u->kad[inx_w - 1])) < goy_w) );
   }
 
 #if 0
@@ -218,18 +218,18 @@
       return;
     }
     else {
-      u3_noun i_gay = u3x_h(gay);
+      u3_noun i_gay = u3h(gay);
       c3_w    goy_w = u3r_word(0, i_gay);
       u3_noun bik;
 
       bik = _bink(loc_u, &inx_w, loc_u->kct_w, goy_w);
 
       if ( c3y == bik ) {
-        _merg(loc_u, inx_w + 1, u3x_t(gay));
+        _merg(loc_u, inx_w + 1, u3t(gay));
         _lune(loc_u, inx_w, goy_w);
       }
       else {
-        _merg(loc_u, inx_w, u3x_t(gay));
+        _merg(loc_u, inx_w, u3t(gay));
       }
     }
   }
@@ -240,17 +240,17 @@
   _loss(u3_loss* loc_u)
   {
     while ( u3_nul != loc_u->hel ) {
-      u3_noun i_hel = u3x_h(loc_u->hel);
-      u3_noun guy   = u3kdb_get(u3a_gain(loc_u->sev), u3a_gain(i_hel));
+      u3_noun i_hel = u3h(loc_u->hel);
+      u3_noun guy   = u3kdb_get(u3k(loc_u->sev), u3k(i_hel));
 
       if ( u3_none != guy ) {
         u3_noun gay = u3kb_flop(guy);
 
         _merg(loc_u, 0, gay);
-        u3a_lose(gay);
+        u3z(gay);
       }
 
-      loc_u->hel = u3x_t(loc_u->hel);
+      loc_u->hel = u3t(loc_u->hel);
     }
   }
 
@@ -274,8 +274,8 @@
   {
     while ( 1 ) {
       if ( u3_nul == lix ) return c3y;
-      if ( c3n == u3a_is_cell(lix) ) return c3n;
-      lix = u3x_t(lix);
+      if ( c3n == u3du(lix) ) return c3n;
+      lix = u3t(lix);
     }
   }
 

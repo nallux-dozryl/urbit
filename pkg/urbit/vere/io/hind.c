@@ -39,7 +39,7 @@ _hind_io_kick(u3_auto* car_u, u3_noun wir, u3_noun cad)
       case c3__trim: {
         ret_o = c3y;
         u3_auto_plan(car_u, u3_ovum_init(0, u3_blip,
-                                         u3i_cell(c3__arvo, u3_nul), u3a_gain(cad)));
+                                         u3nc(c3__arvo, u3_nul), u3k(cad)));
       } break;
 
       case c3__vega: {
@@ -57,7 +57,7 @@ _hind_io_kick(u3_auto* car_u, u3_noun wir, u3_noun cad)
     }
   }
 
-  u3a_lose(wir); u3a_lose(cad);
+  u3z(wir); u3z(cad);
   return ret_o;
 }
 

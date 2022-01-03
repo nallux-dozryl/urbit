@@ -15,21 +15,21 @@ u3qb_skid(u3_noun a, u3_noun b)
     u3_noun*   hed;
     u3_noun*   tel;
     u3j_site sit_u;
-    u3j_gate_prep(&sit_u, u3a_gain(b));
+    u3j_gate_prep(&sit_u, u3k(b));
 
     do {
       u3x_cell(t, &i, &t);
 
-      switch ( u3j_gate_slam(&sit_u, u3a_gain(i)) ) {
+      switch ( u3j_gate_slam(&sit_u, u3k(i)) ) {
         case c3y: {
           *lef = u3i_defcons(&hed, &tel);
-          *hed = u3a_gain(i);
+          *hed = u3k(i);
           lef  = tel;
         } break;
 
         case c3n: {
           *rig = u3i_defcons(&hed, &tel);
-          *hed = u3a_gain(i);
+          *hed = u3k(i);
           rig  = tel;
         } break;
 
@@ -44,7 +44,7 @@ u3qb_skid(u3_noun a, u3_noun b)
   *lef = u3_nul;
   *rig = u3_nul;
 
-  return u3i_cell(l, r);
+  return u3nc(l, r);
 }
 
 u3_noun

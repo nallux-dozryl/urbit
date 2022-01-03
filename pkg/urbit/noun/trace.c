@@ -15,7 +15,7 @@ static c3_o _ct_lop_o;
 void
 u3t_push(u3_noun mon)
 {
-  u3R->bug.tax = u3i_cell(mon, u3R->bug.tax);
+  u3R->bug.tax = u3nc(mon, u3R->bug.tax);
 }
 
 /* u3t_mean(): push `[%mean roc]` on trace stack.
@@ -23,7 +23,7 @@ u3t_push(u3_noun mon)
 void
 u3t_mean(u3_noun roc)
 {
-  u3R->bug.tax = u3i_cell(u3i_cell(c3__mean, roc), u3R->bug.tax);
+  u3R->bug.tax = u3nc(u3nc(c3__mean, roc), u3R->bug.tax);
 }
 
 /* u3t_drop(): drop from meaning stack.
@@ -31,12 +31,12 @@ u3t_mean(u3_noun roc)
 void
 u3t_drop(void)
 {
-  c3_assert(_(u3a_is_cell(u3R->bug.tax)));
+  c3_assert(_(u3du(u3R->bug.tax)));
   {
     u3_noun tax = u3R->bug.tax;
 
-    u3R->bug.tax = u3a_gain(u3x_t(tax));
-    u3a_lose(tax);
+    u3R->bug.tax = u3k(u3t(tax));
+    u3z(tax);
   }
 }
 
@@ -49,7 +49,7 @@ u3t_slog(u3_noun hod)
     u3C.slog_f(hod);
   }
   else {
-    u3a_lose(hod);
+    u3z(hod);
   }
 }
 
@@ -77,9 +77,9 @@ u3t_heck(u3_atom cog)
     u3R = &(u3H->rod_u);
     {
       if ( 0 == u3R->pro.day ) {
-        u3R->pro.day = u3v_do("doss", 0);
+        u3R->pro.day = u3do("doss", 0);
       }
-      u3R->pro.day = u3v_dc("pi-heck", u3i_string(str_c), u3R->pro.day);
+      u3R->pro.day = u3dc("pi-heck", u3i_string(str_c), u3R->pro.day);
     }
     u3R = rod_u;
   }
@@ -91,9 +91,9 @@ static void
 _ct_sane(u3_noun lab)
 {
   if ( u3_nul != lab ) {
-    c3_assert(c3y == u3a_is_cell(lab));
-    c3_assert(c3y == u3a_is_atom(u3x_h(lab)));
-    _ct_sane(u3x_t(lab));
+    c3_assert(c3y == u3du(lab));
+    c3_assert(c3y == u3ud(u3h(lab)));
+    _ct_sane(u3t(lab));
   }
 }
 #endif
@@ -116,8 +116,8 @@ _t_samp_process(u3_road* rod_u)
     while ( u3_nul != don ) {
       //  Get surface allocated label
       //
-      //  u3_noun lab = u3i_cell(u3i_string("foobar"), 0);
-      u3_noun laj = u3x_h(don),
+      //  u3_noun lab = u3nc(u3i_string("foobar"), 0);
+      u3_noun laj = u3h(don),
               lab = u3a_take(laj);
       u3a_wash(laj);
 
@@ -126,31 +126,31 @@ _t_samp_process(u3_road* rod_u)
       {
         u3_noun old;
 
-        if ( u3_none == (old = u3kdb_get(u3a_gain(muf), u3a_gain(lab))) ) {
-          muf = u3kdb_put(muf, u3a_gain(lab), len_w);
-          pef = u3i_cell(u3i_cell(lab, u3a_gain(muf)), pef);
+        if ( u3_none == (old = u3kdb_get(u3k(muf), u3k(lab))) ) {
+          muf = u3kdb_put(muf, u3k(lab), len_w);
+          pef = u3nc(u3nc(lab, u3k(muf)), pef);
           len_w += 1;
         }
         else {
           u3_assure(u3a_is_cat(old));
 
-          u3a_lose(muf);
+          u3z(muf);
           while ( len_w > (old + 1) ) {
-            u3_noun t_pef = u3a_gain(u3x_t(pef));
+            u3_noun t_pef = u3k(u3t(pef));
 
             len_w -= 1;
-            u3a_lose(pef);
+            u3z(pef);
             pef = t_pef;
           }
-          muf = u3a_gain(u3x_t(u3x_h(pef)));
-          u3a_lose(lab);
+          muf = u3k(u3t(u3h(pef)));
+          u3z(lab);
         }
       }
-      don = u3x_t(don);
+      don = u3t(don);
     }
     rod_u = u3tn(u3_road, rod_u->par_p);
   }
-  u3a_lose(muf);
+  u3z(muf);
 
   //  Lose the maps and save a pure label stack in original order.
   //
@@ -158,16 +158,16 @@ _t_samp_process(u3_road* rod_u)
     u3_noun pal = u3_nul;
 
     while ( u3_nul != pef ) {
-      u3_noun h_pef = u3x_h(pef);
-      u3_noun t_pef = u3a_gain(u3x_t(pef));
+      u3_noun h_pef = u3h(pef);
+      u3_noun t_pef = u3k(u3t(pef));
 
-      pal = u3i_cell(u3a_gain(u3x_h(h_pef)), pal);
+      pal = u3nc(u3k(u3h(h_pef)), pal);
 
-      u3a_lose(pef);
+      u3z(pef);
       pef = t_pef;
     }
 
-    // u3l_log("sample: stack length %d\r\n", u3kb_lent(u3a_gain(pal)));
+    // u3l_log("sample: stack length %d\r\n", u3kb_lent(u3k(pal)));
     return pal;
   }
 }
@@ -232,9 +232,9 @@ u3t_samp(void)
       if ( 0 == u3R->pro.day ) {
         /* bunt a +doss
         */
-        u3R->pro.day = u3i_trel(u3i_qual(0, 0, 0, u3i_qual(0, 0, 0, 0)), 0, 0);
+        u3R->pro.day = u3nt(u3nq(0, 0, 0, u3nq(0, 0, 0, 0)), 0, 0);
       }
-      u3R->pro.day = u3v_dt("pi-noon", mot_l, lab, u3R->pro.day);
+      u3R->pro.day = u3dt("pi-noon", mot_l, lab, u3R->pro.day);
     }
     u3R = rod_u;
   }
@@ -250,10 +250,10 @@ u3t_samp(void)
 c3_o
 u3t_come(u3_noun lab)
 {
-  if ( (u3_nul == u3R->pro.don) || !_(u3r_sing(lab, u3x_h(u3R->pro.don))) ) {
+  if ( (u3_nul == u3R->pro.don) || !_(u3r_sing(lab, u3h(u3R->pro.don))) ) {
     u3a_gain(lab);
     _ct_lop_o = c3y;
-    u3R->pro.don = u3i_cell(lab, u3R->pro.don);
+    u3R->pro.don = u3nc(lab, u3R->pro.don);
     _ct_lop_o = c3n;
     return c3y;
   }
@@ -267,9 +267,9 @@ u3t_flee(void)
 {
   _ct_lop_o = c3y;
   u3_noun don  = u3R->pro.don;
-  u3R->pro.don = u3a_gain(u3x_t(don));
+  u3R->pro.don = u3k(u3t(don));
   _ct_lop_o = c3n;
-  u3a_lose(don);
+  u3z(don);
 }
 
 /*  u3t_trace_open(): opens a trace file and writes the preamble.
@@ -353,10 +353,10 @@ u3t_nock_trace_push(u3_noun lab)
     return c3n;
 
   if ( (u3_nul == u3R->pro.trace) ||
-       !_(u3r_sing(lab, u3x_h(u3x_h(u3R->pro.trace)))) ) {
+       !_(u3r_sing(lab, u3h(u3h(u3R->pro.trace)))) ) {
     u3a_gain(lab);
     c3_d time = u3t_trace_time();
-    u3R->pro.trace = u3i_cell(u3i_cell(lab, u3i_chubs(1, &time)), u3R->pro.trace);
+    u3R->pro.trace = u3nc(u3nc(lab, u3i_chubs(1, &time)), u3R->pro.trace);
     return c3y;
   }
   else {
@@ -377,11 +377,11 @@ u3t_nock_trace_pop()
     return;
 
   u3_noun trace  = u3R->pro.trace;
-  u3R->pro.trace = u3a_gain(u3x_t(trace));
+  u3R->pro.trace = u3k(u3t(trace));
 
-  u3_noun item = u3x_h(trace);
-  u3_noun lab = u3x_h(item);
-  c3_d start_time = u3r_chub(0, u3x_t(item));
+  u3_noun item = u3h(trace);
+  u3_noun lab = u3h(item);
+  c3_d start_time = u3r_chub(0, u3t(item));
 
   // 33microseconds (a 30th of a millisecond).
   c3_d duration = u3t_trace_time() - start_time;
@@ -401,7 +401,7 @@ u3t_nock_trace_pop()
     u3_Host.tra_u.con_w++;
   }
 
-  u3a_lose(trace);
+  u3z(trace);
 }
 
 /* u3t_event_trace(): dumps a simple event from outside nock.
@@ -461,7 +461,7 @@ u3t_damp(FILE* fil_u)
   c3_assert( 0 != fil_u );
 
   if ( 0 != u3R->pro.day ) {
-    u3_noun wol = u3v_do("pi-tell", u3R->pro.day);
+    u3_noun wol = u3do("pi-tell", u3R->pro.day);
 
     //  XX prints to stderr since it's called on shutdown, daemon may be gone
     //
@@ -469,20 +469,20 @@ u3t_damp(FILE* fil_u)
       u3_noun low = wol;
 
       while ( u3_nul != low ) {
-        c3_c* str_c = (c3_c*)u3r_tape(u3x_h(low));
+        c3_c* str_c = (c3_c*)u3r_tape(u3h(low));
         fputs(str_c, fil_u);
         fputs("\r\n", fil_u);
 
         c3_free(str_c);
-        low = u3x_t(low);
+        low = u3t(low);
       }
 
-      u3a_lose(wol);
+      u3z(wol);
     }
 
     /* bunt a +doss
     */
-    u3R->pro.day = u3i_trel(u3i_qual(0, 0, 0, u3i_qual(0, 0, 0, 0)), 0, 0);
+    u3R->pro.day = u3nt(u3nq(0, 0, 0, u3nq(0, 0, 0, 0)), 0, 0);
   }
 
   u3t_print_steps(fil_u, "nocks", u3R->pro.nox_d);

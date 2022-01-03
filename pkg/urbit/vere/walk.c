@@ -16,12 +16,12 @@
 static u3_noun
 _walk_ok(u3_noun nod)
 {
-  u3_noun don = u3n_mung(u3a_gain(u2A->toy.arch), u3a_gain(nod));
+  u3_noun don = u3n_mung(u3k(u2A->toy.arch), u3k(nod));
 
   if ( c3n == u3_sing(nod, don) ) {
     c3_assert(0);
   }
-  u3a_lose(don);
+  u3z(don);
   return nod;
 }
 #endif
@@ -104,7 +104,7 @@ _walk_mkdirp(c3_c* bas_c, u3_noun pax)
     return;
   }
 
-  pax_w = u3r_met(3, u3x_h(pax));
+  pax_w = u3r_met(3, u3h(pax));
   fas_w = strlen(bas_c);
   len_w = 1 + fas_w + pax_w;
 
@@ -113,7 +113,7 @@ _walk_mkdirp(c3_c* bas_c, u3_noun pax)
 
   pax_c[fas_w] = '/';
   waq_y = (void*)(1 + pax_c + fas_w);
-  u3r_bytes(0, pax_w, waq_y, u3x_h(pax));
+  u3r_bytes(0, pax_w, waq_y, u3h(pax));
   pax_c[len_w] = '\0';
 
   if ( 0 != mkdir(pax_c, 0755) && EEXIST != errno ) {
@@ -121,7 +121,7 @@ _walk_mkdirp(c3_c* bas_c, u3_noun pax)
     u3m_bail(c3__fail);
   }
 
-  _walk_mkdirp(pax_c, u3x_t(pax));
+  _walk_mkdirp(pax_c, u3t(pax));
   c3_free(pax_c);
 }
 
@@ -147,8 +147,8 @@ u3_walk_save(c3_c* pas_c, u3_noun tim, u3_atom pad, c3_c* bas_c, u3_noun pax)
   fln_w = u3r_met(3, pad);
   pad_y = c3_malloc(fln_w);
   u3r_bytes(0, fln_w, pad_y, pad);
-  u3a_lose(pad);
-  u3a_lose(pax);
+  u3z(pad);
+  u3z(pax);
 
   rit_w = write(fid_i, pad_y, fln_w);
   close(fid_i);
@@ -162,7 +162,7 @@ u3_walk_save(c3_c* pas_c, u3_noun tim, u3_atom pad, c3_c* bas_c, u3_noun pax)
   if ( 0 != tim ) {
     struct timeval tim_tv[2];
 
-    u3_time_out_tv(&tim_tv[0], u3a_gain(tim));
+    u3_time_out_tv(&tim_tv[0], u3k(tim));
     u3_time_out_tv(&tim_tv[1], tim);
 
     utimes(pas_c, tim_tv);
@@ -223,18 +223,18 @@ _walk_in(const c3_c* dir_c, c3_w len_w)
           {
             u3_noun nam = u3i_string(nam_c);
             u3_noun ext = u3i_string(ext_c);
-            u3_noun get = u3kdb_get(u3a_gain(map), u3a_gain(nam));
+            u3_noun get = u3kdb_get(u3k(map), u3k(nam));
             u3_noun dat = u3_walk_load(pat_c);
             u3_noun hax;
 
             if ( !strcmp("noun", ext_c) ) {
               dat = u3ke_cue(dat);
             }
-            hax = u3v_do("sham", u3a_gain(dat));
+            hax = u3do("sham", u3k(dat));
             if ( u3_none == get ) { get = u3_nul; }
 
-            get = u3kdb_put(get, ext, u3i_trel(c3y, hax, dat));
-            map = u3kdb_put(map, nam, u3i_cell(c3n, get));
+            get = u3kdb_put(get, ext, u3nt(c3y, hax, dat));
+            map = u3kdb_put(map, nam, u3nc(c3n, get));
           }
           c3_free(nam_c);
           c3_free(ext_c);
@@ -244,9 +244,9 @@ _walk_in(const c3_c* dir_c, c3_w len_w)
 
           if ( u3_nul != dir ) {
             map = u3kdb_put
-              (map, u3i_string(fil_c), u3i_cell(c3n, dir));
+              (map, u3i_string(fil_c), u3nc(c3n, dir));
           }
-          else u3a_lose(tim);
+          else u3z(tim);
         }
         c3_free(pat_c);
       }
@@ -262,7 +262,7 @@ u3_noun
 u3_walk(const c3_c* dir_c, u3_noun old)
 {
   //  XX - obviously, cheaper to update old data.
-  u3a_lose(old);
+  u3z(old);
   {
     struct stat buf_b;
 
@@ -272,7 +272,7 @@ u3_walk(const c3_c* dir_c, u3_noun old)
       c3_assert(0);
     }
     else {
-      return u3i_cell(c3n,
+      return u3nc(c3n,
                   _walk_in(dir_c, strlen(dir_c)));
     }
   }
@@ -293,8 +293,8 @@ u3_path(c3_o fyl, u3_noun pax)
     u3_noun wiz = pax;
 
     while ( u3_nul != wiz ) {
-      len_w += (1 + u3r_met(3, u3x_h(wiz)));
-      wiz = u3x_t(wiz);
+      len_w += (1 + u3r_met(3, u3h(wiz)));
+      wiz = u3t(wiz);
     }
   }
 
@@ -308,19 +308,19 @@ u3_path(c3_o fyl, u3_noun pax)
     c3_c*   waq_c = (pas_c + strlen(pas_c));
 
     while ( u3_nul != wiz ) {
-      c3_w tis_w = u3r_met(3, u3x_h(wiz));
+      c3_w tis_w = u3r_met(3, u3h(wiz));
 
-      if ( (c3y == fyl) && (u3_nul == u3x_t(wiz)) ) {
+      if ( (c3y == fyl) && (u3_nul == u3t(wiz)) ) {
         *waq_c++ = '.';
       } else *waq_c++ = '/';
 
-      u3r_bytes(0, tis_w, (c3_y*)waq_c, u3x_h(wiz));
+      u3r_bytes(0, tis_w, (c3_y*)waq_c, u3h(wiz));
       waq_c += tis_w;
 
-      wiz = u3x_t(wiz);
+      wiz = u3t(wiz);
     }
     *waq_c = 0;
   }
-  u3a_lose(pax);
+  u3z(pax);
   return pas_c;
 }

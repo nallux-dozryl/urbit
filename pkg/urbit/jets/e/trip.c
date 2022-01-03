@@ -14,7 +14,7 @@ u3we_trip(u3_noun cor)
 {
   u3_noun a = u3x_at(u3x_sam, cor);
 
-  if ( c3n == u3a_is_atom(a) ) {
+  if ( c3n == u3ud(a) ) {
     return u3m_bail(c3__exit);
   }
 
@@ -25,6 +25,6 @@ u3_atom
 u3ke_trip(u3_noun a)
 {
   u3_atom pro = u3qe_trip(a);
-  u3a_lose(a);
+  u3z(a);
   return pro;
 }
