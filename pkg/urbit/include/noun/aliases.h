@@ -68,7 +68,30 @@
     */
 #     define u3_assent(x)  if ( !_(x) ) { u3m_bail(c3__exit); }
 
-    /* u3to(), u3tn(), u3of(): offset/pointer conversion.
+
+  /**  Aliases.
+  **/
+    /* u3x_h(), u3x_t(), u3x_at(): noun fragments.
+    */
+
+    /* u3i_cell(), u3i_trel(), u3i_qual(): tuple composition.
+    */
+
+
+    /* u3i_list(), u3_none-terminated varargs list
+    */
+#     define u3nl              u3i_list
+
+    /* u3a_is_cell(), u3a_is_atom(): noun/cell test.
+    */
+
+    /* u3a_gain(), u3a_lose(): reference counts.
+    */
+
+    /* u3v_do(), u3v_dc(), u3v_dt(), u3v_dq(): arvo calls.
+    */
+
+    /* u3to(), u3of(): offset/pointer conversion.
     */
 #     define  u3to(type, x) ((type *) u3a_into(x))
 #     define  u3tn(type, x) (x == 0) ? (void *)0 :  ((type *) u3a_into(x))
