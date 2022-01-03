@@ -204,8 +204,8 @@ _king_dawn(u3_noun feed, u3_noun pill, u3_noun path)
 void
 _king_pier(u3_noun pier)
 {
-  if ( (c3n == u3du(pier)) ||
-       (c3n == u3ud(u3t(pier))) ) {
+  if ( (c3n == u3a_is_cell(pier)) ||
+       (c3n == u3a_is_atom(u3t(pier))) ) {
     u3m_p("daemon: invalid pier", pier);
     exit(1);
   }
@@ -406,7 +406,7 @@ _boothack_key(u3_noun kef)
 
     //  if it's a single seed, we can trivially sanity-check early
     //
-    if ( c3y == u3ud(u3h(seed)) ) {
+    if ( c3y == u3a_is_atom(u3h(seed)) ) {
       //  local reference, not counted
       //
       ship = u3h(seed);

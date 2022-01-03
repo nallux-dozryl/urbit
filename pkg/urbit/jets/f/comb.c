@@ -37,8 +37,8 @@
       }
 #if 1
       else if ( (c3y == u3r_bush(mal, &p_mal, &q_mal)) &&
-                (c3y == u3du(p_mal)) &&
-                (c3y == u3du(q_mal)) &&
+                (c3y == u3a_is_cell(p_mal)) &&
+                (c3y == u3a_is_cell(q_mal)) &&
                 (0 == u3h(q_mal)) &&
                 (1 == u3t(q_mal)) )
       {

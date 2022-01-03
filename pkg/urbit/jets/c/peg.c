@@ -39,8 +39,8 @@
     if ( (c3n == u3r_mean(cor, u3x_sam_2, &a, u3x_sam_3, &b, 0)) ||
          (0 == a) ||
          (0 == b) ||
-         (c3n == u3ud(b)) ||
-         (c3n == u3ud(a) && b != 1) )
+         (c3n == u3a_is_atom(b)) ||
+         (c3n == u3a_is_atom(a) && b != 1) )
     {
       return u3m_bail(c3__exit);
     } else {

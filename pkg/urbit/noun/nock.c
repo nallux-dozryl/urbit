@@ -62,7 +62,7 @@ _n_hint(u3_noun zep,
     }
 
     case c3__live: {
-      if ( c3y == u3ud(hod) ) {
+      if ( c3y == u3a_is_atom(hod) ) {
         u3t_off(noc_o);
         u3t_heck(hod);
         u3t_on(noc_o);
@@ -153,7 +153,7 @@ _n_nock_on(u3_noun bus, u3_noun fol)
     u3R->pro.nox_d += 1;
 #endif
 
-    if ( c3y == u3r_du(hib) ) {
+    if ( c3y == u3a_is_cell(hib) ) {
       u3_noun poz, riv;
 
       poz = _n_nock_on(u3k(bus), u3k(hib));
@@ -166,7 +166,7 @@ _n_nock_on(u3_noun bus, u3_noun fol)
       default: return u3m_bail(c3__exit);
 
       case 0: {
-        if ( c3n == u3r_ud(gal) ) {
+        if ( c3n == u3a_is_atom(gal) ) {
           return u3m_bail(c3__exit);
         }
         else {
@@ -201,7 +201,7 @@ _n_nock_on(u3_noun bus, u3_noun fol)
         u3_noun gof, pro;
 
         gof = _n_nock_on(bus, u3k(gal));
-        pro = u3r_du(gof);
+        pro = u3a_is_cell(gof);
 
         u3a_lose(gof); u3a_lose(fol);
         return pro;
@@ -299,7 +299,7 @@ _n_nock_on(u3_noun bus, u3_noun fol)
             return pro;
           }
           else {
-            if ( c3n == u3r_ud(b_gal) ) {
+            if ( c3n == u3a_is_atom(b_gal) ) {
               return u3m_bail(c3__exit);
             }
             else {
@@ -322,7 +322,7 @@ _n_nock_on(u3_noun bus, u3_noun fol)
         {
           u3_noun zep, hod, nex;
 
-          if ( c3y == u3r_du(p_gal) ) {
+          if ( c3y == u3a_is_cell(p_gal) ) {
             u3_noun b_gal = u3h(p_gal);
             u3_noun c_gal = u3t(p_gal);
             u3_noun d_gal = q_gal;
@@ -354,10 +354,10 @@ _n_nock_on(u3_noun bus, u3_noun fol)
         val = u3m_soft_esc(u3k(ref), u3k(gof));
         u3t_on(noc_o);
 
-        if ( !_(u3du(val)) ) {
+        if ( !_(u3a_is_cell(val)) ) {
           u3m_bail(u3nt(1, gof, 0));
         }
-        if ( !_(u3du(u3t(val))) ) {
+        if ( !_(u3a_is_cell(u3t(val))) ) {
           //
           //  replace with proper error stack push
           //
@@ -548,7 +548,7 @@ _n_melt(u3_noun ops, c3_w* byc_w, c3_w* cal_w,
 
   while ( u3_nul != ops ) {
     op  = u3h(ops);
-    if ( c3n == u3du(op) ) {
+    if ( c3n == u3a_is_cell(op) ) {
       switch ( op ) {
         default:
           siz_y[i_w] = 1;
@@ -768,7 +768,7 @@ _n_prog_asm(u3_noun ops, u3n_prog* pog_u, u3_noun sip)
 
   while ( i_w-- > 0 ) {
     u3_noun op = u3h(ops);
-    if ( c3y == u3ud(op) ) {
+    if ( c3y == u3a_is_atom(op) ) {
       switch ( op ) {
         default:
           buf_y[i_w] = (c3_y) u3h(ops);
@@ -1012,7 +1012,7 @@ _n_bint(u3_noun* ops, u3_noun hif, u3_noun nef, c3_o los_o, c3_o tel_o)
 {
   c3_w tot_w = 0;
 
-  if ( c3n == u3du(hif) ) {
+  if ( c3n == u3a_is_cell(hif) ) {
     //  compile whitelisted atomic hints to dispatch protocol;
     //  compute and drop all others;
     //
@@ -1141,12 +1141,12 @@ _n_formulaic(u3_noun fol)
   if ( c3n == u3r_cell(fol, &op, &ar) ) {
     return 0;
   }
-  if ( c3y == u3du(op) ) {
+  if ( c3y == u3a_is_cell(op) ) {
     return _n_formulaic(op) && _n_formulaic(ar);
   }
   else switch ( op ) {
     case 0:
-      return ( c3y == u3ud(ar) );
+      return ( c3y == u3a_is_atom(ar) );
     case 1:
       return 1;
     case 3:
@@ -1165,16 +1165,16 @@ _n_formulaic(u3_noun fol)
         (_n_formulaic(b) || _n_formulaic(c));
     case 9:
       return (c3y == u3r_cell(ar, &a, &b))
-        && (c3y == u3ud(a))
+        && (c3y == u3a_is_atom(a))
         && _n_formulaic(b);
     case 10:
       if ( c3n == u3r_cell(ar, &a, &b) ) {
         return 0;
       }
-      if ( c3n == u3du(a) ) {
+      if ( c3n == u3a_is_cell(a) ) {
         return 0;
       }
-      if ( c3n == u3ud(u3h(a)) ) {
+      if ( c3n == u3a_is_atom(u3h(a)) ) {
         return 0;
       }
       return _n_formulaic(u3t(a)) && _n_formulaic(b);
@@ -1185,11 +1185,11 @@ _n_formulaic(u3_noun fol)
       if ( !_n_formulaic(b) ) {
         return 0;
       }
-      if ( c3y == u3ud(a) ) {
+      if ( c3y == u3a_is_atom(a) ) {
         return 1;
       }
       else {
-        return ( c3y == u3ud(u3h(a)) ) && _n_formulaic(u3t(a));
+        return ( c3y == u3a_is_atom(u3h(a)) ) && _n_formulaic(u3t(a));
       }
     default:
       return 0;
@@ -1211,7 +1211,7 @@ _n_comp(u3_noun* ops, u3_noun fol, c3_o los_o, c3_o tel_o)
   c3_w tot_w = 0;
   u3_noun cod, arg, hed, tel;
   u3x_cell(fol, &cod, &arg);
-  if ( c3y == u3du(cod) ) {
+  if ( c3y == u3a_is_cell(cod) ) {
     tot_w += _n_comp(ops, cod, c3n, c3n);
     ++tot_w; _n_emit(ops, SWAP);
     tot_w += _n_comp(ops, arg, c3n, c3n);
@@ -1219,7 +1219,7 @@ _n_comp(u3_noun* ops, u3_noun fol, c3_o los_o, c3_o tel_o)
   }
   else switch ( cod ) {
     case 0:
-      if ( c3n == u3ud(arg) ) {
+      if ( c3n == u3a_is_atom(arg) ) {
         u3m_bail(c3__exit);
         return 0;
       }
@@ -1289,14 +1289,14 @@ _n_comp(u3_noun* ops, u3_noun fol, c3_o los_o, c3_o tel_o)
     case 5: {
       u3x_cell(arg, &hed, &tel);
 
-      if ( c3n == u3du(hed) ) {
+      if ( c3n == u3a_is_cell(hed) ) {
         u3m_bail(c3__exit);
         return 0;
       }
       else {
         c3_t hec_t, tec_t;
         hec_t = (1 == u3h(hed));
-        if ( c3n == u3du(tel) ) {
+        if ( c3n == u3a_is_cell(tel) ) {
           u3m_bail(c3__exit);
           break;
         }
@@ -1819,7 +1819,7 @@ _n_kick(u3_noun cor, u3j_site* sit_u)
 static inline u3_noun
 _n_kale(u3_noun a)
 {
-  if ( c3n == u3du(a) ) {
+  if ( c3n == u3a_is_cell(a) ) {
     u3m_bail(c3__exit);
   }
   return a;
@@ -2113,7 +2113,7 @@ _n_burn(u3n_prog* pog_u, u3_noun bus, c3_ys mov, c3_ys off)
     do_deep:
       top  = _n_peek(off);
       o    = *top;
-      *top = u3du(o);
+      *top = u3a_is_cell(o);
       u3z(o);
       BURN();
 
@@ -2322,11 +2322,11 @@ _n_burn(u3n_prog* pog_u, u3_noun bus, c3_ys mov, c3_ys off)
       x   = u3m_soft_esc(u3k(*top), u3k(o));
       u3t_on(noc_o);
 
-      if ( c3n == u3du(x) ) {
+      if ( c3n == u3a_is_cell(x) ) {
         u3m_bail(u3nc(1, o));
         return u3_none;
       }
-      else if ( c3n == u3du(u3t(x)) ) {
+      else if ( c3n == u3a_is_cell(u3t(x)) ) {
         u3t_push(u3nt(c3__hunk, *top, o));
         u3m_bail(c3__exit);
         return u3_none;
@@ -2357,7 +2357,7 @@ _n_burn(u3n_prog* pog_u, u3_noun bus, c3_ys mov, c3_ys off)
 
     do_heck:
       x = _n_pep(mov, off);
-      if ( c3y == u3ud(x) ) {
+      if ( c3y == u3a_is_atom(x) ) {
         u3t_off(noc_o);
         u3t_heck(x);
         u3t_on(noc_o);

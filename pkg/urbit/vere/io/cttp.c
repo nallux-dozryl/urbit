@@ -556,7 +556,7 @@ _cttp_creq_new(u3_cttp* ctp_u, c3_l num_l, u3_noun hes)
   //
   u3_noun unit_pul = u3do("de-purl:html", u3k(url));
 
-  if ( c3n == u3r_du(unit_pul) ) {
+  if ( c3n == u3a_is_cell(unit_pul) ) {
     c3_c* url_c = u3r_string(url);
     u3l_log("cttp: unable to parse url:\n    %s\n", url_c);
     c3_free(url_c);
@@ -589,7 +589,7 @@ _cttp_creq_new(u3_cttp* ctp_u, c3_l num_l, u3_noun hes)
 
   //  XX this should be checked against a whitelist
   //
-  c3_assert( c3y == u3ud(method) );
+  c3_assert( c3y == u3a_is_atom(method) );
   ceq_u->met_c = u3r_string(method);
   ceq_u->url_c = _cttp_creq_url(u3k(pul));
 

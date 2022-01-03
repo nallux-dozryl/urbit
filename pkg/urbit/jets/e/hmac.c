@@ -74,16 +74,16 @@
                                u3x_sam_13, &key,
                                u3x_sam_14, &wid,
                                u3x_sam_15, &dat, 0)) ||
-         (c3n == u3ud(boq)) ||
+         (c3n == u3a_is_atom(boq)) ||
          (c3n == u3a_is_cat(boq)) ||
-         (c3n == u3ud(out)) ||
+         (c3n == u3a_is_atom(out)) ||
          (c3n == u3a_is_cat(out)) ||
-         (c3n == u3ud(wik)) ||
+         (c3n == u3a_is_atom(wik)) ||
          (c3n == u3a_is_cat(wik)) ||
-         (c3n == u3ud(key)) ||
-         (c3n == u3ud(wid)) ||
+         (c3n == u3a_is_atom(key)) ||
+         (c3n == u3a_is_atom(wid)) ||
          (c3n == u3a_is_cat(wid)) ||
-         (c3n == u3ud(dat)) )
+         (c3n == u3a_is_atom(dat)) )
     {
       return u3m_bail(c3__exit);
     }

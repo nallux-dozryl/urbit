@@ -18,8 +18,8 @@ u3wc_swp(u3_noun cor)
   u3_noun a, b;
   u3x_mean(cor, u3x_sam_2, &a, u3x_sam_3, &b, 0);
 
-  if (  (c3n == u3ud(a))
-     || (c3n == u3ud(b)) )
+  if (  (c3n == u3a_is_atom(a))
+     || (c3n == u3a_is_atom(b)) )
   {
     return u3m_bail(c3__exit);
   }

@@ -1638,7 +1638,7 @@ u3a_luse(u3_noun som)
     fprintf(stderr, "loom: insane %d 0x%x\r\n", som, som);
     abort();
   }
-  if ( _(u3du(som)) ) {
+  if ( _(u3a_is_cell(som)) ) {
     u3a_luse(u3h(som));
     u3a_luse(u3t(som));
   }
@@ -1763,7 +1763,7 @@ u3a_mark_noun(u3_noun som)
       }
       else {
         siz_w += new_w;
-        if ( _(u3du(som)) ) {
+        if ( _(u3a_is_cell(som)) ) {
           siz_w += u3a_mark_noun(u3h(som));
           som = u3t(som);
         }
@@ -1838,7 +1838,7 @@ u3a_count_noun(u3_noun som)
       }
       else {
         siz_w += new_w;
-        if ( _(u3du(som)) ) {
+        if ( _(u3a_is_cell(som)) ) {
           siz_w += u3a_count_noun(u3h(som));
           som = u3t(som);
         }
@@ -1912,7 +1912,7 @@ u3a_discount_noun(u3_noun som)
       }
       else {
         siz_w += new_w;
-        if ( _(u3du(som)) ) {
+        if ( _(u3a_is_cell(som)) ) {
           siz_w += u3a_discount_noun(u3h(som));
           som = u3t(som);
         }
@@ -2524,7 +2524,7 @@ _ca_detect(u3p(u3h_root) har_p, u3_noun fum, u3_noun som, c3_d axe_d)
     if ( som == fum ) {
       return axe_d;
     }
-    else if ( !_(u3du(fum)) || (u3_none != u3h_get(har_p, fum)) ) {
+    else if ( !_(u3a_is_cell(fum)) || (u3_none != u3h_get(har_p, fum)) ) {
       return 0;
     }
     else {

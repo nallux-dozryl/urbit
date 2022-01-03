@@ -9,10 +9,10 @@
   static u3_noun
   _norm(u3_noun a)
   {
-    if ( c3n == u3du(a) ) {
+    if ( c3n == u3a_is_cell(a) ) {
       return u3_nul;
     } else {
-      return u3nc(((c3y == u3du(u3h(a))) ? u3_nul : u3k(u3h(a))),
+      return u3nc(((c3y == u3a_is_cell(u3h(a))) ? u3_nul : u3k(u3h(a))),
                   _norm(u3t(a)));
     }
   }
@@ -24,7 +24,7 @@
       if ( u3_nul == a ) {
         return c3y;
       }
-      if ( c3n == u3ud(u3h(a)) ) {
+      if ( c3n == u3a_is_atom(u3h(a)) ) {
         return c3n;
       }
       a = u3t(a);

@@ -593,7 +593,7 @@ u3i_list(u3_weak som, ...)
 static u3_noun
 _edit_cat(u3_noun big, c3_l axe_l, u3_noun som)
 {
-  if ( c3n == u3du(big) ) {
+  if ( c3n == u3a_is_cell(big) ) {
     return u3m_bail(c3__exit);
   }
   else {
@@ -624,7 +624,7 @@ _edit(u3_noun big, u3_noun axe, u3_noun som)
   if ( c3y == u3a_is_cat(axe) ) {
     return _edit_cat(big, (c3_l) axe, som);
   }
-  else if ( c3n == u3du(big) ) {
+  else if ( c3n == u3a_is_cell(big) ) {
     return u3m_bail(c3__exit);
   }
   else {
@@ -644,7 +644,7 @@ static u3_noun _edit_or_mutate(u3_noun, u3_noun, u3_noun);
 static void
 _mutate_cat(u3_noun big, c3_l axe_l, u3_noun som)
 {
-  if ( c3n == u3du(big) ) {
+  if ( c3n == u3a_is_cell(big) ) {
     u3m_bail(c3__exit);
   }
   else {
@@ -675,7 +675,7 @@ _mutate(u3_noun big, u3_noun axe, u3_noun som)
   if ( c3y == u3a_is_cat(axe) ) {
     _mutate_cat(big, (c3_l) axe, som);
   }
-  else if ( c3n == u3du(big) ) {
+  else if ( c3n == u3a_is_cell(big) ) {
     u3m_bail(c3__exit);
   }
   else {

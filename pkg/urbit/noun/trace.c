@@ -31,7 +31,7 @@ u3t_mean(u3_noun roc)
 void
 u3t_drop(void)
 {
-  c3_assert(_(u3du(u3R->bug.tax)));
+  c3_assert(_(u3a_is_cell(u3R->bug.tax)));
   {
     u3_noun tax = u3R->bug.tax;
 
@@ -91,8 +91,8 @@ static void
 _ct_sane(u3_noun lab)
 {
   if ( u3_nul != lab ) {
-    c3_assert(c3y == u3du(lab));
-    c3_assert(c3y == u3ud(u3h(lab)));
+    c3_assert(c3y == u3a_is_cell(lab));
+    c3_assert(c3y == u3a_is_atom(u3h(lab)));
     _ct_sane(u3t(lab));
   }
 }

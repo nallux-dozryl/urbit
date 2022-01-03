@@ -14,8 +14,8 @@
       return c3y;
     }
     else {
-      if ( c3y == u3ud(a) ) {
-        if ( c3y == u3ud(b) ) {
+      if ( c3y == u3a_is_atom(a) ) {
+        if ( c3y == u3a_is_atom(b) ) {
           return u3qa_lth(a, b);
         }
         else {
@@ -23,7 +23,7 @@
         }
       }
       else {
-        if ( c3y == u3ud(b) ) {
+        if ( c3y == u3a_is_atom(b) ) {
           return c3n;
         }
         else {

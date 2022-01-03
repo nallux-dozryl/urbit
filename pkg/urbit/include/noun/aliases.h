@@ -82,11 +82,6 @@
 #     define u3nt(a, b, c)     u3i_trel(a, b, c)
 #     define u3nq(a, b, c, d)  u3i_qual(a, b, c, d)
 
-    /* u3du(), u3ud(): noun/cell test.
-    */
-#     define u3du(som)         (u3r_du(som))
-#     define u3ud(som)         (u3r_ud(som))
-
     /* u3k(), u3z(): reference counts.
     */
 #     define u3k(som)          u3a_gain(som)

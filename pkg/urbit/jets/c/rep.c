@@ -117,10 +117,10 @@ _block_rep(u3_atom a,
         if ( 0 == cab ) {
           break;
         }
-        else if ( c3n == u3du(cab) ) {
+        else if ( c3n == u3a_is_cell(cab) ) {
           return u3m_bail(c3__exit);
         }
-        else if ( c3n == u3ud(h_cab = u3h(cab)) ) {
+        else if ( c3n == u3a_is_atom(h_cab = u3h(cab)) ) {
           return u3m_bail(c3__exit);
         }
         else if ( (tot_w + (len_w = u3r_met(a_g, h_cab))) < tot_w ) {

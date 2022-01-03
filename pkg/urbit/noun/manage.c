@@ -690,8 +690,8 @@ u3m_bail(u3_noun how)
 
   /* Printf some metadata.
   */
-  if ( c3__exit != how && (_(u3ud(how)) || 1 != u3h(how)) ) {
-    if ( _(u3ud(how)) ) {
+  if ( c3__exit != how && (_(u3a_is_atom(how)) || 1 != u3h(how)) ) {
+    if ( _(u3a_is_atom(how)) ) {
       c3_c str_c[5];
 
       str_c[0] = ((how >> 0) & 0xff);
@@ -702,7 +702,7 @@ u3m_bail(u3_noun how)
       fprintf(stderr, "\r\nbail: %s\r\n", str_c);
     }
     else {
-      c3_assert(_(u3ud(u3h(how))));
+      c3_assert(_(u3a_is_atom(u3h(how))));
       fprintf(stderr, "\r\nbail: %d\r\n", u3h(how));
     }
   }
@@ -733,7 +733,7 @@ u3m_bail(u3_noun how)
 
   /* Reconstruct a correct error ball.
   */
-  if ( _(u3ud(how)) ) {
+  if ( _(u3a_is_atom(how)) ) {
     switch ( how ) {
       case c3__exit: {
         how = u3nc(2, u3R->bug.tax);
@@ -1053,7 +1053,7 @@ u3m_soft_sure(u3_funk fun_f, u3_noun arg)
 {
   u3_noun pro, pru = u3m_soft_top(0, (1 << 18), fun_f, arg);
 
-  c3_assert(_(u3du(pru)));
+  c3_assert(_(u3a_is_cell(pru)));
   pro = u3k(u3t(pru));
   u3z(pru);
 
@@ -1133,7 +1133,7 @@ u3m_soft_run(u3_noun gul,
     /* Produce - or fall again.
     */
     {
-      c3_assert(_(u3du(why)));
+      c3_assert(_(u3a_is_cell(why)));
       switch ( u3h(why) ) {
         default: c3_assert(0); return 0;
 
@@ -1391,7 +1391,7 @@ c3_y _cm_hex(c3_y c_y)
 static c3_w
 _cm_in_pretty(u3_noun som, c3_o sel_o, c3_c* str_c)
 {
-  if ( _(u3du(som)) ) {
+  if ( _(u3a_is_cell(som)) ) {
     c3_w sel_w, one_w, two_w;
 
     sel_w = 0;
@@ -1499,7 +1499,7 @@ u3m_pretty(u3_noun som)
 static c3_w
 _cm_in_pretty_path(u3_noun som, c3_c* str_c)
 {
-  if ( _(u3du(som)) ) {
+  if ( _(u3a_is_cell(som)) ) {
     c3_w sel_w, one_w, two_w;
     if ( str_c ) {
       *(str_c++) = '/';
