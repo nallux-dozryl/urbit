@@ -831,7 +831,7 @@ _http_seq_continue(void* vod_p, u3_noun nun)
   //
   if ( c3y == aut ) {
     u3_hreq* req_u = _http_req_prepare(rec_u, _http_seq_new);
-    u3_noun  hed   = u3nl(u3nc(u3i_string("Content-Type"),
+    u3_noun  hed   = u3i_list(u3nc(u3i_string("Content-Type"),
                                u3i_string("text/event-stream")),
                           u3nc(u3i_string("Cache-Control"),
                                u3i_string("no-cache")),
