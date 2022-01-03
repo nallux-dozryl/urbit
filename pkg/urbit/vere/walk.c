@@ -230,7 +230,7 @@ _walk_in(const c3_c* dir_c, c3_w len_w)
             if ( !strcmp("noun", ext_c) ) {
               dat = u3ke_cue(dat);
             }
-            hax = u3do("sham", u3k(dat));
+            hax = u3v_do("sham", u3k(dat));
             if ( u3_none == get ) { get = u3_nul; }
 
             get = u3kdb_put(get, ext, u3nt(c3y, hax, dat));

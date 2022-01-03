@@ -160,7 +160,7 @@ u3v_do(const c3_c* txt_c, u3_noun sam)
 static u3_noun
 _cv_scot(u3_noun dim)
 {
-  return u3do("scot", dim);
+  return u3v_do("scot", dim);
 }
 
 /* u3v_time(): set the reck time.
@@ -201,7 +201,7 @@ _cv_mole(u3_noun  fot,
          u3_noun  san,
          c3_d*    ato_d)
 {
-  u3_noun uco = u3do("slay", san);
+  u3_noun uco = u3v_do("slay", san);
   u3_noun p_uco, q_uco, r_uco, s_uco;
 
   if ( (c3n == u3r_qual(uco, &p_uco, &q_uco, &r_uco, &s_uco)) ||
@@ -281,7 +281,7 @@ u3v_punt(u3_noun blu, c3_l tab_l, u3_noun tac)
   //  We are calling nock here, but hopefully need no protection.
   //
   while ( c3y == u3a_is_cell(cat) ) {
-    u3_noun wol = u3dc("wash", u3nc(tab_l, col_l), u3k(u3h(cat)));
+    u3_noun wol = u3v_dc("wash", u3nc(tab_l, col_l), u3k(u3h(cat)));
 
     u3m_wall(wol);
     cat = u3t(cat);
@@ -295,7 +295,7 @@ u3v_punt(u3_noun blu, c3_l tab_l, u3_noun tac)
 void
 u3v_sway(u3_noun blu, c3_l tab_l, u3_noun tax)
 {
-  u3_noun mok = u3dc("mook", 2, tax);
+  u3_noun mok = u3v_dc("mook", 2, tax);
 
   u3v_punt(blu, tab_l, u3k(u3t(mok)));
   u3z(mok);

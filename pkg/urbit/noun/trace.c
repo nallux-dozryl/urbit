@@ -77,9 +77,9 @@ u3t_heck(u3_atom cog)
     u3R = &(u3H->rod_u);
     {
       if ( 0 == u3R->pro.day ) {
-        u3R->pro.day = u3do("doss", 0);
+        u3R->pro.day = u3v_do("doss", 0);
       }
-      u3R->pro.day = u3dc("pi-heck", u3i_string(str_c), u3R->pro.day);
+      u3R->pro.day = u3v_dc("pi-heck", u3i_string(str_c), u3R->pro.day);
     }
     u3R = rod_u;
   }
@@ -234,7 +234,7 @@ u3t_samp(void)
         */
         u3R->pro.day = u3nt(u3nq(0, 0, 0, u3nq(0, 0, 0, 0)), 0, 0);
       }
-      u3R->pro.day = u3dt("pi-noon", mot_l, lab, u3R->pro.day);
+      u3R->pro.day = u3v_dt("pi-noon", mot_l, lab, u3R->pro.day);
     }
     u3R = rod_u;
   }
@@ -461,7 +461,7 @@ u3t_damp(FILE* fil_u)
   c3_assert( 0 != fil_u );
 
   if ( 0 != u3R->pro.day ) {
-    u3_noun wol = u3do("pi-tell", u3R->pro.day);
+    u3_noun wol = u3v_do("pi-tell", u3R->pro.day);
 
     //  XX prints to stderr since it's called on shutdown, daemon may be gone
     //
